@@ -3,14 +3,14 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 
-const User = require('../models/user');
-
+const User = require('../../models/usermodel');
 
 
 // Function to send verification email
 
-const sendVerificationEmail = (email, verificationToken) => {
+const sendVerificationEmail = async (email, verificationToken) => {
     // create a node mailer transporter 
     const transporter = nodemailer.createTransport({
         //configuring the service
@@ -18,11 +18,28 @@ const sendVerificationEmail = (email, verificationToken) => {
         service: 'gmail',
         auth: {
             user:"phugiazx44@gmail.com",
-            pass:""
+            pass:"tpuw wnvi tfnq lqrr"
         }
-    })
-}
+    });
 
+
+
+
+    // compose the email
+    const mailOptions = {
+        from: 'amazon.com',
+        to: email,
+        subject: 'Email verification',
+        text: `Please click on the link to verify your email: http://localhost:3055/verify/${verificationToken}`
+    };
+
+    // send the email
+    try{
+        await transporter.sendMail(mailOptions);
+    } catch(error){
+        console.log('Error in sending email: ', error);
+    }
+};
 // xem laij phan nay link:https://www.youtube.com/watch?v=dfoZj7DPSAs phuts 1:10:01
 
 
@@ -37,7 +54,7 @@ const sendVerificationEmail = (email, verificationToken) => {
       //check if user exist
       const existingUser = await User.findOne({email});
       if(existingUser){
-        return res.status(400).json({message: 'Email already exist'});
+        return res.status(400).json({message: 'Email already registered'});
       }
 
       //Create a new user
@@ -64,5 +81,29 @@ const sendVerificationEmail = (email, verificationToken) => {
     
   })
 
-  
+
+
+  //endpoint to verify email
+  router.get('/verify/:token', async(req, res) => {
+    try{
+        const token = req.params.token;
+        //find the user with the token
+        const user = await User.findOne({verificationToken: token});
+        if(!user){
+            return res.status(404).json({message: 'Invalid verification token'});
+        }
+
+        //Mark the user as verified
+        user.verified = true;
+        user.verificationToken = undefined;
+
+        await user.save();
+        res.status(200).json({message: 'Email verified successfully'});
+    } catch(error){
+        console.log('Error in verification: ', error);
+        res.status(500).json({message: 'Verification failed'});
+    }
+})
+
 module.exports = router;
+

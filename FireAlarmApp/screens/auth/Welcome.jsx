@@ -22,7 +22,7 @@ const Welcome = () => {
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
       <Image
-        source={require("../../assets/images/1.png")}
+        source={require("../../assets/images/3d-render-fire-extinguisher-pastel-white-background.jpg")}
         style={{
           resizeMode: "cover",
           width: SIZES.width,
@@ -41,8 +41,7 @@ const Welcome = () => {
           <View style={{ alignItems: "center" }}>
    
            
-            <HeightSpace height={80} />
-
+          
             <View>
               <ReusableBtn
                 onPress={() => navigation.navigate("Login")}
@@ -52,6 +51,7 @@ const Welcome = () => {
                 borderColor={COLORS.black}
                 borderWidth={0}
                 textColor={COLORS.white}
+                height={100}
               />
 
               <HeightSpace height={20} />
@@ -64,6 +64,7 @@ const Welcome = () => {
                 borderColor={COLORS.red}
                 borderWidth={0}
                 textColor={COLORS.black}
+                height={100}
               />
                <HeightSpace height={20} />
             </View>

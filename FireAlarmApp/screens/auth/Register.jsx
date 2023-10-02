@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
@@ -18,13 +19,46 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { TextInput } from "react-native-gesture-handler";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import Octicons from "react-native-vector-icons/Octicons";
+import axios from "axios";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-
   const navigation = useNavigation();
+
+  
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    // send a post request to the backend to register the user
+    axios
+      .post("http://localhost:3055/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Registration Sucessful",
+          "You have registered successfully. Please login to continue"
+        );
+
+        setName("");
+        setEmail("");
+        setPassword("");
+      })
+      .catch((err) => {
+        Alert.alert(
+          "Registration Failed",
+          "an error occured while registering. Please try again"
+        );
+        console.log("registration failed", err);
+      });
+  };
+
+
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -172,7 +206,7 @@ const Register = () => {
 
         <View style={{ marginLeft: "auto", marginRight: "auto" }}>
           <ReusableBtn
-            onPress={() => navigation.navigate("Login")}
+            onPress={handleRegister}
             btnText={"Register"}
             width={SIZES.width - 150}
             backgroundColor={COLORS.red}
@@ -196,7 +230,7 @@ const Register = () => {
               />
             </Pressable>
             <WidthSpace width={5} />
-            <Pressable onPress={() => navigation.navigate("Login")}>
+            <Pressable onPress={() => navigation.goBack()}>
               <ReusableText
                 text={"Login Now"}
                 family={"medium"}
