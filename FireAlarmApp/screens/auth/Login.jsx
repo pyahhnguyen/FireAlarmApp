@@ -5,9 +5,11 @@ import {
   SafeAreaView,
   Image,
   KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
+import WidthSpace from "../../components/Reusable/WidthSpace";
 import HeightSpace from "../../components/Reusable/HeightSpace";
 import { COLORS, SIZES } from "../../constants/theme";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -29,11 +31,11 @@ const Login = () => {
     >
       <View>
         <Image
-          style={{ width: 100, height: 80, marginTop: 80 }}
-          source={require("../../assets/images/PayPal.png")}
+          style={{ width: 100, height: 100, marginTop: 60 }}
+          source={require("../../assets/images/firefighter.png")}
         />
       </View>
-      <HeightSpace height={50} />
+      <HeightSpace height={30} />
       <KeyboardAvoidingView>
         <View style={{alignItems:"center"}}>
         <ReusableText style={{flex:1,alignItems:"center"}}
@@ -112,25 +114,53 @@ const Login = () => {
           family={"medium"}
           size={SIZES.small}
           color={COLORS.black}
+       
         />
         
       </View>
 
 
-      <HeightSpace height={50} />
+      <HeightSpace height={30} />
 
-      <View>
+      <View  style={{marginLeft:"auto",marginRight:"auto"}}>
 
       <ReusableBtn
         onPress={() => navigation.navigate("Bottom")}
         btnText={"Login"}
-        width={SIZES.width - 50}
+        width={SIZES.width - 150}
         backgroundColor={COLORS.red}
         borderColor={COLORS.red}
         borderWidth={0}
         textColor={COLORS.white}
+        alignItems="center"
+        justifyContent="center"
       />
       </View>
+
+      <HeightSpace height={30} />
+      <Pressable style={{alignItems:'center'}}>
+        <View style={{flexDirection:"row"}}>
+        <Pressable>
+        <ReusableText 
+          text={"Don't have an account?"}
+          family={"medium"}
+          size={SIZES.medium}
+          color={COLORS.black}
+       
+        />
+        </Pressable>
+        <WidthSpace width={5} />
+        <Pressable onPress={() => navigation.navigate("Register")}>
+        <ReusableText 
+          text={"Sign Up"}
+          family={"medium"}
+          size={SIZES.medium}
+          color={COLORS.red}
+      
+        />
+        </Pressable>
+        </View>
+      </Pressable>
     </KeyboardAvoidingView>
     </SafeAreaView>
   

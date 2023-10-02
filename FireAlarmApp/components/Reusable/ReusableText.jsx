@@ -16,5 +16,6 @@ const styles = StyleSheet.create({
         fontFamily: family,
         fontSize: size,
         color: color,
+        
     })
 })

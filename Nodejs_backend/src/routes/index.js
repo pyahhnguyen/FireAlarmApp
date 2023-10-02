@@ -1,8 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const crypto = require('crypto');
 const router = express.Router();
 
 const FireAlert = require('../models/fireAlert');
 const AirQuality = require('../models/airQuality');
+
 
 
 // Root route
@@ -12,6 +16,7 @@ router.get('/', (req, res) => {
     });
   });
   
+
   // API để lấy tất cả dữ liệu chỉ số không khí
   router.get('/api/airqualities', async (req, res) => {
     try {

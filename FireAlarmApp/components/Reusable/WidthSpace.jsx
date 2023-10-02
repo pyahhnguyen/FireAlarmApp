@@ -8,3 +8,4 @@ const WidthSpace = ({width}) => {
         </View>
     )
 }
+export default WidthSpace
