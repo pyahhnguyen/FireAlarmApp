@@ -1,58 +1,66 @@
-
 import { Dimensions } from 'react-native'
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get('screen');
 
 const COLORS = {
-  primary: "#2A4D50",
-  secondary: "#DDF0FF",
-  tertiary: "#FF7754",
-
-  gray: "#83829A",
-  gray2: "#C1C0C8",
-
-  offwhite: "#F3F4F8",
-  white: "#FFFFFF",
-  black: "#000000",
-  red: "#e81e4d",
-  green: " #00C135",
-  lightWhite: "#FAFAFC",
+    blue: "#4267B2",
+    red: "#EB6A58",
+    green: "#449282",
+    white: "#FBFBFB",
+    lightWhite: "#FFFFFF",  
+    lightBlue: "#6885C1",
+    lightRed: "#EB9C9B",
+    lightGreen: "#73ADA1",
+    black: '#121212',
+    dark: '#3D3A45',
+    gray: '#8C8896',
+    lightGrey: '#D1CFD5',
 };
 
 
 const SIZES = {
-  xSmall: 10,
-  small: 12,
-  medium: 16,
-  large: 20,
-  xLarge: 24,
-  xxLarge: 44,
-  height,
-  width
+    xSmall: 10,
+    small: 12,
+    medium: 16,
+    large: 20,
+    xLarge: 24,
+    xxLarge: 44,
+    height,
+    width,
+};
+
+const TEXT = {
+    xxSmall: 11,
+    xSmall: 13,
+    small: 15,
+    medium: 17,
+    large: 21,
+    xLarge: 27,
+    xxLarge: 32,
 };
 
 
 const SHADOWS = {
-  small: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    small: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 2,
-  },
-  medium: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    medium: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 5.84,
+        elevation: 5,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 5.84,
-    elevation: 5,
-  },
 };
 
 
-export { COLORS, SIZES , SHADOWS };
+export { COLORS, SIZES, SHADOWS, TEXT };
