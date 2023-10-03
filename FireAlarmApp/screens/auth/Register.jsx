@@ -27,7 +27,6 @@ const Register = () => {
   const [name, setName] = useState("");
   const navigation = useNavigation();
 
-  
   const handleRegister = () => {
     const user = {
       name: name,
@@ -56,8 +55,6 @@ const Register = () => {
         console.log("registration failed", err);
       });
   };
-
-
 
   return (
     <SafeAreaView

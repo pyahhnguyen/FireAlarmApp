@@ -39,8 +39,16 @@ export default function App() {
           component={Onboarding}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Bottom" component={BottomTabNavigation} options={{headerShown: false}} />
-        <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false}} />
+        <Stack.Screen
+          name="Bottom"
+          component={BottomTabNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{ headerShown: false }}
+        />
 
         <Stack.Screen
           name="Register"
