@@ -17,16 +17,16 @@ const sendVerificationEmail = async (email, verificationToken) => {
     service: "gmail",
     auth: {
       user: "phugiazx44@gmail.com",
-      pass: "tpuw wnvi tfnq lqrr",
+      pass: "uwpa gszd eete nrye",
     },
   });
 
   // compose the email
   const mailOptions = {
-    from: "amazon.com",
+    from: "20139072@student.hcmute.edu.vn",
     to: email,
     subject: "Email verification",
-    text: `Please click on the link to verify your email: http://localhost:3055/verify/${verificationToken}`,
+    text: `Please click on the link to verify your email: http://10.0.238.197/verify/${verificationToken}`,
   };
 
   // send the email
@@ -38,33 +38,39 @@ const sendVerificationEmail = async (email, verificationToken) => {
 };
 // xem laij phan nay link:https://www.youtube.com/watch?v=dfoZj7DPSAs phuts 1:10:01
 
-// Register route
+
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    //check if user exist
+    // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already registered" });
     }
 
-    //Create a new user
-    const Newuser = new User({ name, email, password });
+    // Create a new user
+    const newUser = new User({ name, email, password });
 
-    //Generate and store the verification token
-    Newuser.verificationToken = crypto.randomBytes(20).toString("hex");
+    
+    
+    // Generate a verification token
+    newUser.verificationToken = crypto.randomBytes(16).toString("hex");
+    // Save the user
+    await newUser.save();
 
-    //Save the user
-    await Newuser.save();
 
-    //Send verification to  the email user
-    sendVerificationEmail(Newuser.verificationToken, Newuser.email);
-  } catch (error) {
-    console.log("Error in register: ", error);
+    // Return a success message
+    return res.status(200).json({ message: "Registration successful" });
+    
+    
+
+  } catch (err) {
+    console.log("Error in register: ", err);
     res.status(500).json({ message: "Registration failed" });
   }
 });
+
 
 //endpoint to verify email
 router.get("/verify/:token", async (req, res) => {

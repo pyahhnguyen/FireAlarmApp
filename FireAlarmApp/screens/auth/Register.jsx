@@ -35,7 +35,7 @@ const Register = () => {
     };
     // send a post request to the backend to register the user
     axios
-      .post("http://localhost:3055/register", user)
+      .post("http://10.0.238.197:3056/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(
@@ -56,6 +56,8 @@ const Register = () => {
       });
   };
 
+
+  
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -245,10 +247,5 @@ const Register = () => {
 export default Register;
 
 const styles = StyleSheet.create({
-  backArrowIcon1: {
-    flex: 1,
-    width: "100%",
-    height: 19,
-    overflow: "hidden",
-  },
+ 
 });

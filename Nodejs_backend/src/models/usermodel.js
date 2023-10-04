@@ -1,28 +1,26 @@
-const momgoose = require('mongoose');
+const mongoose = require('mongoose');
 
-const userSchema = new momgoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    password:{
-        type:String,
+    password: {
+        type: String,
         required: true,
-        unique: true
-
     },
-    verified:{
+    verified: {
         type: Boolean,
         default: false
     },
-    verificationToken:String,
+    verificationToken: String,
 
-    address:[
+    addresses: [
         {
             name: String,
             mobileNo: String,
@@ -33,10 +31,8 @@ const userSchema = new momgoose.Schema({
             country: String,
         }
     ],
-
-
 });
 
-const User = momgoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
