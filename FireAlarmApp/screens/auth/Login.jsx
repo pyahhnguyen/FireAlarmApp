@@ -17,11 +17,35 @@ import { TextInput } from "react-native-gesture-handler";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { Alert } from "react-native";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+
+  const handleLogin = () => {
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://10.0.240.11:3056/login", user)
+      .then((response) => {
+        console.log(response);
+        const token = response.data.token;
+        AsyncStorage.setItem("authToken", token);
+        navigation.replace("Bottom");
+      })
+      .catch((err) => {
+        Alert.alert("Login Failed", "Invalid email");
+        console.log(err);
+      });
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -134,7 +158,7 @@ const Login = () => {
 
         <View style={{ marginLeft: "auto", marginRight: "auto" }}>
           <ReusableBtn
-            onPress={() => navigation.navigate("Bottom")}
+            onPress={handleLogin}
             btnText={"Login"}
             width={SIZES.width - 150}
             backgroundColor={COLORS.red}

@@ -3,11 +3,10 @@ const express = require("express");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 
 const app = express();
-const jwt = require("jsonwebtoken");
+
 // init middlewares
 app.use(morgan("dev")); // print request logs on console
 app.use(helmet()); // secure express app by setting various HTTP headers
@@ -24,3 +23,7 @@ app.use("", require("./routes/index"));
 app.use("", require("./routes/Auth/User"));
 
 module.exports = app;
+
+
+
+

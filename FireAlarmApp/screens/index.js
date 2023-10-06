@@ -11,6 +11,4 @@ export {
     Location,
     Chat,
     Profile,
- 
-
- };
+  };
