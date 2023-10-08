@@ -87,17 +87,11 @@ router.post("/register", async (req, res) => {
 //   }
 // });
 
-
-
-
-
 // Function to generate a secret key
 const generateSecretKey = () => {
   const secretKey = crypto.randomBytes(32).toString("hex");
   return secretKey;
 };
-
-
 
 //
 const secretKey = generateSecretKey();
@@ -107,12 +101,12 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     // Check if user exists
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({message: "Invalid email or password"});
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    if(user.password !== password){
+    if (user.password !== password) {
       return res.status(401).json({ message: "Invalid  password" });
     }
     // // Check if password is correct

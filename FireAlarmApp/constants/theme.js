@@ -26,6 +26,7 @@ const SIZES = {
     xxLarge: 44,
     height,
     width,
+    radius: 16,
 };
 
 const TEXT = {
@@ -38,7 +39,12 @@ const TEXT = {
     xxLarge: 32,
 };
 
-
+ const spacing = {
+    s: 8,
+    m: 18,
+    l: 24,
+    xl: 40,
+  };
 const SHADOWS = {
     small: {
         shadowColor: "#000",
@@ -60,7 +66,8 @@ const SHADOWS = {
         shadowRadius: 5.84,
         elevation: 5,
     },
+
 };
 
 
-export { COLORS, SIZES, SHADOWS, TEXT };
+export { COLORS, SIZES, SHADOWS, TEXT , spacing };

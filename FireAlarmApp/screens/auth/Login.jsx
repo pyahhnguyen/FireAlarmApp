@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
 import WidthSpace from "../../components/Reusable/WidthSpace";
 import HeightSpace from "../../components/Reusable/HeightSpace";
@@ -21,10 +21,27 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Alert } from "react-native";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  
+
+  // useEffect(() => {
+  //   const checkLoginstatus = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem("authToken");
+  //       if (token) {
+  //         navigation.replace("Bottom");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   checkLoginstatus();
+  // }, []);
+
 
   const handleLogin = () => {
     const user = {
@@ -33,7 +50,7 @@ const Login = () => {
     };
 
     axios
-      .post("http://10.0.240.11:3056/login", user)
+      .post("http://10.0.229.121:3056/login", user)
       .then((response) => {
         console.log(response);
         const token = response.data.token;

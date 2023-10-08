@@ -35,7 +35,7 @@ const Register = () => {
     };
     // send a post request to the backend to register the user
     axios
-      .post("http://10.0.240.11:3056/register", user)
+      .post("http://10.0.229.121:3056/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(
