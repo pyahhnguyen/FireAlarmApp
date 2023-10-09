@@ -17,13 +17,13 @@ const CARD_WIDTH_SPACING = CARD_WIDTH + spacing.l;
 
 const Room = ({ list_room }) => {
   return (
-    <FlatList
+    <FlatList 
       data={list_room}
       horizontal
       snapToInterval={CARD_WIDTH_SPACING}
       decelerationRate="fast"
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(i) => i.id}
+      keyExtractor={i => i.id}
       renderItem={({ item, index }) => {
         return (
           <TouchableOpacity

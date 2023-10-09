@@ -15,8 +15,6 @@ const Slides = ({ item }) => {
            <Image source={item.image} style={styles.image} />
 
          
-
-
             <View style={styles.stack}>
                
                 <ReusableText 
