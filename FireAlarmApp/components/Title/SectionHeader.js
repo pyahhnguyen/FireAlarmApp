@@ -9,7 +9,7 @@ const SectionHeader = ({title, onPress, buttonTitle = 'Button'}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Pressable onPress={() => navigation.navigate("Register")}>
+      <Pressable onPress={() => navigation.navigate("")}>
               <ReusableText
                 text={"See all"}
                 family={"bold"}

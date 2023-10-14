@@ -8,7 +8,7 @@ import { COLORS } from "../constants/theme";
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
-  padding: 10,
+  // padding: 10,
   borderRadius: 20,
   height: 80,
   position: "absolute",
@@ -16,8 +16,6 @@ const tabBarStyle = {
   width: "100%",
   overflow: "hidden",
 };
-
-
 
 const BottomTabNavigation = () => {
   return (

@@ -7,7 +7,7 @@ import { Octicons } from '@expo/vector-icons';
 const ScreenHeader = ({ mainTitle, secondTitle }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.mainTitle}>{mainTitle}</Text>
+      {/* <Text style={styles.mainTitle}>{mainTitle}</Text> */}
         <View style={styles.location}>
         <EvilIcons name="location" size={18} color="gray" />
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
        
         justifyContent: "space-between",
         paddingHorizontal: 25,
-        marginTop: 10,
+        // marginTop: 10,
         marginBottom:30
     
     },

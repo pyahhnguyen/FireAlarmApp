@@ -7,11 +7,12 @@ import ReusableText from "../Reusable/ReusableText";
 import { COLORS, SIZES } from "../../constants/theme";
 const MainHeader = ({ title }) => {
   const insets = useSafeAreaInsets();
+
+  
   return (
     <View style={[styles.container, { marginTop: insets.top }]}>
-      <SimpleLineIcons onPress={() => {}} name="menu" size={20} color="gray" />
+      {/* <SimpleLineIcons onPress={() => {}} name="menu" size={20} color="gray" /> */}
       <Text style={styles.title}>{title}</Text>
-
       <Ionicons
         name="notifications-outline"
         size={24}
@@ -28,11 +29,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 25,
+    
   },
   title: {
-    fontSize: 19,
-    fontWeight: "bold",
-    
+   
+    fontSize: 22,
+    fontWeight: "medium",
+    fontFamily: "medium",
+    color:"gray"
   },
 });
 
