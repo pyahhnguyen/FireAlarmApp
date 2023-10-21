@@ -16,13 +16,12 @@ const Home = () => {
       <ScrollView  showsVerticalScrollIndicator={false}>
 
         <Text style={styles.textStyle}>Rooms</Text>
-        <Room list_room={ROOM_LIST} />
+        <Room list_room={ROOM_LIST}   />
         <SectionHeader
           title="Sensors"
           //   buttonTitle="See all"
           //   onPress={() => {}}
         />
-       
         <SensorList list={SENSOR_LIST} />
         </ScrollView>
      

@@ -21,8 +21,13 @@ require("./db/init_mongo");
 app.use("", require("./routes/index"));
 
 app.use("", require("./routes/Auth/User"));
+ 
+
+
 
 module.exports = app;
+
+
 
 
 

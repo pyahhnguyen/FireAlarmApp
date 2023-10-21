@@ -9,25 +9,21 @@ const CARD_HEIGHT = 175;
 const SensorList = ({ list }) => {
   return (
     <View style={styles.container}>
-      {list.map((item, index) => {
-        return (
-          <TouchableOpacity style={styles.cardContainer}>
-            <View style={[styles.card, SHADOWS.small]} key={item.id}>
-              <View style={styles.imageBox}>
-                <Image style={styles.image} source={item.image} />
-              </View>
-
-              <View style={styles.footer}>
-                <View style={styles.titleBox}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.data}>{item.data}</Text>
-                </View>
-              </View>
-
+      {list.map((item) => (
+        <TouchableOpacity key={item.id} style={styles.cardContainer}>
+          <View style={[styles.card, SHADOWS.small]}>
+            <View style={styles.imageBox}>
+              <Image style={styles.image} source={item.image} />
             </View>
-          </TouchableOpacity>
-        );
-      })}
+            <View style={styles.footer}>
+              <View style={styles.titleBox}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.data}>{item.data}</Text>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
