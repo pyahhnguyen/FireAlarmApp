@@ -61,7 +61,7 @@ mongoose.connection.on('connected', () => {
   // ...
 
   // Simulate and store sensor data every 5 seconds (you can adjust the interval)
-  setInterval(simulateAndStoreSensorData, 5000);
+  setInterval(simulateAndStoreSensorData, 2000);
 });
 
 mongoose.connection.on('error', (err) => {

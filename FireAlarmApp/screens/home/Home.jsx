@@ -5,12 +5,12 @@ import MainHeader from "../../components/Title/MainHeader";
 import ScreenHeader from "../../components/Title/ScreenHeader";
 import Room from "../../components/Room/Room";
 import { ScrollView } from "react-native-gesture-handler";
-import { ROOM_LIST, SENSOR_LIST } from "../../assets/data/room";
+import { ROOM_LIST  } from "../../assets/data/room";
 import SectionHeader from "../../components/Title/SectionHeader";
 import SensorList from "../../components/Sensor/SensorList";
 import { useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
-import WebSocket from 'react-native-websocket';
+// import { WebSocket } from "react-native-websocket";
 
 
 const Home = () => {
@@ -37,7 +37,7 @@ const Home = () => {
           id: 7,
           image: require('../../assets/images/humiditypng.png'),
           title: 'Temp',
-          data: '50',
+          data: '30',
           description:
             "Cherry blossoms usually bloom between mid-March and early May. In 2022, Tokyo's cherry blossom season officially began on March 20",
         },
@@ -69,7 +69,7 @@ const Home = () => {
 
   ]);
 
-   const ws = new WebSocket('ws://localhost:3000'); 
+   const ws = new WebSocket('ws://10.0.243.115:3000'); 
 
   // useEffect(() => {
   //   // Fetch sensor data from your API
