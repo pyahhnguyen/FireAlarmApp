@@ -4,8 +4,49 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const http = require("http"); // Import the 'http' module for creating an HTTP server
+const WebSocket = require("ws");
 
 const app = express();
+const server = http.createServer(app); // Create an HTTP server
+
+const wss = new WebSocket.Server({ server: server }); // Create a WebSocket server
+
+
+function broadcastSensorData(sensorData) {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(sensorData), (error) => {
+        if (error) {
+          // Xử lý lỗi khi gửi dữ liệu
+          console.error('Error sending data to a client:', error);
+        } else {
+          // Dữ liệu đã được gửi thành công
+          console.log('Data sent to a client successfully');
+        }
+      });
+    }
+  });
+}
+
+wss.on("connection", (ws) => {
+  console.log("WebSocket client connected");
+
+  ws.on("message", (message) => {
+    console.log(`Received: ${message}`);
+    // Hoặc bạn có thể phân loại và xử lý dữ liệu cảm biến ở đây
+    const sensorData = JSON.parse(message);
+    broadcastSensorData(sensorData)
+
+  });
+
+  ws.on("close", () => {
+    console.log("WebSocket client disconnected");
+  });
+});
+
+// Kết nối WebSocket server với HTTP server
+wss.server = server;
 
 // init middlewares
 app.use(morgan("dev")); // print request logs on console
@@ -16,19 +57,16 @@ app.use(bodyParser.json()); // parse application/json
 // init MongoDb
 require("./db/init_mongo");
 
-//init routes
 
+//init routes
 app.use("", require("./routes/index"));
 
 app.use("", require("./routes/Auth/User"));
- 
 
+app.use("", require("./routes/Sensor/sensor_data"));
 
+server.listen(3000, () => console.log("Server websocket running on port 3000"))
 
-module.exports = app;
-
-
-
-
+module.exports = {server, app, wss};
 
 

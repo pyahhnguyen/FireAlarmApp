@@ -19,6 +19,7 @@ class Database {
       console.error('Error connecting to MongoDB:', err.message);
     }
   }
+  
 
   // Get instance
   static getInstance() {

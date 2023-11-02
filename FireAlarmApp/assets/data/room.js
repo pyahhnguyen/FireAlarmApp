@@ -54,7 +54,7 @@ export const SENSOR_LIST = [
     {
       id: 7,
       image: require('../images/humiditypng.png'),
-      title: 'Temperature',
+      title: 'Temp',
       data: '30',
       description:
         "Cherry blossoms usually bloom between mid-March and early May. In 2022, Tokyo's cherry blossom season officially began on March 20",

@@ -6,7 +6,7 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 
 const User = require("../../models/usermodel");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");  
 const bcrypt = require("bcryptjs");
 // Function to send verification email
 
