@@ -1,34 +1,15 @@
 //root: /api/sensor_data
 const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-
-// Define a Mongoose schema for your sensor data
-const sensorDataSchema = new Schema({
-    sensor_id: String,
-    building: String,
-    floor: Number,
-    apartment: Number,
-    room: String,
-    timestamp: Date,
-    data: {
-      type: { type: String }, // Adjust the schemato specify the type of 'type' as String
-      value: Number,
-    },
-  });
-  
-// Create a Mongoose model for the sensor data
-const SensorData = mongoose.model('SensorData', sensorDataSchema); 
+const SensorData = require('../../models/sensor'); 
 
 // In your Express API
-router.get('/api/temperature-data', async (req, res) => {
+router.get('/api/sensordata', async (req, res) => {
     try {
-      const temperatureData = await SensorData.find({ 'data.type': 'temperature' });
-      res.json(temperatureData);
+      const sensorData = await SensorData.find({ sensor_id: { $in: ['001', '002', '003', '004'] } }).sort({ timestamp: -1 }).limit(4).exec();
+      res.json(sensorData);
     } catch (err) {
-      console.error('Error fetching temperature data:', err);
+      console.error('Error fetching sensor data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });

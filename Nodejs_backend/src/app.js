@@ -9,8 +9,7 @@ const WebSocket = require("ws");
 
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
-
-const wss = new WebSocket.Server({ server: server }); // Create a WebSocket server
+const wss = new WebSocket.Server({ server }); // Create a WebSocket server
 
 
 function broadcastSensorData(sensorData) {
@@ -27,13 +26,16 @@ function broadcastSensorData(sensorData) {
       });
     }
   });
+
 }
 
+
+
+// Test gửi dữ liệu qua WebSocket
 wss.on("connection", (ws) => {
   console.log("WebSocket client connected");
-
   ws.on("message", (message) => {
-    console.log(`Received: ${message}`);
+    console.log(`Received_from_script: ${message}`);
     // Hoặc bạn có thể phân loại và xử lý dữ liệu cảm biến ở đây
     const sensorData = JSON.parse(message);
     broadcastSensorData(sensorData)
@@ -45,8 +47,6 @@ wss.on("connection", (ws) => {
   });
 });
 
-// Kết nối WebSocket server với HTTP server
-wss.server = server;
 
 // init middlewares
 app.use(morgan("dev")); // print request logs on console

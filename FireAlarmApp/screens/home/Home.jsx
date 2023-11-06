@@ -10,18 +10,17 @@ import SectionHeader from "../../components/Title/SectionHeader";
 import SensorList from "../../components/Sensor/SensorList";
 import { useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
-// import { WebSocket } from "react-native-websocket";
-
+import { io } from "socket.io-client";
 
 const Home = () => {
-  // const [isLoading, setIsLoading] = useState(true);
+  
   const [sensors, setSensors] = useState([
 
     {
-      id: 5,
+          id: 5,
           image: require('../../assets/images/Co2.png'),
           title: 'CO2',
-          data: '300',
+          data: 'N/A',
           description:
             'The ultimate Amalfi Coast travel guide, where to stay, where to eat, and what areas to visit in the Amalfi Coast of Italy. Positano, Ravello, Amalfi and more',
         },
@@ -29,7 +28,7 @@ const Home = () => {
           id: 6,
           image: require('../../assets/images/smoke.png'),
           title: 'Smoke',
-          data: '50',
+          data: 'N/A',
           description:
             'Granada is the capital city of the province of Granada, in the autonomous community of Andalusia, Spain',
         },
@@ -37,7 +36,7 @@ const Home = () => {
           id: 7,
           image: require('../../assets/images/humiditypng.png'),
           title: 'Temp',
-          data: '30',
+          data: 'N/A',
           description:
             "Cherry blossoms usually bloom between mid-March and early May. In 2022, Tokyo's cherry blossom season officially began on March 20",
         },
@@ -45,7 +44,7 @@ const Home = () => {
           id: 8,    
           image: require('../../assets/images/temperature.png'),
             title: 'Humidity',
-            data: '40',
+            data: 'N/A',
             description:
                 'Paris, France’s capital, is a major European city and a global center for art, fashion, gastronomy and culture',
             },
@@ -69,35 +68,29 @@ const Home = () => {
 
   ]);
 
-   const ws = new WebSocket('ws://10.0.243.115:3000'); 
-
-  // useEffect(() => {
-  //   // Fetch sensor data from your API
-  //   fetch('http://192.168.137.1:3056/api/temperature-data') // Replace with your API URL
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setSensorData(data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => console.error('Error fetching sensor data:', error));
-  // }, []);
-
   useEffect(() => {
+    const ws = new WebSocket('ws://10.0.243.115:3000'); 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      const sensorIdToUpdate = 7; // ID của sensor bạn muốn cập nhật
 
-      // Kiểm tra xem dữ liệu có phải là loại "temperature" không
-      if (data.data.type === 'temperature') {
-        // Tìm sensor cần cập nhật trong danh sách và thay thế giá trị "data" bằng giá trị mới
-        const updatedSensors = sensors.map((sensor) => {
-          if (sensor.id === sensorIdToUpdate) {
-            return { ...sensor, data: data.data.value.toString() };
+      if (Array.isArray(data)) {
+        const updatedSensors = [...sensors]; // Tạo một bản sao của danh sách cảm biến hiện tại
+
+        data.forEach((sensorData) => {
+          if (sensorData.data && sensorData.data.type) {
+            const sensorType = sensorData.data.type;
+
+            // Tìm cảm biến trong danh sách dựa trên loại cảm biến
+            const sensorToUpdate = updatedSensors.find(
+              (sensor) => sensor.title.toLowerCase() === sensorType.toLowerCase()
+            );
+
+            if (sensorToUpdate) {
+              sensorToUpdate.data = sensorData.data.value.toString();
+            }
           }
-          return sensor;
         });
 
-        // Cập nhật biến trạng thái sensors với danh sách đã cập nhật
         setSensors(updatedSensors);
       }
     };
@@ -105,9 +98,7 @@ const Home = () => {
     return () => {
       ws.close();
     };
-  }, [sensors]); // Đảm bảo rằng sự thay đổi trong danh sách sensors sẽ gọi lại hiệu ứng
-
-
+  }, [sensors]);
 
 
   // // Find the latest temperature data

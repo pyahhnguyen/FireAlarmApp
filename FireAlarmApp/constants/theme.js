@@ -14,6 +14,10 @@ const COLORS = {
     dark: '#3D3A45',
     gray: '#8C8896',
     lightGrey: '#D1CFD5',
+    primary: "#2A4D50",
+    secondary: "#DDF0FF",
+    tertiary: "#FF7754",
+
 };
 
 
