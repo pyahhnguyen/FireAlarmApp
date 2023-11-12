@@ -50,7 +50,7 @@ const Login = () => {
     };
 
     axios
-      .post("http://10.0.243.115:3056/login", user)
+      .post("http://10.0.2.2:3056/login", user)
       .then((response) => {
         console.log(response);
         const token = response.data.token;

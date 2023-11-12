@@ -5,8 +5,8 @@ const {
   Floor,
   Apartment,
   Building,
-} = require("../models/apartment");
-const User = require("../models/usermodel"); // Correct the import statement
+} = require("../../models/apartment");
+const User = require("../../models/usermodel"); // Correct the import statement
 // MongoDB Atlas connection string
 const Connect_String =
   "mongodb+srv://phugia:Z50j1tmo@atlascluster.hhqailb.mongodb.net/?retryWrites=true&w=majority";
