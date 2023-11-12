@@ -55,7 +55,7 @@ app.use(compression()); // compress all responses
 app.use(cors()); // enable CORS - Cross Origin Resource Sharing
 app.use(bodyParser.json()); // parse application/json
 // init MongoDb
-require("./db/init_mongo");
+require("./config/db/init_mongo");
 
 
 //init routes

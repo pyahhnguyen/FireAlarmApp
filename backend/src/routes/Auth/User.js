@@ -27,7 +27,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
     from: "20139072@student.hcmute.edu.vn",
     to: email,
     subject: "Email verification",
-    text: `Please click on the link to verify your email: http://192.168.137.1/verify/${verificationToken}`,
+    text: `Please click on the link to verify your email: http://192.168.1.4/verify/${verificationToken}`,
   };
 
   // send the email
