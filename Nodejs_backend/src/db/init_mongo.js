@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Connect_String = "mongodb+srv://phugia:Z50j1tmo@atlascluster.hhqailb.mongodb.net/?retryWrites=true&w=majority";
+const Connect_String = process.env.URL_MONGODB;
 
 class Database {
   constructor() {

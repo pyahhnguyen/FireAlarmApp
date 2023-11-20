@@ -13,23 +13,22 @@ const Slides = ({ item }) => {
     return (
         <View>
            <Image source={item.image} style={styles.image} />
-
          
             <View style={styles.stack}>
                
                 <ReusableText 
                     text={item.title}
-                    family={"medium"}
-                    size={SIZES.xxLarge}
-                    color={COLORS.white}
+                    family={"regular"}
+                    size={SIZES.medium}
+                    color={COLORS.secondary}
                 />
-                <HeightSpace height={30} />
+                <HeightSpace height={15 } />
                 <ReusableBtn 
                     onPress={() => navigation.navigate('Welcome')}
                     btnText={"Let's go"}
                     width={(SIZES.width-50) /2.2}
                     backgroundColor={COLORS.red}
-                    borderColor={COLORS.red}
+                    borderColor={COLORS.white}
                     borderWidth={0}
                     textColor={COLORS.white}
                 />

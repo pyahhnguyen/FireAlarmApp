@@ -5,18 +5,20 @@ import {COLORS} from '../../constants/theme';
 import ReusableText from '../Reusable/ReusableText';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable } from 'react-native';
+
+
 const SectionHeader = ({title, onPress, buttonTitle = 'Button'}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Pressable onPress={() => navigation.navigate("")}>
+      {/* <Pressable onPress={() => navigation.navigate("")}>
               <ReusableText
                 text={"See all"}
                 family={"bold"}
                 size={SIZES.medium}
                 color={COLORS.red}
-              />
-            </Pressable>
+              /> 
+            </Pressable> */}
       {/* <Button title={buttonTitle} /> */}
     </View>
   );
@@ -31,10 +33,12 @@ const styles = StyleSheet.create({
     marginRight: spacing.m,
     marginTop: spacing.l,
     marginBottom: 10,
+    fontFamily: 'bold',
   },
   title: {
     fontSize: SIZES.medium,
     fontWeight: 'bold',
+    fontFamily: 'bold',
   },
 });
 

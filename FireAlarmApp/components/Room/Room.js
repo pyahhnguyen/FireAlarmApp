@@ -12,7 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS,SHADOWS, SIZES, spacing } from "../../constants/theme";
 
 const CARD_WIDTH = SIZES.width - 200;
-const CARD_HEIGHT = 300;
+const CARD_HEIGHT = 200;
 const CARD_WIDTH_SPACING = CARD_WIDTH + spacing.l;
 
 const Room = ({ list_room }) => {

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const compression = require("compression");
 const express = require("express");
 const helmet = require("helmet");
@@ -28,7 +29,6 @@ function broadcastSensorData(sensorData) {
   });
 
 }
-
 
 
 // Test gửi dữ liệu qua WebSocket

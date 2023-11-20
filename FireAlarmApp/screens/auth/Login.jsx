@@ -26,7 +26,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-  
 
   // useEffect(() => {
   //   const checkLoginstatus = async () => {
@@ -42,7 +41,6 @@ const Login = () => {
   //   checkLoginstatus();
   // }, []);
 
-
   const handleLogin = () => {
     const user = {
       email: email,
@@ -50,7 +48,7 @@ const Login = () => {
     };
 
     axios
-      .post("http://10.0.243.115:3056/login", user)
+      .post("http://10.0.227.224:3056/login", user)
       .then((response) => {
         console.log(response);
         const token = response.data.token;
@@ -175,7 +173,8 @@ const Login = () => {
 
         <View style={{ marginLeft: "auto", marginRight: "auto" }}>
           <ReusableBtn
-            onPress={handleLogin}
+           // onPress={handleLogin}
+            onPress={() => navigation.navigate("Bottom")}
             btnText={"Login"}
             width={SIZES.width - 150}
             backgroundColor={COLORS.red}

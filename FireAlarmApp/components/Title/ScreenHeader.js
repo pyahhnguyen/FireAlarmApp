@@ -3,17 +3,18 @@ import { StyleSheet, Text, View } from "react-native";
 import { EvilIcons } from '@expo/vector-icons'; 
 import WidthSpace from "../Reusable/WidthSpace";
 import { Octicons } from '@expo/vector-icons'; 
+import { SIZES } from "../../constants/theme";
 
 const ScreenHeader = ({ mainTitle, secondTitle }) => {
   return (
     <View style={styles.container}>
       {/* <Text style={styles.mainTitle}>{mainTitle}</Text> */}
-        <View style={styles.location}>
+        {/* <View style={styles.location}>
         <EvilIcons name="location" size={18} color="gray" />
 
-            <WidthSpace space={20} />
-            <Text style={styles.location}>Di An, Binh Duong</Text>
-        </View>
+            <WidthSpace space={20} /> */}
+            <Text style={styles.location}>Hi! Welcome back</Text>
+        {/* </View> */}
 
     </View>
   );
@@ -25,8 +26,9 @@ const styles = StyleSheet.create({
        
         justifyContent: "space-between",
         paddingHorizontal: 25,
+        marginVertical : 50,
         // marginTop: 10,
-        marginBottom:30
+       
     
     },
         
@@ -40,7 +42,9 @@ const styles = StyleSheet.create({
     location: {
         flexDirection: "row",
         alignItems: "center",
-        color:"gray"
+        color:"black",
+        fontFamily: "regular",
+        fontSize: SIZES.medium,
        
     },
 

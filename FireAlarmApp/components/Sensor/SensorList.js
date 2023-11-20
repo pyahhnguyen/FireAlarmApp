@@ -72,13 +72,15 @@ const styles = StyleSheet.create({
   },
   title: {
     marginVertical: 4,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'medium',
     color: COLORS.gray,
+    fontFamily: 'medium',
+  
    
   },
   data: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: COLORS.red,
     

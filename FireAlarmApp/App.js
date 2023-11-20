@@ -10,6 +10,7 @@ import BottomTabNavigation from "./navigation/BottomTabNavigation";
 import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Welcome from "./screens/auth/Welcome";
+import TabGroup from "./navigation/bottom_nav";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,6 +20,13 @@ export default function App() {
     light: require("./assets/fonts/light.otf"),
     medium: require("./assets/fonts/medium.otf"),
     xtrabold: require("./assets/fonts/xtrabold.otf"),
+    regular_poppins: require("./assets/fonts/Poppins-Regular.ttf"),
+    bold_poppins: require("./assets/fonts/Poppins-Bold.ttf"),
+    light_poppins: require("./assets/fonts/Poppins-Light.ttf"),
+    medium_poppins: require("./assets/fonts/Poppins-Medium.ttf"),
+    xtrabold_poppins: require("./assets/fonts/Poppins-ExtraBold.ttf"),
+    semibold_poppins: require("./assets/fonts/Poppins-SemiBold.ttf"),
+
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -30,6 +38,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
 
   return (
     <NavigationContainer>

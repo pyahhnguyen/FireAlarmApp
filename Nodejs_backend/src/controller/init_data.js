@@ -3,7 +3,7 @@ const WebSocket = require('ws');
 const SensorData = require('../models/sensor'); // Thay đổi đường dẫn tới model của bạn
 
 
-const ws = new WebSocket('ws://10.0.243.115:3000'); // Điều chỉnh địa chỉ và cổng tương ứng
+const ws = new WebSocket('ws://10.0.227.224:3000'); // Điều chỉnh địa chỉ và cổng tương ứng
 
 // Function to generate a random number within a specific range
 function getRandomInRange(min, max, decimalPlaces) {
@@ -40,16 +40,12 @@ async function simulateAndStoreSensorData() {
       },
     };
   });
-
   // Create a new sensor data document for each sensor
   const newSensorDataList = simulatedDataList.map((simulatedData) => new SensorData(simulatedData));
-
   try {
     // Save the sensor data documents to the database
     await SensorData.insertMany(newSensorDataList);
     console.log('Simulated sensor data for multiple sensors saved to the database.');
-  
-////
     // Gửi dữ liệu cập nhật qua WebSocket
     ws.send(JSON.stringify(simulatedDataList));
   } catch (err) {
@@ -70,7 +66,7 @@ mongoose.connection.on('connected', () => {
   // ...
 
   // Simulate and store sensor data every 5 seconds (you can adjust the interval)
-  setInterval(simulateAndStoreSensorData, 5000);
+  setInterval(simulateAndStoreSensorData, 3000);
 });
 
 mongoose.connection.on('error', (err) => {

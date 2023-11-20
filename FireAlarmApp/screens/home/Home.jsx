@@ -20,7 +20,7 @@ const Home = () => {
           id: 5,
           image: require('../../assets/images/Co2.png'),
           title: 'CO2',
-          data: 'N/A',
+          data: '300',
           description:
             'The ultimate Amalfi Coast travel guide, where to stay, where to eat, and what areas to visit in the Amalfi Coast of Italy. Positano, Ravello, Amalfi and more',
         },
@@ -28,7 +28,7 @@ const Home = () => {
           id: 6,
           image: require('../../assets/images/smoke.png'),
           title: 'Smoke',
-          data: 'N/A',
+          data: '1243',
           description:
             'Granada is the capital city of the province of Granada, in the autonomous community of Andalusia, Spain',
         },
@@ -36,7 +36,7 @@ const Home = () => {
           id: 7,
           image: require('../../assets/images/humiditypng.png'),
           title: 'Temp',
-          data: 'N/A',
+          data: '32',
           description:
             "Cherry blossoms usually bloom between mid-March and early May. In 2022, Tokyo's cherry blossom season officially began on March 20",
         },
@@ -44,7 +44,7 @@ const Home = () => {
           id: 8,    
           image: require('../../assets/images/temperature.png'),
             title: 'Humidity',
-            data: 'N/A',
+            data: '87',
             description:
                 'Paris, France’s capital, is a major European city and a global center for art, fashion, gastronomy and culture',
             },
@@ -69,7 +69,7 @@ const Home = () => {
   ]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://10.0.243.115:3000'); 
+    const ws = new WebSocket('ws://10.0.227.224:3001'); 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
 
@@ -107,32 +107,37 @@ const Home = () => {
   //   .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
   return (
     <View style={styles.container}>
-      <MainHeader title="Welcome back" />
-      <ScreenHeader />
+      <MainHeader title="Hi, Welcome back!" />
+      {/* <ScreenHeader /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.textStyle}>Rooms</Text>
         <Room list_room={ROOM_LIST} />
-        <SectionHeader title="Sensors" />
-        {sensors.length > 0 ? (
+        <SectionHeader title="Devices" />
+        <SectionHeader title="News" />
+        {/* {sensors.length > 0 ? (
           <SensorList list={sensors} />
         ) : (
           <ActivityIndicator size="large" color={COLORS.primary} />
-        )}
+        )} */}
       </ScrollView>
     </View>
   );
 };
 
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightWhite,
   },
 
   textStyle: {
+    fontFamily: 'bold',
     fontSize: SIZES.xLarge,
     paddingHorizontal: 25,
+    color: COLORS.dark,
   },
 });
 export default Home;

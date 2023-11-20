@@ -1,57 +1,73 @@
-import { View, Text } from "react-native";
-import React, {useEffect} from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home, Profile, Chat, Location } from "../screens";
+import Device from "../screens/device/Device";
+import Alert from "../screens/Alert/Alert";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Entypo from "react-native-vector-icons/Entypo";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/theme";
+
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
-  // padding: 10,
-  borderRadius: 20,
-  height: 80,
+  borderRadius: 0,
+  height: 65,
   position: "absolute",
   flex: 1,
   width: "100%",
   overflow: "hidden",
+  margin: 0,
 };
 
-const BottomTabNavigation = () => {
+function BottomTabNavigation() {
+  const activeColor = "#FF6C52";
+  const inactiveColor = "#888b8f";
+
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      activeColor="#FF6C52"
       tabBarHideKeyboard={true}
-      headerShown={false}
-      inactiveColor="#CDCFCE"
-      barStyle={{ paddingBottom: 48 }}
+      barStyle={{ paddingBottom: 20 }}
+      screenOptions={({ route, navigation }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = "home";
+          } else if (route.name === "Device") {
+            iconName = "list-sharp";
+          } else if (route.name === "Alert") {
+            iconName = "bonfire";
+          } else if (route.name === "Location") {
+            iconName = "location";
+          } else if (route.name === "Profile") {
+            iconName = "person";
+          }
+
+          return <Ionicons name={iconName} size={26} color={color} />;
+        },
+        tabBarActiveTintColor: COLORS.primary,
+      })}
     >
       <Tab.Screen
         name="Home"
         component={Home}
+        options={{         
+          headerShown: false,        
+        }}
+      />
+
+      <Tab.Screen
+        name="Alert"
+        component={Alert}
         options={{
-          tabBarLabel: "Home",
-          tabBarLabelStyle: { color : "#FF6C52" },
-          tabBarStyle: tabBarStyle,
-          tabBarShowLabel: false,
+          // tabBarLabel: "Alert",
+          // tabBarLabelStyle: ({ focused }) => ({
+          //   color: focused ? activeColor : inactiveColor,
+          // }),
+          // tabBarStyle: tabBarStyle,
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-            name={focused ? "home" : "home-outline"}
-            color={focused ? "#FF6C52" : "#CDCFCE"}
-              size={26}
-            />
-          ),
-          // tabBarIcon: ({ focused }) => 
-          //   focused ? (
-          //   <Entypo name="home" size={24} color="#FF6C52" /> ):(
-          //   <Ionicons
-          //     name={focused ? "home" : "home-outline"}
-          //     color={focused ? "#FF6C52" : "#CDCFCE"}
-          //     size={26}
-          //   />
-          // ),
         }}
       />
 
@@ -59,57 +75,27 @@ const BottomTabNavigation = () => {
         name="Location"
         component={Location}
         options={{
-          tabBarLabel: "Location",
-          tabBarLabelStyle: { color : "#FF6C52" },
-          tabBarStyle: tabBarStyle,
-          tabBarShowLabel: false,
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? "location" : "location-outline"}
-              color={focused ? "#FF6C52" : "#CDCFCE"}
-              size={26}
-            />
-          ),
         }}
       />
 
-      {/* <Tab.Screen
-        name="Chat"
-        component={Chat}
+      <Tab.Screen
+        name="Device"
+        component={Device}
         options={{
-          tabBarStyle: tabBarStyle,
-          tabBarShowLabel: false,
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={
-                focused ? "chatbubble-ellipses" : "chatbubble-ellipses-outline"
-              }
-              color={focused ? "#FF6C52" : "#CDCFCE"}
-              size={26}
-            />
-          ),
         }}
-      /> */}
+      />
+
       <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
-          tabBarStyle: tabBarStyle,
-          tabBarShowLabel: false,
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? "person" : "person-outline"}
-              color={focused ? "#FF6C52" : "#CDCFCE"}
-              size={26}
-            />
-          ),
         }}
       />
     </Tab.Navigator>
   );
-};
+}
 
 export default BottomTabNavigation;

@@ -7,16 +7,9 @@ const Onboarding = () => {
     const slides = [
         {
             id:1,
-            image: require('../../assets/images/1.png'),
+            image: require('../../assets/images/department_safety.jpg'),
             title: "Safety is the number one priority",
         },
-
-        
-    //    {
-    //         id:2,
-    //         image: require('../../assets/images/3.png'),
-    //         title: "Find the perfect place to stay",
-    //    }
     ]
 
 

@@ -8,6 +8,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 const Profile = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
   const [userLogin, setLogin] = useState(true);
+  
   return (
     <View style={styles.container}>
       <View style={styles.container}>
@@ -66,11 +67,7 @@ const Profile = ({ navigation }) => {
 
               <TouchableOpacity onPress={() => {}}>
                 <View style={styles.menuItem(0.2)}>
-                  <MaterialCommunityIcons
-                    name="account"
-                    size={24}
-                    color={COLORS.primary}
-                  />
+                <AntDesign name="API" size={24} color="black" />
                   <Text style={styles.menuText}>Sensor</Text>
                 </View>
               </TouchableOpacity>
@@ -152,10 +149,10 @@ const styles = StyleSheet.create({
     fontFamily: "regular",
     color: COLORS.gray,
     marginLeft: 20,
-    fontWeight: 14,
-    fontSize: 14,
+    fontSize: 14,  // Adjusted this line to set font size
     lineHeight: 26,
   },
+
   menuWapper: {
     marginTop: SIZES.xLarge,
     width: SIZES.width - SIZES.large,

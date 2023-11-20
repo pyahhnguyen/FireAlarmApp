@@ -8,16 +8,16 @@ import { COLORS, SIZES } from "../../constants/theme";
 const MainHeader = ({ title }) => {
   const insets = useSafeAreaInsets();
 
-  
   return (
     <View style={[styles.container, { marginTop: insets.top }]}>
       {/* <SimpleLineIcons onPress={() => {}} name="menu" size={20} color="gray" /> */}
       <Text style={styles.title}>{title}</Text>
       <Ionicons
-        name="notifications-outline"
-        size={24}
+        name="notifications"
+        size={26}
         color="gray"
         onPress={() => {}}
+        
       />
     </View>
   );
@@ -29,14 +29,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 25,
-    
+    paddingVertical: 5,
   },
   title: {
    
-    fontSize: 22,
-    fontWeight: "medium",
-    fontFamily: "medium",
-    color:"gray"
+    fontFamily: "medium_poppins",
+    fontSize: SIZES.eighteen,
+    color: "black",
   },
 });
 
