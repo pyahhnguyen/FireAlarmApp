@@ -10,13 +10,13 @@ import { COLORS } from "../constants/theme";
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
-  borderRadius: 0,
-  height: 65,
+  borderRadius: 20,
   position: "absolute",
   flex: 1,
   width: "100%",
   overflow: "hidden",
   margin: 0,
+  backgroundColor: COLORS.lightWhite,
 };
 
 function BottomTabNavigation() {
@@ -28,7 +28,7 @@ function BottomTabNavigation() {
     <Tab.Navigator
       initialRouteName="Home"
       tabBarHideKeyboard={true}
-      barStyle={{ paddingBottom: 20 }}
+      barStyle={{ paddingBottom: 20}}
       screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -36,7 +36,7 @@ function BottomTabNavigation() {
           if (route.name === "Home") {
             iconName = "home";
           } else if (route.name === "Device") {
-            iconName = "list-sharp";
+            iconName = "reader";
           } else if (route.name === "Alert") {
             iconName = "bonfire";
           } else if (route.name === "Location") {
@@ -47,14 +47,17 @@ function BottomTabNavigation() {
 
           return <Ionicons name={iconName} size={26} color={color} />;
         },
-        tabBarActiveTintColor: COLORS.primary,
+        tabBarActiveTintColor: '#FF9209',
       })}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{         
-          headerShown: false,        
+          headerShown: false,       
+          tabBarStyle: tabBarStyle,
+        
+           
         }}
       />
 
@@ -66,16 +69,23 @@ function BottomTabNavigation() {
           // tabBarLabelStyle: ({ focused }) => ({
           //   color: focused ? activeColor : inactiveColor,
           // }),
-          // tabBarStyle: tabBarStyle,
-          headerShown: false,
-        }}
+          tabBarStyle: tabBarStyle,
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTintColor: COLORS.primary,
+        
+          }
+        }
       />
 
       <Tab.Screen
         name="Location"
         component={Location}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerTitleAlign: "center",
+          tabBarStyle: tabBarStyle,
+          backgroundColor: COLORS.lightWhite,
         }}
       />
 
@@ -83,7 +93,9 @@ function BottomTabNavigation() {
         name="Device"
         component={Device}
         options={{
-          headerShown: false,
+          headerShown: true,
+          tabBarStyle: tabBarStyle,
+          headerTitleAlign: "center",
         }}
       />
 
@@ -92,6 +104,7 @@ function BottomTabNavigation() {
         component={Profile}
         options={{
           headerShown: false,
+          tabBarStyle: tabBarStyle,
         }}
       />
     </Tab.Navigator>

@@ -47,7 +47,7 @@ const Welcome = () => {
                 onPress={() => navigation.navigate("Login")}
                 btnText={"Login"}
                 width={SIZES.width - 50}
-                backgroundColor={COLORS.black}
+                backgroundColor={COLORS.primary}
                 borderColor={COLORS.black}
                 borderWidth={0}
                 textColor={COLORS.white}

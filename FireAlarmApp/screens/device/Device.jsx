@@ -5,7 +5,7 @@ import React from 'react';
 const Device = () => {
     return (
         <View>
-        <Text>Device</Text>
+        {/* <Text>Device</Text> */}
         </View>
     );
     }

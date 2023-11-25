@@ -4,13 +4,13 @@ import { useFonts } from "expo-font";
 import { useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Onboarding } from "./screens";
+import { Home, Onboarding } from "./screens";
 import { SplashScreen } from "./screens";
 import BottomTabNavigation from "./navigation/BottomTabNavigation";
 import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Welcome from "./screens/auth/Welcome";
-import TabGroup from "./navigation/bottom_nav";
+import Living from "./screens/home/roomScreen/living";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -38,7 +38,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
 
   return (
     <NavigationContainer>
@@ -69,7 +68,19 @@ export default function App() {
           component={Login}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name= "Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="LivingRoom"
+          component={Living}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
+    
     </NavigationContainer>
   );
 }

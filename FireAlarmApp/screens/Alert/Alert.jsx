@@ -5,7 +5,7 @@ import React from 'react';
 const Alert = () => {
     return (
         <View>
-        <Text>Alert</Text>
+        {/* <Text>Alert</Text> */}
         </View>
     );
     }
