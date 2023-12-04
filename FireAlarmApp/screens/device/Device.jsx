@@ -1,13 +1,124 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, useState , Image, Dimensions,TouchableOpacity, Button} from 'react-native'
+import React from 'react'
+import { FlatList } from 'react-native-gesture-handler';
+import { COLORS,SIZES } from '../../constants/theme';
 
 
+const w = Dimensions.get("screen").width;
+const h = Dimensions.get("screen").height;
 const Device = () => {
-    return (
-        <View>
-        {/* <Text>Device</Text> */}
-        </View>
-    );
+    // const [sensors, setSensors] = useState(SENSOR_LIST);
+    const renderItem = ({item, index }) => {
+      return (
+        <TouchableOpacity
+        style={{
+          marginVertical: 5,
+          marginLeft: 25,
+          borderRadius: 5,
+          backgroundColor: COLORS.white,
+          ...styles.shadow,
+          overflow: "hidden",
+          height: h/9,
+          width : w - 50,
+          position: 'relative'          
+      
+        }}
+        >
+          <View style={[styles.card]}>
+            <Image
+              style={styles.image}
+              source={require("../../assets/images/Co2.png")}
+            />
+         <View>
+            <Text style={styles.titleItem}>Sensor #1</Text>
+            <Text style={styles.titleItem}>Type: Smoke Detector</Text>
+            <Text style={styles.titleItem}>Location:</Text>
+            <Text style={styles.titleItem}>Status: </Text>
+            <Text style={styles.titleItem}>Warning: </Text>
+          </View>
+
+
+          </View>
+          
+        </TouchableOpacity>
+      );
     }
+
+ 
+
+
+    return (
+      <View >
+        
+        <TouchableOpacity style={styles.addButton} >
+        <Text style={styles.addButtonText}>Add Device</Text>
+      </TouchableOpacity>
+        <View>
+          <FlatList renderItem={renderItem} data={[1,2,3]} />
+        </View>
+      </View>
+    );
+    };
+ 
+    const styles = StyleSheet.create({
+      container: {
+        marginHorizontal: 10,
+        marginVertical : 15,
+        backgroundColor: COLORS.white,
+        borderRadius: 10,
+
+      },
+      cardContainer:{
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        // backgroundColor: COLORS.,
+
+      },
+      card : {
+        backgroundColor: COLORS.white,
+        borderRadius: SIZES.radius,
+        flexDirection: 'row',
+        marginVertical: 10,
+        // justifyContent: 'space-between',
+        
+      },
+      image :{
+        width: w/4.5,
+        resizeMode: 'cover',
+        height: w/4.5,
+        backgroundColor: COLORS.lightWhite,
+        borderRadius: 20, 
+        marginLeft: 10,
+        marginRight: 40,
+        
+
+      },
+      shadow: {
+        shadowColor: "#121211",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 10.32,
+        elevation: 8,
+      },
+      addButton: {
+        backgroundColor: COLORS.primary,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        margin: 20,
+        alignSelf: 'center',
+      },
+      addButtonText: {
+        color: COLORS.white,
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      titleItem:{
+        fontSize:12,
+      }
+    });
 
 export default Device;

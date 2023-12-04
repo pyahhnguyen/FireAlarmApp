@@ -6,6 +6,7 @@ export const ROOM_LIST = [
       location: 'Italy',
       description:
         'The ultimate Amalfi Coast travel guide, where to stay, where to eat, and what areas to visit in the Amalfi Coast of Italy. Positano, Ravello, Amalfi and more',
+      screen: 'Living',
     },
     {
       id: 2,
@@ -14,6 +15,7 @@ export const ROOM_LIST = [
       location: 'Spain',
       description:
         'Granada is the capital city of the province of Granada, in the autonomous community of Andalusia, Spain',
+      screen: 'Bedroom',
     },
     {
       id: 3,
@@ -22,6 +24,7 @@ export const ROOM_LIST = [
       location: 'Japan',
       description:
         "Cherry blossoms usually bloom between mid-March and early May. In 2022, Tokyo's cherry blossom season officially began on March 20",
+      screen: 'Kitchen',
     },
     {
       id: 4,    
@@ -30,6 +33,7 @@ export const ROOM_LIST = [
         location: 'France',
         description:
             'Paris, France’s capital, is a major European city and a global center for art, fashion, gastronomy and culture',
+        screen: 'Bathroom',
         },
        
   ];

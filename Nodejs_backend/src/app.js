@@ -65,7 +65,7 @@ app.use("", require("./routes/Auth/User"));
 
 app.use("", require("./routes/Sensor/sensor_data"));
 
-server.listen(3000, () => console.log("Server websocket running on port 3000"))
+server.listen(4000, () => console.log("Server websocket running on port 4000"))
 
 module.exports = {server, app, wss};
 

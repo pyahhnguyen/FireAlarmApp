@@ -21,8 +21,9 @@ const Slides = ({ item }) => {
                     family={"regular"}
                     size={SIZES.medium}
                     color={COLORS.secondary}
+                   
                 />
-                <HeightSpace height={15 } />
+              <HeightSpace height={15 } />
                 <ReusableBtn 
                     onPress={() => navigation.navigate('Welcome')}
                     btnText={"Let's go"}

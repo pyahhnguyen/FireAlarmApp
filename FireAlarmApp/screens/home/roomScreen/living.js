@@ -1,120 +1,105 @@
-// import { View, Text, useState , ScrollView} from 'react-native'
-// import React from 'react'
-// import SensorList from '../../../components/Sensor/SensorList'
+import { StyleSheet, Text, View, useState , Image, Dimensions,TouchableOpacity} from 'react-native'
+import React from 'react'
+import SensorList from '../../../components/Sensor/SensorList'
+import { SENSOR_LIST } from '../../../assets/data/room'
+import { FlatList } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS,SIZES } from '../../../constants/theme';
+
+const w = Dimensions.get("screen").width;
+const h = Dimensions.get("screen").height;
+const Living = () => {
+    // const [sensors, setSensors] = useState(SENSOR_LIST);
+    const renderItem = ({item, index }) => {
+      return (
+        <TouchableOpacity
+        style={{
+          marginVertical: 5,
+          marginLeft: 25,
+          borderRadius: 5,
+          backgroundColor: COLORS.white,
+          ...styles.shadow,
+          overflow: "hidden",
+          height: h/9,
+          width : w - 50,
+          position: 'relative'
+          
+      
+        }}
+        >
+          <View style={[styles.card]}>
+            <Image
+              style={styles.image}
+              source={require("../../../assets/images/smoke.png")}
+            />
+         <View>
+            <Text style={styles.titleItem}>Sensor #1</Text>
+            <Text style={styles.titleItem}>Type: Smoke Detector</Text>
+            <Text style={styles.titleItem}>Status: </Text>
+            <Text style={styles.titleItem}>Warning: </Text>
+          </View>
+
+
+          </View>
+          
+        </TouchableOpacity>
+      );
+    }
 
 
 
-// const Living = () => {
-
-//     const [sensors, setSensors] = useState([
-//         {
-//           id: 5,
-//           image: require("../../../assets/images/Co2.png"),
-//           title: "CO2",
-//           data: "300",
-//           description:
-//             "The ultimate Amalfi Coast travel guide, where to stay, where to eat, and what areas to visit in the Amalfi Coast of Italy. Positano, Ravello, Amalfi and more",
-//         },
-//         {
-//           id: 6,
-//           image: require("../../../assets/images/smoke.png"),
-//           title: "Smoke",
-//           data: "1243",
-//           description:
-//             "Granada is the capital city of the province of Granada, in the autonomous community of Andalusia, Spain",
-//         },
-//         {
-//           id: 7,
-//           image: require("../../../assets/images/humiditypng.png"),
-//           title: "Temp",
-//           data: "32",
-//           description:
-//             "Cherry blossoms usually bloom between mid-March and early May. In 2022, Tokyo's cherry blossom season officially began on March 20",
-//         },
-//         {
-//           id: 8,
-//           image: require("../../../assets/images/temperature.png"),
-//           title: "Humidity",
-//           data: "87",
-//           description:
-//             "Paris, France’s capital, is a major European city and a global center for art, fashion, gastronomy and culture",
-//         },
-//         {
-//           id: 9,
-//           image: require("../../../assets/images/kitchen.jpg"),
-//           title: "Kitchen",
-//           location: "Japan",
-//           description:
-//             "Cherry blossoms usually bloom between mid-March and early May. In 2022, Tokyo's cherry blossom season officially began on March 20",
-//         },
-//         {
-//           id: 10,
-//           image: require("../../../assets/images/bathroom.jpg"),
-//           title: "Bathroom",
-//           location: "France",
-//           description:
-//             "Paris, France’s capital, is a major European city and a global center for art, fashion, gastronomy and culture",
-//         },
-//       ]);
-//   return (
-//     <ScrollView showsVerticalScrollIndicator={false}>
-//     <View>
-//        {sensors.length > 0 ? (
-//           <SensorList list={sensors} />
-//         ) : (
-//           <ActivityIndicator size="large" color={COLORS.primary} />
-//         )}
-//     </View>
-//     </ScrollView>
-//   )
-// }
-
-// export default Living
-
-
-import * as React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import Modal from "react-native-modal";
-
-export default function TabOneScreen() {
-
-  const [isModalVisible, setIsModalVisible] = React.useState(false);
-
-  const handleModal = () => setIsModalVisible(() => !isModalVisible);
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} />
-      <Button title="button" onPress={handleModal} />
-      <Modal isVisible={isModalVisible}>
-        <View style={{ flex: 1 }}>
-          <Text>Hello!</Text>
-          <Button title="Hide modal" onPress={handleModal} />
+    return (
+      <View >
+        <View>
+          <FlatList renderItem={renderItem} data={[1, 2, 3, 4, 5, 6, 7,8]} />
         </View>
-      </Modal>
-    </View>
-  );
-}
+      </View>
+    );
+    };
+ 
+    const styles = StyleSheet.create({
+      container: {
+        marginHorizontal: 10,
+        marginVertical : 15,
+        backgroundColor: COLORS.white,
+        borderRadius: 10,
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: "400",
-    textAlign: "center",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
+      },
+      cardContainer:{
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        // backgroundColor: COLORS.,
+
+      },
+      card : {
+        backgroundColor: COLORS.white,
+        borderRadius: SIZES.radius,
+        flexDirection: 'row',
+        marginVertical: 10,
+        // justifyContent: 'space-between',
+        
+      },
+      image :{
+        width: w/3.5,
+        resizeMode: 'cover',
+        height: w/3.5,
+        backgroundColor: COLORS.lightWhite,
+        borderRadius: 20, 
+        marginRight: 50,
+        
+
+      },
+      shadow: {
+        shadowColor: "#121211",
+        shadowOffset: {
+          width: 0,
+          height: 8,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 10.32,
+        elevation: 8,
+      },
+   
+    });
+    
+    export default Living;  

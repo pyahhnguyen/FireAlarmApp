@@ -6,11 +6,14 @@ import Alert from "../screens/Alert/Alert";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/theme";
+import Alert_PopUp from "../screens/Alert/pop-up_screen";
+import Living from "../screens/home/roomScreen/living";
 
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
-  borderRadius: 20,
+  borderTopLeftRadius: 10,
+  borderTopRightRadius: 10,
   position: "absolute",
   flex: 1,
   width: "100%",
@@ -20,8 +23,6 @@ const tabBarStyle = {
 };
 
 function BottomTabNavigation() {
-  const activeColor = "#FF6C52";
-  const inactiveColor = "#888b8f";
 
 
   return (
@@ -47,7 +48,7 @@ function BottomTabNavigation() {
 
           return <Ionicons name={iconName} size={26} color={color} />;
         },
-        tabBarActiveTintColor: '#FF9209',
+        tabBarActiveTintColor: COLORS.background,
       })}
     >
       <Tab.Screen
@@ -73,6 +74,12 @@ function BottomTabNavigation() {
           headerShown: true,
           headerTitleAlign: "center",
           headerTintColor: COLORS.primary,
+          headerStyle:{
+            backgroundColor: COLORS.background,
+            height: 100,
+            // borderBottomLeftRadius: 10,
+            // borderBottomRightRadius: 10,
+          },
         
           }
         }
@@ -85,7 +92,15 @@ function BottomTabNavigation() {
           headerShown: true,
           headerTitleAlign: "center",
           tabBarStyle: tabBarStyle,
+          headerTintColor: COLORS.primary,
           backgroundColor: COLORS.lightWhite,
+          headerStyle:{
+            backgroundColor: COLORS.background,
+            height: 100,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+          },
+          
         }}
       />
 
@@ -95,7 +110,14 @@ function BottomTabNavigation() {
         options={{
           headerShown: true,
           tabBarStyle: tabBarStyle,
+          headerTintColor: COLORS.primary,
           headerTitleAlign: "center",
+          headerStyle:{
+            backgroundColor: COLORS.background,
+            height: 100,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+          },
         }}
       />
 
@@ -105,8 +127,13 @@ function BottomTabNavigation() {
         options={{
           headerShown: false,
           tabBarStyle: tabBarStyle,
+         
         }}
       />
+      
+      
+      
+
     </Tab.Navigator>
   );
 }

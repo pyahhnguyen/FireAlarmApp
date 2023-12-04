@@ -21,7 +21,7 @@ const Profile = ({ navigation }) => {
  
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.lightWhite} />
+      <StatusBar backgroundColor={'transparent'} />
       <View style={{ width: "100%" }}>
         <ImageBackground
           source={require("../../assets/images/profile_background.jpg")}
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightWhite,
   },
   cover: {
-    height: 300,
+   
     width: "100%",
     resizeMode: "cover",
   },

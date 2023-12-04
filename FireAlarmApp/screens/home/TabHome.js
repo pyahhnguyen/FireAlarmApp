@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { COLORS } from "../../constants/theme";
 import WeatherAlert from "./Weather_alert";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from 'react-native-virtualized-view'
 
 import AlertHistory from "./alert_history";
 import dummyData, {
@@ -21,8 +21,6 @@ import dummyData, {
 } from "../../constants/dummy";
 import { SIZES, FONTS } from "../../constants/theme";
 import Donut from "./donut_screen";
-import Transaction from "./recent_alert";
-import { FlatList } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 const tabs = ["Status", "News"];
@@ -40,12 +38,6 @@ const TabHome = () => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
-  // const onScroll = ({ nativeEvent }) => {
-  //   const index = Math.round(nativeEvent.contentOffset.x / (w - 20));
-
-  //   setSelected(index);
-  // };
-
   const renderContent = () => {
     switch (tabs[selected]) {
       case "Status":
@@ -60,7 +52,7 @@ const TabHome = () => {
   const data_chart = [
     {
       value: 5,
-      color: '#188527',
+      color: "#188527",
     },
     {
       value: 10,
@@ -76,11 +68,8 @@ const TabHome = () => {
           padding: 20,
           borderRadius: 5,
           backgroundColor: COLORS.white,
-         
-            alignItems: 'center',
-            justifyContent: 'center',
-         
-          
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         {/* <Text style={{ color: COLORS.black, ...FONTS.h3 }}>Recent Alerts</Text> */}
@@ -89,16 +78,12 @@ const TabHome = () => {
     );
   }
 
-
   function renderAlertHistory() {
-    return (
-      <AlertHistory customContainerStyle={{}} history={transactionHistory} />
-    );
+    return <AlertHistory customContainerStyle={{}} history={alertHistory} />;
   }
- 
+
   const StatusContent = () => (
     <ScrollView>
-   
       <View style={{ marginBottom: 250, flex: 1 }}>
         <View
           style={{
@@ -115,21 +100,20 @@ const TabHome = () => {
             color: COLORS.black,
             fontFamily: "medium_poppins",
             fontSize: SIZES.medium,
-       
           }}
         >
           Recent Alerts
         </Text>
-          {renderAlertHistory()}
- 
-        </View>
-   
+        {renderAlertHistory()}
+      </View>
     </ScrollView>
   );
 
+
+
   const NewsContent = () => (
-    <View style={{marginTop : 20, marginBottom: 280 }}>
-      <AlertHistory customContainerStyle={{}} history={transactionHistory} />
+    <View style={{ marginTop: 20, marginBottom: 280 }}>
+      <AlertHistory customContainerStyle={{}} history={alertHistory} />
     </View>
   );
 
@@ -137,7 +121,7 @@ const TabHome = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         {tabs.map((e, i) => (
-          <Pressable onPress={() => setSelected(i)}>
+          <Pressable key={i} onPress={() => setSelected(i)}>
             <Text
               style={[styles.title, selected == i && { color: COLORS.primary }]}
             >
@@ -147,7 +131,6 @@ const TabHome = () => {
           </Pressable>
         ))}
       </View>
-
       {/* Render content based on the selected tab */}
       {renderContent()}
     </View>
@@ -161,7 +144,6 @@ const styles = StyleSheet.create({
     marginTop: 100,
     backgroundColor: "transparent",
   },
-
   container_device: {
     // backgroundColor: COLORS.lightWhite,
     height: 300,

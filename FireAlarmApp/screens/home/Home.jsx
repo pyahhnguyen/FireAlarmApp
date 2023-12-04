@@ -11,20 +11,14 @@ import {
 } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../constants/theme";
-import MainHeader from "../../components/Title/MainHeader";
-import ScreenHeader from "../../components/Title/ScreenHeader";
 import Room from "../../components/Room/Room";
-import { ScrollView } from "react-native-gesture-handler";
 import { ROOM_LIST } from "../../assets/data/room";
-import SectionHeader from "../../components/Title/SectionHeader";
-import SensorList from "../../components/Sensor/SensorList";
 import { useState, useEffect } from "react";
-import { ActivityIndicator } from "react-native";
 import { io } from "socket.io-client";
 import { Ionicons } from "@expo/vector-icons";
 import WeatherAlert from "../../screens/home/Weather_alert";
 import TabHome from "./TabHome";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
@@ -82,6 +76,9 @@ const Home = () => {
   const w = Dimensions.get('screen').width;
   const h = Dimensions.get('screen').height;
   const navigation = useNavigation();
+
+
+
   useEffect(() => {
     const ws = new WebSocket("ws://10.0.227.224:3001");
     ws.onmessage = (event) => {
@@ -115,6 +112,8 @@ const Home = () => {
     };
   }, [sensors]);
 
+
+
   function renderHeader() {
     const renderItem = ({ item, index }) => (
       <TouchableOpacity
@@ -122,14 +121,17 @@ const Home = () => {
           width: (w - 15*2)/2,
           height: 140,
           paddingBottom: 20,
-          marginLeft: index === 0 ? SIZES.padding : 0,
-          marginRight: SIZES.padding,
+          marginLeft: index === 0 ? SIZES.xSmall : 0,
+          marginRight: SIZES.xSmall,
           borderRadius: 10,
           backgroundColor: COLORS.white,
-          ...styles.shadow,
+          // ...styles.shadow,
           overflow: "hidden",
         }}
-        onPress={() => navigation.navigate("LivingRoom", {currency: item })}
+        onPress={() => {
+          navigation.navigate(item.screen); // Navigate to the specified screen
+        }}
+    
       >
         {/* Image */}
 
@@ -140,11 +142,13 @@ const Home = () => {
             borderRadius: 10,
             width: "100%",
             height: "100%",
+            opacity: 0.8,
           }}
         ></Image>
         <Text style={styles.title}>{item.title}</Text>
       </TouchableOpacity>
     );
+
 
     return (
       <View
@@ -155,7 +159,7 @@ const Home = () => {
         }}
       >
         <ImageBackground
-          source={require("../../assets/images/ff9209.png")}
+          source={require("../../assets/images/ffc436.png")}
           resizeMode="cover"
           style={{
             flex: 1,
@@ -196,7 +200,7 @@ const Home = () => {
               <Ionicons
                 name="notifications"
                 size={24}
-                color={COLORS.white}
+                color={COLORS.primary}
                 style={{ flex: 1 }}
               />
             </TouchableOpacity>
@@ -209,8 +213,7 @@ const Home = () => {
               justifyContent: "center",
               ...styles.shadow,
             }}
-           
-          >
+           >
             <WeatherAlert />
           </View>
           {/* Rooms */}
@@ -225,8 +228,8 @@ const Home = () => {
                 marginLeft: SIZES.padding,
                 paddingTop: SIZES.padding,
                 color: COLORS.primary,
-                fontFamily: FONTS.h2.fontFamily,
-                fontSize: SIZES.large,
+                fontFamily: "medium_poppins",
+                fontSize: SIZES.medium,
                 marginTop: 20,
               }}
             >
@@ -323,7 +326,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "medium",
-    color: COLORS.gray,
+    color: COLORS.primary,  
     fontFamily: "medium",
     justifyContent: "center",
     textAlign: "center",

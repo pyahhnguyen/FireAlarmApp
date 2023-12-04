@@ -11,10 +11,11 @@ const styles = StyleSheet.create({
     
 
     stack :{
-        bottom: 0,
+        bottom: 5,
         position: "absolute",
         marginBottom: 60,
         marginHorizontal: 20,
+        // marginBottom: 20,
 
     }
 
