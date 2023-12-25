@@ -208,8 +208,8 @@ const Register = () => {
             onPress={handleRegister}
             btnText={"Register"}
             width={SIZES.width - 150}
-            backgroundColor={COLORS.red}
-            borderColor={COLORS.red}
+            backgroundColor={COLORS.primary}
+            borderColor={COLORS.primary}
             borderWidth={0}
             textColor={COLORS.white}
             alignItems="center"

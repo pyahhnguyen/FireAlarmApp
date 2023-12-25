@@ -17,7 +17,6 @@ const Device = () => {
           borderRadius: 5,
           backgroundColor: COLORS.white,
           ...styles.shadow,
-          overflow: "hidden",
           height: h/9,
           width : w - 50,
           position: 'relative'          
@@ -83,13 +82,14 @@ const Device = () => {
         
       },
       image :{
-        width: w/4.5,
-        resizeMode: 'cover',
-        height: w/4.5,
+        width: w/4,
+        resizeMode: 'contain',
+        height: w/4,
         backgroundColor: COLORS.lightWhite,
         borderRadius: 20, 
         marginLeft: 10,
         marginRight: 40,
+      
         
 
       },
@@ -108,7 +108,7 @@ const Device = () => {
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        margin: 20,
+        marginVertical: 15,
         alignSelf: 'center',
       },
       addButtonText: {

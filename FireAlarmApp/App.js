@@ -77,7 +77,13 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ headerShown: false }}
+          options={{ 
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: "transparent",
+             
+              
+            }, }}
         />
 
         <Stack.Screen
@@ -93,6 +99,7 @@ export default function App() {
               borderBottomLeftRadius: 50,
               
             },
+            
           }}
         />
       

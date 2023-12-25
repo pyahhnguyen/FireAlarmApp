@@ -177,7 +177,7 @@ const Login = () => {
             onPress={() => navigation.navigate("Bottom")}
             btnText={"Login"}
             width={SIZES.width - 150}
-            backgroundColor={COLORS.red}
+            backgroundColor={COLORS.primary}
             borderColor={COLORS.red}
             borderWidth={0}
             textColor={COLORS.white}

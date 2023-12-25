@@ -61,7 +61,7 @@ const Welcome = () => {
                 btnText={"Register"}
                 width={SIZES.width - 50}
                 backgroundColor={COLORS.white}
-                borderColor={COLORS.red}
+                borderColor={COLORS.primary}
                 borderWidth={0}
                 textColor={COLORS.black}
                 height={100}

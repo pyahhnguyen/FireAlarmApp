@@ -3,10 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableOpacity,
   Pressable,
-  useState,
   Dimensions,
   LogBox,
 } from "react-native";
@@ -34,6 +31,7 @@ const TabHome = () => {
   );
 
   const navigation = useNavigation();
+  // ignore error  below 
   React.useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
@@ -120,6 +118,7 @@ const TabHome = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        {/* tab menu */}
         {tabs.map((e, i) => (
           <Pressable key={i} onPress={() => setSelected(i)}>
             <Text

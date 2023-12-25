@@ -6,17 +6,29 @@ import {
   TouchableOpacity,
   PopUp,
   Button,
+  Dimensions,
 } from "react-native";
 import React, { useState } from "react";
 
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
 import { FlatList } from "react-native-gesture-handler";
 import Modal from "../Alert/Modal_alert";
-
+import { useNavigation } from "@react-navigation/native";
+const w = Dimensions.get('screen').width;
+const h = Dimensions.get('screen').height;
 const AlertHistory = ({ customContainerStyle, history }) => {
+
   const [isModalVisible, setIsModalVisible] = React.useState(false);
 
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+
+
+  const navigation = useNavigation();
+
+  const handleDetail = () => {
+    // Navigate to the screen you want
+    navigation.navigate('Alert');
+  };
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -58,6 +70,7 @@ const AlertHistory = ({ customContainerStyle, history }) => {
 
 
   
+  
   return (
     <View
       style={{
@@ -91,13 +104,91 @@ const AlertHistory = ({ customContainerStyle, history }) => {
 
       <Modal isVisible={isModalVisible}>
         <Modal.Container>
-          <Modal.Header title="LogRocket is fab!" />
+          <Modal.ID title="Detector #1" />
+          <Modal.Header title="SMOKE DETECTED" />
           <Modal.Body>
-            <Text>Agree to continue with this guide</Text>
+            <Image
+              source={require("../../assets/images/emergency_alarm.png")}
+              resizeMode="contain"
+              style={{
+                width: 180,
+                height: 160,
+                borderRadius: 2,
+                backgroundColor: COLORS.white,
+                marginLeft: 80,
+              }}
+            />
           </Modal.Body>
+
           <Modal.Footer>
-            <Button title="I agree" onPress={handleModal} />
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginVertical: h / 40,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  width: w - 100,
+                  backgroundColor: COLORS.alert,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: 15,
+                  borderRadius: 1,
+                  borderColor: COLORS.primary,
+                  borderWidth: 0.3,
+                  height: h / 22,
+                }}
+                // onPress={handleModal}
+              >
+
+                <Text style={styles.btnText1}>Emergency Call (114)</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  width: w - 100,
+                  backgroundColor: COLORS.background,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 1,
+                  marginBottom: 15,
+                  borderColor: COLORS.primary,
+                  borderWidth: 0.3,
+                  height: h / 25,
+                }}
+           
+              >
+
+                <Text style={styles.btnText2}>View Detail</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  width: w - 100,
+                  backgroundColor: COLORS.background,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 1,
+                  marginBottom: 15,
+                  borderColor: COLORS.primary,
+                  borderWidth: 0.3,
+                  height: h / 25,
+                }}
+                onPress={handleModal}
+              >
+
+                <Text style={styles.btnText2}>Close</Text>
+              </TouchableOpacity>
+              
+            </View>
+
+          
+
           </Modal.Footer>
+
+
         </Modal.Container>
       </Modal>
     </View>
@@ -105,3 +196,17 @@ const AlertHistory = ({ customContainerStyle, history }) => {
 };
 
 export default AlertHistory;
+
+const styles = StyleSheet.create({
+  btnText1: {
+    color: COLORS.white,
+    fontSize: SIZES.medium,
+    fontFamily: "medium_poppins",
+  },
+
+  btnText2: {
+    color: COLORS.primary,
+    fontSize: SIZES.medium,
+    fontFamily: "medium_poppins",
+  },
+});

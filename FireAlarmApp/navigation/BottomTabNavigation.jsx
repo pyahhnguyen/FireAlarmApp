@@ -6,9 +6,7 @@ import Alert from "../screens/Alert/Alert";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/theme";
-import Alert_PopUp from "../screens/Alert/pop-up_screen";
-import Living from "../screens/home/roomScreen/living";
-
+import { ImageBackground } from "react-native";
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
@@ -48,15 +46,14 @@ function BottomTabNavigation() {
 
           return <Ionicons name={iconName} size={26} color={color} />;
         },
-        tabBarActiveTintColor: COLORS.background,
+        tabBarActiveTintColor: COLORS.primary,
       })}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{         
-          headerShown: false,       
-          tabBarStyle: tabBarStyle,
+          headerShown: false,      
         
            
         }}
@@ -73,13 +70,20 @@ function BottomTabNavigation() {
           tabBarStyle: tabBarStyle,
           headerShown: true,
           headerTitleAlign: "center",
-          headerTintColor: COLORS.primary,
+          headerTintColor: COLORS.black,
           headerStyle:{
             backgroundColor: COLORS.background,
             height: 100,
-            // borderBottomLeftRadius: 10,
-            // borderBottomRightRadius: 10,
+            borderBottomRightRadius: 50,
+            borderBottomLeftRadius: 50,
           },
+          headerBackground: () => (
+            <ImageBackground
+              source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
+              style={{ flex: 1 }}
+              resizeMode="cover"
+            />
+          ),
         
           }
         }
@@ -92,7 +96,7 @@ function BottomTabNavigation() {
           headerShown: true,
           headerTitleAlign: "center",
           tabBarStyle: tabBarStyle,
-          headerTintColor: COLORS.primary,
+          headerTintColor: COLORS.black,
           backgroundColor: COLORS.lightWhite,
           headerStyle:{
             backgroundColor: COLORS.background,
@@ -100,6 +104,13 @@ function BottomTabNavigation() {
             borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10,
           },
+          headerBackground: () => (
+            <ImageBackground
+              source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
+              style={{ flex: 1 }}
+              resizeMode="cover"
+            />
+          ),
           
         }}
       />
@@ -110,7 +121,7 @@ function BottomTabNavigation() {
         options={{
           headerShown: true,
           tabBarStyle: tabBarStyle,
-          headerTintColor: COLORS.primary,
+          headerTintColor: COLORS.black,
           headerTitleAlign: "center",
           headerStyle:{
             backgroundColor: COLORS.background,
@@ -118,6 +129,13 @@ function BottomTabNavigation() {
             borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10,
           },
+          headerBackground: () => (
+            <ImageBackground
+              source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
+              style={{ flex: 1 }}
+              resizeMode="cover"
+            />
+          ),
         }}
       />
 

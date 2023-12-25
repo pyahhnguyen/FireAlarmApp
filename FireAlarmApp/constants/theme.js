@@ -18,8 +18,8 @@ const COLORS = {
     secondary: "#DDF0FF",
     tertiary: "#FF7754",
     header: '#45CFDD',
-    background: '#FFC436',
-    alert: '#FA1E0E'
+    background: '#548CFF',
+    alert: '#FF414D'
 
 };
 
@@ -29,7 +29,7 @@ const SIZES = {
     small: 12,
     medium: 16,
     fourteen: 14,
-    eighteen: 18,
+    eighteen: 18, 
     large: 20,
     xLarge: 24,
     xxLarge: 44,

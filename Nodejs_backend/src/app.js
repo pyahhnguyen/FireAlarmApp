@@ -30,7 +30,6 @@ function broadcastSensorData(sensorData) {
 
 }
 
-
 // Test gửi dữ liệu qua WebSocket
 wss.on("connection", (ws) => {
   console.log("WebSocket client connected");

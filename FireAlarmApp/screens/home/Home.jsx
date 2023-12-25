@@ -78,7 +78,6 @@ const Home = () => {
   const navigation = useNavigation();
 
 
-
   useEffect(() => {
     const ws = new WebSocket("ws://10.0.227.224:3001");
     ws.onmessage = (event) => {
@@ -112,8 +111,7 @@ const Home = () => {
     };
   }, [sensors]);
 
-
-
+  
   function renderHeader() {
     const renderItem = ({ item, index }) => (
       <TouchableOpacity
@@ -159,7 +157,7 @@ const Home = () => {
         }}
       >
         <ImageBackground
-          source={require("../../assets/images/ffc436.png")}
+          source={require("../../assets/images/blue_g.jpg")}
           resizeMode="cover"
           style={{
             flex: 1,

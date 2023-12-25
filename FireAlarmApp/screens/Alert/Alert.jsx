@@ -16,7 +16,7 @@ const Alert = () => {
         paddingVertical: SIZES.base,
         backgroundColor: COLORS.alert,
         marginTop: 10,
-        marginHorizontal: 10,
+        marginHorizontal: 5,
         borderRadius: 8,
       }}
     >
@@ -28,11 +28,11 @@ const Alert = () => {
       >
         <Image
           source={require("../../assets/images/Co2.png")}
-          resizeMode="cover"
+          resizeMode="center"
           style={{
             width: 55,
             height: 55,
-            marginLeft: SIZES.radius,
+            marginLeft: SIZES.radius, 
             backgroundColor: COLORS.lightWhite,
             borderRadius: 5,
           }}
@@ -75,6 +75,8 @@ const Alert = () => {
         </View>
       </View>
 
+
+
       <View
         style={{
           justifyContent: "center",
@@ -92,7 +94,7 @@ const Alert = () => {
             height: h/15,
           }}
         >
-          <Text style={styles.btnText}>Emerency Call(911)</Text>
+          <Text style={styles.btnText}>Emerency Call(114)</Text>
         </TouchableOpacity>
       </View>
 
@@ -129,7 +131,7 @@ const Alert = () => {
         <TouchableOpacity
           style={{
             width: w - 250,
-            backgroundColor: COLORS.background,
+            backgroundColor: COLORS.white,
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 3,

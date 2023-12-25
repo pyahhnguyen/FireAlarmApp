@@ -6,8 +6,8 @@ const Modal = ({ isVisible = false, children, ...props }) => {
   return (
     <RNModal
       isVisible={isVisible}
-      animationInTiming={500}
-      animationOutTiming={1000}
+      animationInTiming={300}
+      animationOutTiming={300}
       backdropTransitionInTiming={400}
       backdropTransitionOutTiming={400}
       {...props}
@@ -20,10 +20,16 @@ const Modal = ({ isVisible = false, children, ...props }) => {
 const ModalContainer = ({ children }) => (
   <View style={styles.container}>{children}</View>
 );
+const ModalID = ({ title }) => (
+ 
+    <Text style={styles.textid}>{title}</Text>
+    
 
+);
 const ModalHeader = ({ title }) => (
   <View style={styles.header}>
     <Text style={styles.text}>{title}</Text>
+    
   </View>
 );
 
@@ -38,9 +44,9 @@ const ModalFooter = ({ children }) => (
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffffff",
-    borderRadius: 25,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#000",
+    // borderColor: "#000",
     borderStyle: "solid",
   },
   header: {
@@ -48,9 +54,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    paddingTop: 10,
     textAlign: "center",
     fontSize: 24,
+  },
+  textid: {
+    paddingTop: 20,
+    textAlign: "center",
+    fontSize: 22,
+    color: "#fc1717",
+   
   },
   body: {
     justifyContent: "center",
@@ -65,6 +77,8 @@ const styles = StyleSheet.create({
   },
 });
 
+
+Modal.ID = ModalID;
 Modal.Header = ModalHeader;
 Modal.Container = ModalContainer;
 Modal.Body = ModalBody;

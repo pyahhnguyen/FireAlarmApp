@@ -51,12 +51,11 @@ const Location = () => {
     <View>
       <View
         style={{
-          paddingVertical: SIZES.base,
+      
           backgroundColor: COLORS.lightWhite,
-
-          marginHorizontal: 15,
+          marginHorizontal: 10,
           borderRadius: 10,
-          marginVertical: 20,
+          marginVertical: 10,
         }}
       >
         <View style={{ flexDirection: "row", marginTop: 15 }}>
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: w / 5.5,
-    resizeMode: "cover",
+    resizeMode: "center",
     height: w / 5.5,
     backgroundColor: COLORS.lightWhite,
     borderRadius: 2,
