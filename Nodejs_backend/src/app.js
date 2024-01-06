@@ -13,41 +13,43 @@ const server = http.createServer(app); // Create an HTTP server
 const wss = new WebSocket.Server({ server }); // Create a WebSocket server
 
 
-function broadcastSensorData(sensorData) {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(sensorData), (error) => {
-        if (error) {
-          // Xử lý lỗi khi gửi dữ liệu
-          console.error('Error sending data to a client:', error);
-        } else {
-          // Dữ liệu đã được gửi thành công
-          console.log('Data sent to a client successfully');
-        }
-      });
-    }
-  });
+// function broadcastSensorData(sensorData) {
+//   wss.clients.forEach((client) => {
+//     if (client.readyState === WebSocket.OPEN) {
+//       client.send(JSON.stringify(sensorData), (error) => {
+//         if (error) {
+//           // Xử lý lỗi khi gửi dữ liệu
+//           console.error('Error sending data to a client:', error);
+//         } else {
+//           // Dữ liệu đã được gửi thành công
+//           console.log('Data sent to a client successfully');
+//         }
+//       });
+//     }
+//   });
 
-}
+// }
 
-// Test gửi dữ liệu qua WebSocket
-wss.on("connection", (ws) => {
-  console.log("WebSocket client connected");
-  ws.on("message", (message) => {
-    console.log(`Received_from_script: ${message}`);
-    // Hoặc bạn có thể phân loại và xử lý dữ liệu cảm biến ở đây
-    const sensorData = JSON.parse(message);
-    broadcastSensorData(sensorData)
+// // Test gửi dữ liệu qua WebSocket
+// wss.on("connection", (ws) => {
+//   console.log("WebSocket client connected");
+//   ws.on("message", (message) => {
+//     console.log(`Received_from_script: ${message}`);
+//     // Hoặc bạn có thể phân loại và xử lý dữ liệu cảm biến ở đây
+//     const sensorData = JSON.parse(message);
+//     broadcastSensorData(sensorData)
 
-  });
+//   });
 
-  ws.on("close", () => {
-    console.log("WebSocket client disconnected");
-  });
-});
+//   ws.on("close", () => {
+//     console.log("WebSocket client disconnected");
+//   });
+// });
 
 
 // init middlewares
+
+
 app.use(morgan("dev")); // print request logs on console
 app.use(helmet()); // secure express app by setting various HTTP headers
 app.use(compression()); // compress all responses
@@ -60,11 +62,11 @@ require("./db/init_mongo");
 //init routes
 app.use("", require("./routes/index"));
 
-app.use("", require("./routes/Auth/User"));
+app.use("", require("./routes/Auth/User.route"));
 
 app.use("", require("./routes/Sensor/sensor_data"));
 
-server.listen(4000, () => console.log("Server websocket running on port 4000"))
+// server.listen(4000, () => console.log("Server websocket running on port 4000"))
 
 module.exports = {server, app, wss};
 

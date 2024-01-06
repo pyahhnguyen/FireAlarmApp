@@ -51,8 +51,8 @@ const TabHome = () => {
     {
       value: 5,
       color: "#188527",
-    },
-    {
+      },
+      {
       value: 10,
       color: "#fc1717",
     },
@@ -71,7 +71,7 @@ const TabHome = () => {
         }}
       >
         {/* <Text style={{ color: COLORS.black, ...FONTS.h3 }}>Recent Alerts</Text> */}
-        <Donut data={data_chart} />
+        {/* <Donut data={data_chart} /> */}
       </View>
     );
   }

@@ -59,7 +59,9 @@ const Profile = ({ navigation }) => {
         {userLogin === false ? (
           <View></View>
         ) : (
+          
           <View style={styles.menuWapper}>
+
             <TouchableOpacity onPress={() => {}}>
               <View style={styles.menuItem(0.2)}>
                 <MaterialCommunityIcons

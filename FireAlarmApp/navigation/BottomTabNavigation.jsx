@@ -74,16 +74,16 @@ function BottomTabNavigation() {
           headerStyle:{
             backgroundColor: COLORS.background,
             height: 100,
-            borderBottomRightRadius: 50,
-            borderBottomLeftRadius: 50,
+            borderBottomRightRadius: 10,
+            borderBottomLeftRadius: 10,
           },
-          headerBackground: () => (
-            <ImageBackground
-              source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
-              style={{ flex: 1 }}
-              resizeMode="cover"
-            />
-          ),
+          // headerBackground: () => (
+          //   <ImageBackground
+          //     source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
+          //     style={{ flex: 1 }}
+          //     resizeMode="cover"
+          //   />
+          // ),
         
           }
         }
@@ -104,13 +104,13 @@ function BottomTabNavigation() {
             borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10,
           },
-          headerBackground: () => (
-            <ImageBackground
-              source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
-              style={{ flex: 1 }}
-              resizeMode="cover"
-            />
-          ),
+          // headerBackground: () => (
+          //   <ImageBackground
+          //     source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
+          //     style={{ flex: 1 }}
+          //     resizeMode="cover"
+          //   />
+          // ),
           
         }}
       />
@@ -129,13 +129,13 @@ function BottomTabNavigation() {
             borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10,
           },
-          headerBackground: () => (
-            <ImageBackground
-              source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
-              style={{ flex: 1 }}
-              resizeMode="cover"
-            />
-          ),
+          // headerBackground: () => (
+          //   <ImageBackground
+          //     source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
+          //     style={{ flex: 1 }}
+          //     resizeMode="cover"
+          //   />
+          // ),
         }}
       />
 

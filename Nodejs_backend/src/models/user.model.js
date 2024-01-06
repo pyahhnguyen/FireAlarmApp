@@ -20,17 +20,15 @@ const userSchema = new mongoose.Schema({
     },
     verificationToken: String,
 
-    addresses: [
-        {
-            name: String,
-            mobileNo: String,
-            RoomNo: String,
-            street: String,
-            landmark: String,
-            city: String,
-            country: String,
-        }
-    ],
+    phonenumber: {
+        type: String,
+        required: true,
+    },
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const User = mongoose.model('User', userSchema);

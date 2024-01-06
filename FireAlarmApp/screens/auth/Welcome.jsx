@@ -40,7 +40,6 @@ const Welcome = () => {
         <KeyboardAvoidingView>
           <View style={{ alignItems: "center" }}>
    
-           
           
             <View>
               <ReusableBtn

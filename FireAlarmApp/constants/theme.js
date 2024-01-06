@@ -18,7 +18,7 @@ const COLORS = {
     secondary: "#DDF0FF",
     tertiary: "#FF7754",
     header: '#45CFDD',
-    background: '#548CFF',
+    background: '#51C2D5',
     alert: '#FF414D'
 
 };

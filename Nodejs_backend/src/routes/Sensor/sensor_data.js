@@ -1,7 +1,7 @@
 //root: /api/sensor_data
 const express = require("express");
 const router = express.Router();
-const SensorData = require('../../models/sensor'); 
+const SensorData = require('../../models/sensor.model'); 
 
 // In your Express API
 router.get('/api/sensordata', async (req, res) => {

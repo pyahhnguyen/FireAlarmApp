@@ -41,14 +41,15 @@ const Login = () => {
   //   checkLoginstatus();
   // }, []);
 
+
+
   const handleLogin = () => {
     const user = {
       email: email,
       password: password,
     };
-
     axios
-      .post("http://10.0.227.224:3056/login", user)
+      .post("http://10.0.238.60:3056/login", user)
       .then((response) => {
         console.log(response);
         const token = response.data.token;
@@ -60,6 +61,9 @@ const Login = () => {
         console.log(err);
       });
   };
+
+
+  
 
   return (
     <SafeAreaView
@@ -173,8 +177,8 @@ const Login = () => {
 
         <View style={{ marginLeft: "auto", marginRight: "auto" }}>
           <ReusableBtn
-           // onPress={handleLogin}
-            onPress={() => navigation.navigate("Bottom")}
+            onPress={handleLogin}
+            // onPress={() => navigation.navigate("Bottom")}
             btnText={"Login"}
             width={SIZES.width - 150}
             backgroundColor={COLORS.primary}
