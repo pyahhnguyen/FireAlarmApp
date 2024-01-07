@@ -19,7 +19,7 @@ const apartmentSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    room  : {
+    room : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room',
         required: true,
@@ -28,6 +28,11 @@ const apartmentSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    statusApartment: {
+        type: String,
+        default: 'normal',
+    },
+
     // Thêm các trường khác tùy theo yêu cầu của bạn
     createdAt: {
         type: Date,

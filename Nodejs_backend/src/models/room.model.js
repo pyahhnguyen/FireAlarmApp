@@ -5,20 +5,21 @@ const roomSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    apartment: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Apartment',
-        required: true,
-    },
+
     // Add other room-specific fields as needed
     createdAt: {
         type: Date,
         default: Date.now,
     },
-     
+    
     statusRoom: {
         type: String,
         default: 'normal',
+    },
+    sensor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sensor',
+        required: true,
     },
 
 
