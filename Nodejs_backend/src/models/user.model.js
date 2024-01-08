@@ -19,16 +19,21 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     verificationToken: String,
-
-    phonenumber: {
-        type: String,
-        required: true,
-    },
-
+    info: [
+        {
+          mobileNo: String,
+          address: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Building',
+            required: true,
+          },
+        },
+      ],
     createdAt: {
         type: Date,
         default: Date.now,
     },
+
 });
 
 const User = mongoose.model('User', userSchema);

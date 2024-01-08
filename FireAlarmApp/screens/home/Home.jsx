@@ -77,6 +77,7 @@ const Home = () => {
   const h = Dimensions.get('screen').height;
   const navigation = useNavigation();
 
+  
 
   useEffect(() => {
     const ws = new WebSocket("ws://10.0.227.224:3001");
@@ -157,7 +158,7 @@ const Home = () => {
         }}
       >
         <ImageBackground
-          source={require("../../assets/images/blue_g.jpg")}
+          source={require("../../assets/images/51c2d5.png")}
           resizeMode="cover"
           style={{
             flex: 1,

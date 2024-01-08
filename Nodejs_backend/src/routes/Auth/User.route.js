@@ -54,7 +54,7 @@ router.post("/register", async (req, res) => {
     }
 
     // Create a new user
-    const newUser = new User({ name, email, password });
+    const newUser = new User({name, email, password});
 
     // Generate a verification token
     newUser.verificationToken = crypto.randomBytes(16).toString("hex");
@@ -98,16 +98,13 @@ router.get("/verify/:token", async (req, res) => {
 });
 
 
-
 // Function to generate a secret key
 const generateSecretKey = () => {
   const secretKey = crypto.randomBytes(32).toString("hex");
   return secretKey;
 };
 
-
 const secretKey = generateSecretKey();
-
 
 // Endpoint to login
 router.post("/login", async (req, res) => {
@@ -123,6 +120,7 @@ router.post("/login", async (req, res) => {
     if (user.password !== password) {
       return res.status(401).json({ message: "Invalid  password" });
     }
+
     // // Check if password is correct
     // const passwordMatch = await bcrypt.compare(password, user.password);
     // if (!passwordMatch) {
@@ -130,8 +128,11 @@ router.post("/login", async (req, res) => {
     // }
 
     // Generate a JWT token
-    const token = jwt.sign({ userId: user._id }, secretKey);
-
+    const token = jwt.sign({
+      userId: user._id,
+      email: user.email,
+    }, secretKey);
+    
     res.status(200).json({ message: "Login successful", token });
 
   } catch (err) {
@@ -140,4 +141,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+
+
+router.post("/userdata", async (req, res) => {
+  const { token } = req.body;
+  try {
+    const user = jwt.verify(token, secretKey);
+    const useremail = user.email;
+
+    User.findOne({ email: useremail }).then((data) => {
+      return res.send({ status: "Ok", data: data });
+    });
+  } catch (error) {
+    return res.send({ error: error });
+  }
+});
 module.exports = router;

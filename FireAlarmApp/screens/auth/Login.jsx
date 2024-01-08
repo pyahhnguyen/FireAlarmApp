@@ -18,8 +18,8 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import { Alert } from "react-native";
+import axios from "axios";  
 
 
 const Login = () => {
@@ -27,20 +27,20 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   const checkLoginstatus = async () => {
-  //     try {
-  //       const token = await AsyncStorage.getItem("authToken");
-  //       if (token) {
-  //         navigation.replace("Bottom");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   checkLoginstatus();
-  // }, []);
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("authToken");
 
+        if (token) {
+          navigation.replace("Bottom");
+        }
+      } catch (err) {
+        console.log("error message", err);
+      }
+    };
+    checkLoginStatus();
+  }, [])
 
 
   const handleLogin = () => {
@@ -54,6 +54,7 @@ const Login = () => {
         console.log(response);
         const token = response.data.token;
         AsyncStorage.setItem("authToken", token);
+        AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
         navigation.replace("Bottom");
       })
       .catch((err) => {
@@ -62,8 +63,6 @@ const Login = () => {
       });
   };
 
-
-  
 
   return (
     <SafeAreaView

@@ -64,7 +64,7 @@ app.use("", require("./routes/index"));
 
 app.use("", require("./routes/Auth/User.route"));
 
-app.use("", require("./routes/Sensor/sensor_data"));
+// app.use("", require("./routes/Sensor/sensor_data"));
 
 // server.listen(4000, () => console.log("Server websocket running on port 4000"))
 

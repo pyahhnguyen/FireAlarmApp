@@ -42,7 +42,8 @@ const Register = () => {
           "Registration Sucessful",
           "You have registered successfully. Please login to continue"
         );
-
+        
+        navigation.navigate('Login');
         setName("");
         setEmail("");
         setPassword("");
@@ -57,7 +58,7 @@ const Register = () => {
   };
 
 
-  
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}

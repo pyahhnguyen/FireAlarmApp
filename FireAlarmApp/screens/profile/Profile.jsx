@@ -13,12 +13,45 @@ import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const h = Dimensions.get('screen').height;
+
+
 const Profile = ({ navigation }) => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState('');
   const [userLogin, setLogin] = useState(true);
  
+
+
+ async function getData() {
+    const token = await AsyncStorage.getItem('authToken');
+    console.log(token);
+    axios
+      .post('http://10.0.238.60:3056/userdata', {token: token})
+      .then(res => {
+        console.log(res.data);
+        setUserData(res.data.data);
+     
+      });
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+
+  const logout = () => {
+    clearAuthToken();
+  };
+  const clearAuthToken = async () => {
+    await AsyncStorage.removeItem("authToken");
+    console.log("auth token cleared");
+    navigation.replace("Login");
+  };
+
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={'transparent'} />
@@ -42,7 +75,7 @@ const Profile = ({ navigation }) => {
           style={styles.profile}
         />
         <Text style={styles.name}>
-          {userLogin === true ? "Phu Gia" : "Please login"}
+        {userLogin === true ? (userData ? userData.name : "Please login") : ""}
         </Text>
         {userLogin === false ? (
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
@@ -52,7 +85,7 @@ const Profile = ({ navigation }) => {
           </TouchableOpacity>
         ) : (
           <View style={styles.loginBtn}>
-            <Text style={styles.menuText}>phugiazx44@gmail.com</Text>
+            <Text style={styles.menuText}>{userData.email}</Text>
           </View>
         )}
 
@@ -109,7 +142,7 @@ const Profile = ({ navigation }) => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={logout}>
               <View style={styles.menuItem(0.2)}>
                 <AntDesign name="logout" color={COLORS.primary} size={24} />
                 <Text style={styles.menuText}>Logout</Text>
