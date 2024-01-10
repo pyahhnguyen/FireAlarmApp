@@ -12,7 +12,7 @@ const Device = () => {
       return (
         <TouchableOpacity
         style={{
-          marginVertical: 5,
+          marginVertical: 10,
           marginLeft: 25,
           borderRadius: 5,
           backgroundColor: COLORS.white,

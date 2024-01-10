@@ -27,7 +27,7 @@ const h = Dimensions.get("screen").height;
 const TabHome = () => {
   const [selected, setSelected] = React.useState(0);
   const [alertHistory, setAlertHistory] = React.useState(
-    dummyData.transactionHistory
+    dummyData.alertHistory
   );
 
   const navigation = useNavigation();
@@ -47,6 +47,7 @@ const TabHome = () => {
     }
   };
 
+
   const data_chart = [
     {
       value: 5,
@@ -58,6 +59,7 @@ const TabHome = () => {
     },
   ];
 
+  
   function renderChart() {
     return (
       <View

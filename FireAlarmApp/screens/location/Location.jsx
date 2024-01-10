@@ -6,11 +6,14 @@ import {
   TouchableOpacity,
   Dimensions,
   FlatList,
+  
+  
 } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../constants/theme";
 
 import { FontAwesome } from "@expo/vector-icons";
+import { ScrollView } from "react-native-gesture-handler"; 
 
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
@@ -47,8 +50,10 @@ const Location = () => {
       </TouchableOpacity>
     );
   };
+
+
   return (
-    <View>
+    <ScrollView>
       <View
         style={{
       
@@ -56,6 +61,8 @@ const Location = () => {
           marginHorizontal: 10,
           borderRadius: 10,
           marginVertical: 10,
+          marginBottom: 50,
+
         }}
       >
         <View style={{ flexDirection: "row", marginTop: 15 }}>
@@ -104,6 +111,8 @@ const Location = () => {
           flexDirection: "column", // row
           justifyContent: "center", // Center vertically
           alignItems: "center", // Center horizontally
+          marginBottom: 50,
+          
         }}
       >
         <View>
@@ -113,7 +122,7 @@ const Location = () => {
           <FlatList renderItem={renderItem} data={[1, 2, 3]} />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -16,58 +16,61 @@ import Modal from "../Alert/Modal_alert";
 import { useNavigation } from "@react-navigation/native";
 const w = Dimensions.get('screen').width;
 const h = Dimensions.get('screen').height;
+
+
+
 const AlertHistory = ({ customContainerStyle, history }) => {
-
   const [isModalVisible, setIsModalVisible] = React.useState(false);
-
-  const handleModal = () => setIsModalVisible(() => !isModalVisible);
+  const [selectedItemData, setSelectedItemData] = React.useState(history);
+  const handleModal = (item) => {
+    setSelectedItemData(item);
+    setIsModalVisible(!isModalVisible);
+  };
 
 
   const navigation = useNavigation();
-
+  
   const handleDetail = () => {
-    // Navigate to the screen you want
-    navigation.navigate('Alert');
-  };
+  navigation.navigate('Alert', { sensorData: selectedItemData });
+};
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
+const renderItem = ({ item }) => (
+  <TouchableOpacity
+    style={{
+      flexDirection: "row",
+      alignItems: "center",
+      paddingVertical: SIZES.base,
+    }}
+    onPress={() => handleModal(item)}
+  >
+    <Image
+      source={require("../../assets/images/fireicon-remove.png")}
       style={{
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: SIZES.base,
+        width: 30,
+        height: 30,
+        opacity: 0.8,
       }}
-      onPress={() => handleModal(item)}
+    />
+
+    <View style={{ flex: 1, marginLeft: SIZES.radius }}>
+      <Text style={{ ...FONTS.h4, color: COLORS.primary }}>
+        {item.deviceDescription}
+      </Text>
+      <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.createdAt}</Text>
+    </View>
+
+    <View
+      style={{
+        height: "100%",
+        alignItems: "center",
+        marginRight: 40,
+        marginTop: 15,
+      }}
     >
-      <Image
-        source={require("../../assets/images/fireicon-remove.png")}
-        style={{
-          width: 30,
-          height: 30,
-          opacity: 0.8,
-        }}
-      />
-
-      <View style={{ flex: 1, marginLeft: SIZES.radius }}>
-        <Text style={{ ...FONTS.h4, color: COLORS.primary }}>
-          {item.description}
-        </Text>
-        <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.date}</Text>
-      </View>
-
-      <View
-        style={{
-          height: "100%",
-          alignItems: "center",
-          marginRight: 40,
-          marginTop: 15,
-        }}
-      >
-        <Text style={{ color: "#fc1717", ...FONTS.body3 }}>{item.status}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-
+      <Text style={{ color: "#fc1717", ...FONTS.body3 }}>{item.status}</Text>
+    </View>
+  </TouchableOpacity>
+);
 
   
   
@@ -82,30 +85,31 @@ const AlertHistory = ({ customContainerStyle, history }) => {
         ...customContainerStyle,
       }}
     >
-      <FlatList
-        contentContainerStyle={{}}
-        scrollEnabled={true}
-        data={history}
-        keyExtractor={(item) => `${item.id}`}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => {
-          return (
-            <View
-              style={{
-                width: "100%",
-                height: 1,
-                backgroundColor: COLORS.gray,
-              }}
-            />
-          );
+    <FlatList
+  contentContainerStyle={{}}
+  scrollEnabled={true}
+  data={history}
+  keyExtractor={(item) => `${item.deviveId}`}  // Update to deviveId
+  renderItem={renderItem}
+  showsVerticalScrollIndicator={false}
+  ItemSeparatorComponent={() => {
+    return (
+      <View
+        style={{
+          width: "100%",
+          height: 1,
+          backgroundColor: COLORS.gray,
         }}
       />
+    );
+  }}
+/>
 
-      <Modal isVisible={isModalVisible}>
+
+      <Modal isVisible={isModalVisible} itemData={selectedItemData}>
         <Modal.Container>
-          <Modal.ID title="Detector #1" />
-          <Modal.Header title="SMOKE DETECTED" />
+        <Modal.ID title={` Detector #${selectedItemData.deviveId} `} />
+        <Modal.Header title={selectedItemData.deviceDescription ? selectedItemData.deviceDescription.toUpperCase() : ''} />
           <Modal.Body>
             <Image
               source={require("../../assets/images/emergency_alarm.png")}
@@ -140,7 +144,6 @@ const AlertHistory = ({ customContainerStyle, history }) => {
                   borderWidth: 0.3,
                   height: h / 22,
                 }}
-                // onPress={handleModal}
               >
 
                 <Text style={styles.btnText1}>Emergency Call (114)</Text>
@@ -158,7 +161,7 @@ const AlertHistory = ({ customContainerStyle, history }) => {
                   borderWidth: 0.3,
                   height: h / 25,
                 }}
-           
+                onPress={handleDetail}
               >
 
                 <Text style={styles.btnText2}>View Detail</Text>

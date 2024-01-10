@@ -1,15 +1,20 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../constants/theme";
-import { SENSOR_LIST } from "../../assets/data/room";
-import ReusableBtn from "../../components/Button/ReusableBtn";
+import { useNavigation } from "@react-navigation/native";
 
+const Alert = ({ route }) => {
+  const { sensorData } = route.params;
 
+  const w = Dimensions.get('screen').width;
+  const h = Dimensions.get('screen').height;
 
-const Alert = () => {
+  const navigation = useNavigation();
 
-    const w = Dimensions.get('screen').width;
-    const h = Dimensions.get('screen').height;
+  handleDevice = () => {
+    navigation.navigate('Location');
+  };
+
   return (
     <View
       style={{
@@ -18,6 +23,7 @@ const Alert = () => {
         marginTop: 10,
         marginHorizontal: 5,
         borderRadius: 8,
+        marginBottom: 50,
       }}
     >
       <View
@@ -39,9 +45,9 @@ const Alert = () => {
         />
 
         <View style={{ flex: 1, marginLeft: SIZES.radius, marginBottom: 15 }}>
-          <Text style={{ color: COLORS.black, fontSize: 16, fontWeight:'bold' }}>Device#1</Text>
+          <Text style={{ color: COLORS.black, fontSize: 16, fontWeight:'bold' }}>{sensorData.deviceName.name}</Text>
           <Text style={{ color: COLORS.black,  fontSize: 16 }}>
-            2023-12-23, 23:06pm
+            {sensorData.createdAt}
           </Text>
         </View>
 
@@ -56,7 +62,7 @@ const Alert = () => {
           <Text
             style={{ color: COLORS.black, ...FONTS.h4, marginBottom: 20 }}
           >
-            Alarm
+            {sensorData.status}
           </Text>
           <Text style={{ color: COLORS.black, ...FONTS.h4, marginTop: 5 }}>
             Set
@@ -70,8 +76,8 @@ const Alert = () => {
           <Text style={styles.header}>Code.</Text>
         </View>
         <View>
-          <Text style={styles.content}>SW-GS529N</Text>
-          <Text style={styles.content}>SW-13</Text>
+          <Text style={styles.content}>{sensorData.deviceName.ModelNo}</Text>
+          <Text style={styles.content}>{sensorData.deviceName.Code}</Text>
         </View>
       </View>
 
@@ -139,6 +145,7 @@ const Alert = () => {
             borderWidth: 0.3,
             height: h/25,
           }}
+          // onPress={handleDevice}
         >
           <Text style={styles.btnText1}>View Device</Text>
         </TouchableOpacity>
