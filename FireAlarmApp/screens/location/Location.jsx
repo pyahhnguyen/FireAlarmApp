@@ -18,9 +18,29 @@ import { ScrollView } from "react-native-gesture-handler";
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
 
-const Location = () => {
+const Location = ({ route }) => {
+
+const { detailSensor } = route.params;
+
+
+
+// Define a mapping between locations and floor plan images
+const locationImages = {
+  "Living Room": require("../../assets/images/Planner_Living_fire.png"),
+  'Kitchen': require("../../assets/images/Planner_Kitchen_fire.png"),
+  "Bed Room": require("../../assets/images/Planner_Bedroom_fire.png"),
+  "Bath Room": require("../../assets/images/Planner_Bathroom_fire.png"),
+  // Add more locations as needed
+};
+
+// Select the image based on the location
+const locationImage = locationImages[detailSensor.location];
+
+
+
   const renderItem = ({ item, index }) => {
     return (
+      
       <TouchableOpacity
         style={{
           
@@ -48,81 +68,91 @@ const Location = () => {
           </View>
         </View>
       </TouchableOpacity>
+      
     );
   };
 
 
   return (
-    <ScrollView>
-      <View
-        style={{
-      
-          backgroundColor: COLORS.lightWhite,
-          marginHorizontal: 10,
-          borderRadius: 10,
-          marginVertical: 10,
-          marginBottom: 50,
-
-        }}
-      >
-        <View style={{ flexDirection: "row", marginTop: 15 }}>
-          <View>
-            <Text style={styles.header}>Name.</Text>
-            <Text style={styles.header}>Location Code.</Text>
-          </View>
-          <View>
-            <Text style={styles.content}>LivingRoom</Text>
-            <Text style={styles.content}>LivingRoom</Text>
-          </View>
-
-          <View style={styles.icon}>
-            <FontAwesome name="pencil-square-o" size={24} color="black" />
-          </View>
-        </View>
-
-        <View>
-          <Text style={styles.header}>Floor Plan.</Text>
-        </View>
-
+    <View>
         <View
           style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 30,
+            backgroundColor: COLORS.lightWhite,
+            marginHorizontal: 10,
+            borderRadius: 10,
+            marginVertical: 10,
             marginBottom: 50,
-    
-            resizeMode: "cover",
           }}
         >
-          <Image
-            source={require("../../assets/images/planner.png")}
-            style={{
-              width: w - 40,
-              height: h / 3.3,
-              borderRadius: 2,
-              backgroundColor: COLORS.lightWhite,
-            }}
-          />
-        </View>
-      </View>
+          <View style={{ flexDirection: "row", marginTop: 15 }}>
+            <View>
+              <Text style={styles.header}>Name.</Text>
+              <Text style={styles.header}>Location Code.</Text>
+            </View>
+            <View>
+              <Text style={styles.content}>{detailSensor.location}</Text>
+              <Text style={styles.content}>{detailSensor.location}</Text>
+            </View>
 
+            <View style={styles.icon}>
+              <FontAwesome name="pencil-square-o" size={24} color="black" />
+            </View>
+          </View>
+
+          <View>
+            <Text style={styles.header}>Floor Plan.</Text>
+          </View>
+
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 30,
+              marginBottom: 50,
+
+              resizeMode: "cover",
+            }}
+          >
+            <Image
+              source={locationImage}
+              style={{
+                width: w - 40,
+                height: h / 3.3,
+                borderRadius: 2,
+                backgroundColor: COLORS.lightWhite,
+              }}
+            />
+          </View>
+        </View>
+
+{/* // Device List  */}
       <View
-        style={{
-          flexDirection: "column", // row
-          justifyContent: "center", // Center vertically
-          alignItems: "center", // Center horizontally
-          marginBottom: 50,
-          
-        }}
-      >
-        <View>
-          <Text style={styles.device_header}>Devices</Text>
+          style={{
+            flexDirection: "column", // row
+            justifyContent: "center", // Center vertically
+            alignItems: "center", // Center horizontally
+            marginBottom: 50,
+          }}
+        >
+          <View>
+            <Text style={styles.device_header}>Devices</Text>
+          </View>
+          <View style={{ backgroundColor: "transparent" }}>
+
+            <FlatList // sửa lại data input 
+            renderItem={renderItem} 
+
+            data={[1, 2, 3]}
+            scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            />
+
+          </View>
         </View>
-        <View style={{backgroundColor:"transparent"}}>
-          <FlatList renderItem={renderItem} data={[1, 2, 3]} />
-        </View>
-      </View>
-    </ScrollView>
+
+  </View>
+
+
   );
 };
 

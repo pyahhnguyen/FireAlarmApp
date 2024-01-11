@@ -1,5 +1,4 @@
 
-
 // export const alertHistory = [
 //     {
 //         id: 1,
@@ -101,6 +100,8 @@ const chartOptions = [
 ]
 
 
+
+
 export const alertHistory = [
     
             {
@@ -118,6 +119,7 @@ export const alertHistory = [
             "status": "Alarm"
             },
 
+
             {
             "deviveId": 2,
             "deviceType": "heat",
@@ -133,6 +135,7 @@ export const alertHistory = [
             "status": "Alarm"
             },
 
+            
             {
             "deviveId": 3,
             "deviceType": "gas",

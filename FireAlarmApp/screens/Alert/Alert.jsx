@@ -9,11 +9,39 @@ const Alert = ({ route }) => {
   const w = Dimensions.get('screen').width;
   const h = Dimensions.get('screen').height;
 
+  // // truyen data đi sensorData = history
+  // const [detailSensor, setDetailSensor] = React.useState(sensorData);
+
   const navigation = useNavigation();
 
   handleDevice = () => {
-    navigation.navigate('Location');
+    navigation.navigate('Location', { detailSensor: sensorData } );
   };
+
+// Define a mapping between sensor types and images
+const sensorTypeImages = {
+  smoke: require("../../assets/images/Smoke-Alarms-Smoke-Detectors.jpg"),
+  heat: require("../../assets/images/heat_sensor.jpg"),
+  gas: require("../../assets/images/gas_sensor.jpg"),
+  flame: require("../../assets/images/Flame-Sensor-Detector.jpg"),
+  // Add more types as needed
+};
+
+// Select the image based on the sensor type
+const sensorImage = sensorTypeImages[sensorData.deviceType] ;
+
+// Define a mapping between locations and floor plan images
+const locationImages = {
+  "Living Room": require("../../assets/images/Planner_Living_fire.png"),
+  'Kitchen': require("../../assets/images/Planner_Kitchen_fire.png"),
+  "Bed Room": require("../../assets/images/Planner_Bedroom_fire.png"),
+  "Bath Room": require("../../assets/images/Planner_Bathroom_fire.png"),
+  // Add more locations as needed
+};
+
+// Select the image based on the location
+const locationImage = locationImages[sensorData.location];
+
 
   return (
     <View
@@ -33,7 +61,7 @@ const Alert = ({ route }) => {
         }}
       >
         <Image
-          source={require("../../assets/images/Co2.png")}
+          source={sensorImage}
           resizeMode="center"
           style={{
             width: 55,
@@ -113,7 +141,7 @@ const Alert = ({ route }) => {
         }}
       >
         <Image
-          source={require("../../assets/images/planner.png")}
+          source={locationImage}
           
           style={{
             width: w - 40,
@@ -134,6 +162,7 @@ const Alert = ({ route }) => {
           marginVertical: h/43,
         }}
       >
+
         <TouchableOpacity
           style={{
             width: w - 250,
@@ -145,7 +174,8 @@ const Alert = ({ route }) => {
             borderWidth: 0.3,
             height: h/25,
           }}
-          // onPress={handleDevice}
+
+          onPress={handleDevice}
         >
           <Text style={styles.btnText1}>View Device</Text>
         </TouchableOpacity>

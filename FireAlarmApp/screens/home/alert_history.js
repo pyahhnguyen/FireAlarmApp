@@ -22,6 +22,7 @@ const h = Dimensions.get('screen').height;
 const AlertHistory = ({ customContainerStyle, history }) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [selectedItemData, setSelectedItemData] = React.useState(history);
+
   const handleModal = (item) => {
     setSelectedItemData(item);
     setIsModalVisible(!isModalVisible);
@@ -29,8 +30,10 @@ const AlertHistory = ({ customContainerStyle, history }) => {
 
 
   const navigation = useNavigation();
-  
+
+
   const handleDetail = () => {
+    setIsModalVisible(false);
   navigation.navigate('Alert', { sensorData: selectedItemData });
 };
 
@@ -104,6 +107,7 @@ const renderItem = ({ item }) => (
     );
   }}
 />
+
 
 
       <Modal isVisible={isModalVisible} itemData={selectedItemData}>

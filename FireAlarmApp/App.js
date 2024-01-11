@@ -13,6 +13,8 @@ import Welcome from "./screens/auth/Welcome";
 import Living from "./screens/home/roomScreen/living";
 import Bedroom from "./screens/home/roomScreen/bedroom";
 import Alert_PopUp from "./screens/Alert/pop-up_screen";
+import DetailProfile from "./screens/profile/DetailProfile";
+import EditProfile from "./screens/profile/EditProfile";
 import { COLORS } from "./constants/theme";
 const Stack = createNativeStackNavigator();
 
@@ -116,7 +118,7 @@ export default function App() {
           }}
         />
 
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Kitchen"
           component={Living}
           options={{ headerShown: true }}
@@ -129,12 +131,28 @@ export default function App() {
             headerShown: true,
         
           }}
-        /> */}
+        />
 
 
-          <Stack.Screen
+          {/* <Stack.Screen
           name="PopUp"
           component={Alert_PopUp}
+          options={{
+            headerShown: false,
+          }}
+        /> */}
+
+        <Stack.Screen
+          name="DetailProfile"
+          component={DetailProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
           options={{
             headerShown: false,
           }}

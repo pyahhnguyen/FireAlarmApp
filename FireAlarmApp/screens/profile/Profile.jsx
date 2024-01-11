@@ -18,11 +18,14 @@ import axios from "axios";
 
 const h = Dimensions.get('screen').height;
 
-
-const Profile = ({ navigation }) => {
+const Profile = () => {
   const [userData, setUserData] = useState('');
   const [userLogin, setLogin] = useState(true);
- 
+
+  const navigation = useNavigation();
+
+
+
 
 
  async function getData() {
@@ -95,7 +98,7 @@ const Profile = ({ navigation }) => {
           
           <View style={styles.menuWapper}>
 
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => navigation.navigate('DetailProfile')}>
               <View style={styles.menuItem(0.2)}>
                 <MaterialCommunityIcons
                   name="account"
