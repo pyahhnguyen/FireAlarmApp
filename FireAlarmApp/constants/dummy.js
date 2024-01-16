@@ -101,7 +101,6 @@ const chartOptions = [
 
 
 
-
 export const alertHistory = [
     
             {
@@ -135,7 +134,7 @@ export const alertHistory = [
             "status": "Alarm"
             },
 
-            
+
             {
             "deviveId": 3,
             "deviceType": "gas",
@@ -221,10 +220,7 @@ export const alertHistory = [
                 "location": "Bath Room",
                 "createdAt": "2023-11-12T14:23:00.000Z",
                 "status": "Alarm"
-            },
-        
-      
-   
+            },   
 ]
 const dummyData = {alertHistory, chartOptions};
 

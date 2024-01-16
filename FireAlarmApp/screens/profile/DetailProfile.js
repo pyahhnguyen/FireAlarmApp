@@ -6,7 +6,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const DetailProfile = () => {
+
+const DetailProfile = ({route}) => {
+  const { UserData } = route.params;
   const navigation = useNavigation();
 
   return (
@@ -39,28 +41,50 @@ const DetailProfile = () => {
         <View style={styles.userInfoContainer}>
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Name</Text>
-            <Text style={styles.infoText}>Phu Gia</Text>
+            <Text style={styles.infoText}>{UserData.name}</Text>
           </View>
 
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Email</Text>
-            <Text style={styles.infoText}>khaihung22zx@gmail.com</Text>
+            <Text style={styles.infoText}>{UserData.email}</Text>
           </View>
+
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Phone</Text>
-            <Text style={styles.infoText}>0919229544</Text>
-          </View>
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoLabel}>Address Building</Text>
-            <Text style={styles.infoText}>Centec Tower Building, No. 72-74, Nguyen Thi Minh Khai Street, Vo Thi Sau Ward, District 3, Ho Chi Minh City, Vietnam</Text>
-          </View>
-    
-          
+            <Text style={styles.infoText}>
+                {UserData.phone ? UserData.phone : '0919229544'}
+            </Text>
+            </View>
+            <View style={styles.infoContainer}>
+            <Text style={styles.infoLabel}>Building Name</Text>
+            <Text style={styles.infoText}>
+                {UserData.buildingName ? UserData.buildingName : 'Centec Tower Building'}
+            </Text>
+            </View>
+            <View style={styles.infoContainer}>
+            <Text style={styles.infoLabel}>Building Address</Text>
+            <Text style={styles.infoText}>
+                {UserData.buildingAddress ? UserData.buildingAddress : 'No. 72-74, Nguyen Thi Minh Khai Street, Vo Thi Sau Ward, District 3, Ho Chi Minh City, Vietnam'}
+            </Text>
+            </View>
+            <View style={styles.infoContainer}>
+            <Text style={styles.infoLabel}>Apartment Number</Text>
+            <Text style={styles.infoText}>
+                {UserData.apartmentNumber ? UserData.apartmentNumber : 'A202'}
+            </Text>
+            </View>
+            <View style={styles.infoContainer}>
+            <Text style={styles.infoLabel}>Apartment Floor</Text>
+            <Text style={styles.infoText}>
+                {UserData.apartmentFloor ? UserData.apartmentFloor : '3'}
+            </Text>
+            </View>
 
         </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("EditProfile")}
+        onPress={() => navigation.navigate("EditProfile", {UserData: UserData})}
+       
       >
       <View>
         <Text

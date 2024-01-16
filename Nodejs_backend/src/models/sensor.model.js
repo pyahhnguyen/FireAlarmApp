@@ -43,3 +43,7 @@ const sensorSchema = new mongoose.Schema({
       default: Date.now,
   },
 });
+
+const Sensor = mongoose.model('Sensor', sensorSchema);
+
+module.exports = Sensor;

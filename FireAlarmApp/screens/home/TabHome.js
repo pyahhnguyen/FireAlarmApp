@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect, useState}from "react";
 import {
   StyleSheet,
   Text,
@@ -19,19 +19,55 @@ import dummyData, {
 import { SIZES, FONTS } from "../../constants/theme";
 import Donut from "./donut_screen";
 import { useNavigation } from "@react-navigation/native";
-
+import axios from "axios";
 const tabs = ["Status", "News"];
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
 
 const TabHome = () => {
   const [selected, setSelected] = React.useState(0);
-  const [alertHistory, setAlertHistory] = React.useState(
-    dummyData.alertHistory
-  );
 
-  const navigation = useNavigation();
+  const [alertHistory, setAlertHistory] = React.useState(dummyData.alertHistory);
+  const [recentalert, setRecentAlert] = React.useState()
+  const [refreshing, setRefreshing] = useState(false);
+
+  const navigation = useNavigation(); 
   // ignore error  below 
+
+  // const fetchData = async () => {
+  //   try {
+  //     setRefreshing(true); // Set refreshing to true while fetching
+  //     const response = await axios.get('http://10.0.239.105:3050/api/alert', {
+  //       headers: {
+  //         'userId': '659a4e55b88b9369f584b308', // Replace with your actual header
+  //       },
+  //     });
+  //    const data = response.data;
+  //     // Convert the JSON data to an array of sensor items
+  //     const sensorArray = Object.values(data);
+  //     // Sort the array based on the triggerAt field in descending order
+  //     sensorArray.sort((a, b) => new Date(b.triggerAt) - new Date(a.triggerAt));
+  //     // Add a deviceId field based on the array index
+  //     sensorArray.forEach((sensor, index) => {
+  //         sensor.deviceId = `${index + 1}`;
+  //     });
+      
+  //     setRecentAlert(data);
+  //     console.log('Retrieved recent data:', sensorArray);
+  //   } catch (error) {
+  //     console.error('Error retrieving data:', error);
+  //   } finally {
+  //     setRefreshing(false); // Set refreshing back to false after fetching
+  //   }
+  // };
+
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+ 
+
+
   React.useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
@@ -54,7 +90,7 @@ const TabHome = () => {
       color: "#188527",
       },
       {
-      value: 10,
+      value: 8,
       color: "#fc1717",
     },
   ];
@@ -73,7 +109,7 @@ const TabHome = () => {
         }}
       >
         {/* <Text style={{ color: COLORS.black, ...FONTS.h3 }}>Recent Alerts</Text> */}
-        {/* <Donut data={data_chart} /> */}
+        <Donut data={data_chart} />
       </View>
     );
   }
@@ -83,6 +119,7 @@ const TabHome = () => {
   }
 
   const StatusContent = () => (
+
     <ScrollView>
       <View style={{ marginBottom: 250, flex: 1 }}>
         <View

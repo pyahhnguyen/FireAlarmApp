@@ -12,7 +12,6 @@ const app = express();
 const server = http.createServer(app); // Create an HTTP server
 const wss = new WebSocket.Server({ server }); // Create a WebSocket server
 
-
 // function broadcastSensorData(sensorData) {
 //   wss.clients.forEach((client) => {
 //     if (client.readyState === WebSocket.OPEN) {

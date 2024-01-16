@@ -25,6 +25,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState(""); 
   const navigation = useNavigation();
 
   const handleRegister = () => {
@@ -32,14 +33,16 @@ const Register = () => {
       name: name,
       email: email,
       password: password,
+      phone: phone, // Add the phone field here
     };
+  
     // send a post request to the backend to register the user
     axios
-      .post("http://10.0.238.60:3056/register", user)
+      .post("http://10.0.239.105:3056/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(
-          "Registration Sucessful",
+          "Registration Successful",
           "You have registered successfully. Please login to continue"
         );
         
@@ -47,15 +50,17 @@ const Register = () => {
         setName("");
         setEmail("");
         setPassword("");
+        setPhone(""); // Clear the phone field after registration
       })
       .catch((err) => {
         Alert.alert(
           "Registration Failed",
-          "an error occured while registering. Please try again"
+          "An error occurred while registering. Please try again"
         );
-        console.log("registration failed", err);
+        console.log("Registration failed", err);
       });
   };
+  
 
 
 
@@ -149,6 +154,39 @@ const Register = () => {
             />
           </View>
         </View>
+        <HeightSpace height={30} />
+
+<View>
+  <View
+    style={{
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+      backgroundColor: "#CDCFCE",
+      paddingVertical: 5,
+      borderRadius: 5,
+    }}
+  >
+    <MaterialIcons
+      style={{ marginLeft: 10 }}
+      name="local-phone"
+      size={24}
+      color="gray"
+    />
+    <TextInput
+      value={phone}
+      onChangeText={(text) => setPhone(text)}
+      style={{
+        marginLeft: 10,
+        width: 300,
+        color: "gray",
+        marginVertical: 10,
+        fontSize: phone ? 16 : 16,
+      }}
+      placeholder="Enter your phone number"
+    />
+  </View>
+</View>
 
         <HeightSpace height={30} />
 

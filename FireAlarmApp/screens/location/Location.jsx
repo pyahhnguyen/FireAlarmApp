@@ -5,12 +5,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  FlatList,
-  
+  FlatList, 
   
 } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../constants/theme";
+import {alertHistory} from "../../constants/dummy";
+
 
 import { FontAwesome } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler"; 
@@ -20,9 +21,9 @@ const h = Dimensions.get("screen").height;
 
 const Location = ({ route }) => {
 
-const { detailSensor } = route.params;
+const { detailSensor } = route.params || { detailSensor: null };
 
-
+const defaultDetailData = detailSensor || alertHistory[0];
 
 // Define a mapping between locations and floor plan images
 const locationImages = {
@@ -34,9 +35,7 @@ const locationImages = {
 };
 
 // Select the image based on the location
-const locationImage = locationImages[detailSensor.location];
-
-
+const locationImage = locationImages[detailSensor && detailSensor.location ? detailSensor.location : defaultDetailData.location];
 
   const renderItem = ({ item, index }) => {
     return (
@@ -81,7 +80,7 @@ const locationImage = locationImages[detailSensor.location];
             marginHorizontal: 10,
             borderRadius: 10,
             marginVertical: 10,
-            marginBottom: 50,
+            marginBottom: 20,
           }}
         >
           <View style={{ flexDirection: "row", marginTop: 15 }}>
@@ -90,8 +89,8 @@ const locationImage = locationImages[detailSensor.location];
               <Text style={styles.header}>Location Code.</Text>
             </View>
             <View>
-              <Text style={styles.content}>{detailSensor.location}</Text>
-              <Text style={styles.content}>{detailSensor.location}</Text>
+              <Text style={styles.content}>{detailSensor && detailSensor.location ? detailSensor.location : defaultDetailData.location}</Text>
+              <Text style={styles.content}>{detailSensor && detailSensor.location ? detailSensor.location : defaultDetailData.location}</Text>
             </View>
 
             <View style={styles.icon}>

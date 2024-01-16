@@ -19,16 +19,19 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     verificationToken: String,
-    info: [
-        {
-          mobileNo: String,
-          address: {
+
+    phone: {
+        type: String,
+        // required: true,
+    },
+
+    address: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Building',
-            required: true,
-          },
-        },
-      ],
+            // Remove the 'required: true' option to make it optional
+    },
+     
+
     createdAt: {
         type: Date,
         default: Date.now,

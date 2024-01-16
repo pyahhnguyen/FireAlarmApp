@@ -6,7 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
 import HeightSpace from "../../components/Reusable/HeightSpace";
 import { COLORS, SIZES } from "../../constants/theme";
@@ -15,7 +15,10 @@ import { TextInput } from "react-native-gesture-handler";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Welcome = () => {
+
   const navigation = useNavigation();
   return (
     <SafeAreaView

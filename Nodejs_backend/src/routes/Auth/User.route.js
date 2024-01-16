@@ -4,21 +4,18 @@ const mongoose = require("mongoose");
 const crypto = require("crypto"); 
 const router = express.Router();
 const nodemailer = require("nodemailer");
-
 const User = require("../../models/user.model");
+const Building = require("../../models/building.model");
+const Apartment = require("../../models/apartment.model");
+const Room = require("../../models/room.model");
 const jwt = require("jsonwebtoken");  
 const bcrypt = require("bcryptjs");
 
-
-
-
 // Function to send verification email
-
 const sendVerificationEmail = async (email, verificationToken) => {
   // create a node mailer transporter
   const transporter = nodemailer.createTransport({
     //configuring the email service
-
     service: "gmail",
     auth: {
       user: "phugiazx44@gmail.com",
@@ -26,12 +23,13 @@ const sendVerificationEmail = async (email, verificationToken) => {
     },
   });
 
+
   // compose the email
   const mailOptions = {
     from: "SafeGuard.com",
     to: email,
     subject: "Email verification",
-    text: `Please click on the link to verify your email: http://10.0.238.60:3056/verify/${verificationToken}`,
+    text: `Please click on the link to verify your email: http://10.0.239.105:3056/verify/${verificationToken}`,
   };
 
   // send the email
@@ -41,11 +39,12 @@ const sendVerificationEmail = async (email, verificationToken) => {
     console.log("Error in sending email: ", error);
   }
 };
-// xem laij phan nay link:https://www.youtube.com/watch?v=dfoZj7DPSAs phuts 1:10:01
+
+// xem laij phan nay link:https://www.youtube.com/watch?v=dfoZj7DPSAs 
 
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password , phone } = req.body;
 
     // Check if user exists
     const existingUser = await User.findOne({email});
@@ -54,7 +53,7 @@ router.post("/register", async (req, res) => {
     }
 
     // Create a new user
-    const newUser = new User({name, email, password});
+    const newUser = new User({name, email, password, phone});
 
     // Generate a verification token
     newUser.verificationToken = crypto.randomBytes(16).toString("hex");
@@ -128,19 +127,14 @@ router.post("/login", async (req, res) => {
     // }
 
     // Generate a JWT token
-    const token = jwt.sign({ userId: user._id, email: user.email }, secretKey, { expiresIn: '2m' });
-
+    const token = jwt.sign({ userId: user._id, email: user.email }, secretKey, { expiresIn: '7d' });
 
     res.status(200).json({ message: "Login successful", token });
-
   } catch (err) {
     console.error("Error in login:", err);
     res.status(500).json({ message: "Login failed" });
   }
 });
-
-
-
 
 router.post("/userdata", async (req, res) => {
   const { token } = req.body;
@@ -155,4 +149,72 @@ router.post("/userdata", async (req, res) => {
     return res.send({ error: error });
   }
 });
+
+router.get("/userinfo", async (req, res) => {
+  const { userID } = req.query;
+
+  console.log('Received userID:', userID);
+
+  try {
+    const userInfo = await User.findById(userID);
+
+    console.log('User Info:', userInfo);
+
+    if (userInfo) {
+      return res.send({ status: "Ok", data: userInfo });
+    } else {
+      return res.send({ status: "User not found" });
+    }
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+    return res.status(500).send({ error: 'Internal Server Error' });
+  }
+});
+
+// error 500 
+router.put("/editprofile", async (req, res) => {
+  const { userId, name, phone, buildingName, buildingAddress, apartmentNo, apartmentFloor } = req.body;
+
+  try {
+    // Update the user profile
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { name: name, phone: phone },
+      { new: true, upsert: true }
+    );
+
+   // Update or create the Building
+   const updatedBuilding = await Building.findOneAndUpdate(
+    { buildingName: buildingName },
+    { buildingName: buildingName,address: buildingAddress },
+    { new: true, upsert: true }
+  );
+
+
+  const updatedApartment = await Apartment.findOneAndUpdate(
+    { owner: userId, building: updatedBuilding._id },
+    { apartmentNo: apartmentNo, floor: apartmentFloor },
+    { new: true, upsert: true }
+  );
+  
+    // Update the user with the new Building reference
+    updatedUser.address = updatedBuilding._id;
+    await updatedUser.save();
+    // await updatedApartment.save();
+    // await updatedBuilding.save();
+
+    res.json({
+      success: true,
+      user: updatedUser,
+      building: updatedBuilding,
+      apartment: updatedApartment,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+
+
 module.exports = router;

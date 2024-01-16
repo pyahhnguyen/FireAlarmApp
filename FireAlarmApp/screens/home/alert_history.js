@@ -37,6 +37,8 @@ const AlertHistory = ({ customContainerStyle, history }) => {
   navigation.navigate('Alert', { sensorData: selectedItemData });
 };
 
+
+
 const renderItem = ({ item }) => (
   <TouchableOpacity
     style={{
@@ -88,25 +90,27 @@ const renderItem = ({ item }) => (
         ...customContainerStyle,
       }}
     >
-    <FlatList
-  contentContainerStyle={{}}
-  scrollEnabled={true}
-  data={history}
-  keyExtractor={(item) => `${item.deviveId}`}  // Update to deviveId
-  renderItem={renderItem}
-  showsVerticalScrollIndicator={false}
-  ItemSeparatorComponent={() => {
-    return (
-      <View
-        style={{
-          width: "100%",
-          height: 1,
-          backgroundColor: COLORS.gray,
-        }}
+          <FlatList
+        contentContainerStyle={{}}
+        scrollEnabled={true}
+        data={history}
+        keyExtractor={(item) => `${item.deviveId}`}  // Update to deviveId
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={ () => {
+          return (
+            <View
+              style={{
+                width: "100%",
+                height: 1,
+                backgroundColor: COLORS.gray,
+              }}
+            />
+          );
+        }
+        
+        }
       />
-    );
-  }}
-/>
 
 
 
@@ -130,6 +134,7 @@ const renderItem = ({ item }) => (
 
           <Modal.Footer>
             <View
+
               style={{
                 justifyContent: "center",
                 alignItems: "center",

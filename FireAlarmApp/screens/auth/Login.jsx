@@ -27,29 +27,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     try {
-  //       const token = await AsyncStorage.getItem("authToken");
-
-  //       if (token) {
-  //         navigation.replace("Bottom");
-  //       }
-  //     } catch (err) {
-  //       console.log("error message", err);
-  //     }
-  //   };
-  //   checkLoginStatus();
-  // }, [])
-
-
   const handleLogin = () => {
     const user = {
       email: email,
       password: password,
     };
     axios
-      .post("http://10.0.238.60:3056/login", user)
+      .post("http://10.0.239.105:3056/login", user)
       .then((response) => {
         console.log(response);
         const token = response.data.token;

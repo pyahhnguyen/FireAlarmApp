@@ -24,32 +24,48 @@ const Profile = () => {
 
   const navigation = useNavigation();
 
-
-
-
-
- async function getData() {
-    const token = await AsyncStorage.getItem('authToken');
-    console.log(token);
-    axios
-      .post('http://10.0.238.60:3056/userdata', {token: token})
-      .then(res => {
-        console.log(res.data);
-        setUserData(res.data.data);
-     
-      });
+  async function getData() {
+    try {
+      const token = await AsyncStorage.getItem('authToken');
+      console.log(token);
+  
+      if (token) {
+        axios.post('http://10.0.239.105:3056/userdata', { token })
+          .then(res => {
+            console.log(res.data); // Log kết quả trả về từ API để kiểm tra
+            
+            if (res.data && res.data.data && res.data.data.email) {
+              // Kiểm tra và log dữ liệu email
+              console.log('Email:', res.data.data.email);
+  
+              // Cập nhật state
+              setUserData(res.data.data);
+            } else {
+              console.error('Email not found in API response');
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching user data:', error);
+          });
+      }
+    } catch (error) {
+      console.error('Error retrieving token from AsyncStorage:', error);
+    }
   }
+  
 
-  useEffect(() => {
-    getData();
-  }, []);
-
+    useEffect(() => {
+     
+      getData();
+    }, []);
 
   const logout = () => {
     clearAuthToken();
   };
+
   const clearAuthToken = async () => {
     await AsyncStorage.removeItem("authToken");
+    await AsyncStorage.setItem("isLoggedIn", JSON.stringify(false));
     console.log("auth token cleared");
     navigation.replace("Login");
   };
@@ -98,7 +114,8 @@ const Profile = () => {
           
           <View style={styles.menuWapper}>
 
-            <TouchableOpacity onPress={() => navigation.navigate('DetailProfile')}>
+            <TouchableOpacity onPress={() => navigation.navigate('DetailProfile', {UserData: userData})}>
+
               <View style={styles.menuItem(0.2)}>
                 <MaterialCommunityIcons
                   name="account"

@@ -16,4 +16,6 @@ const buildingSchema = new mongoose.Schema({
     },
 });
 
-export default mongoose.model('Building', buildingSchema);  
+const Building = mongoose.model('Building', buildingSchema);
+
+module.exports = Building;

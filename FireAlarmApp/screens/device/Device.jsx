@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View, useState , Image, Dimensions,TouchableOpacity, Button} from 'react-native'
-import React from 'react'
+import React , {useEffect}from 'react'
 import { FlatList } from 'react-native-gesture-handler';
 import { COLORS,SIZES } from '../../constants/theme';
-
+import axios from 'axios';
 
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
 const Device = () => {
+  
+
+
     // const [sensors, setSensors] = useState(SENSOR_LIST);
     const renderItem = ({item, index }) => {
       return (

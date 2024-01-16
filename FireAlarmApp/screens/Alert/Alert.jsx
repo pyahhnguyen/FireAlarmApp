@@ -2,12 +2,17 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "rea
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../constants/theme";
 import { useNavigation } from "@react-navigation/native";
+import {alertHistory} from "../../constants/dummy";
 
-const Alert = ({ route }) => {
-  const { sensorData } = route.params;
 
-  const w = Dimensions.get('screen').width;
+
+const Alert = ({ route}) => {
+  const { sensorData } = route.params || { sensorData: null };
+
+  const defaultSensorData = sensorData || alertHistory[0];
+  const w = Dimensions.get('screen').width;;
   const h = Dimensions.get('screen').height;
+
 
   // // truyen data đi sensorData = history
   // const [detailSensor, setDetailSensor] = React.useState(sensorData);
@@ -28,7 +33,7 @@ const sensorTypeImages = {
 };
 
 // Select the image based on the sensor type
-const sensorImage = sensorTypeImages[sensorData.deviceType] ;
+const sensorImage = sensorTypeImages[sensorData && sensorData.deviceType ? sensorData.deviceType : defaultSensorData.deviceType];
 
 // Define a mapping between locations and floor plan images
 const locationImages = {
@@ -40,7 +45,7 @@ const locationImages = {
 };
 
 // Select the image based on the location
-const locationImage = locationImages[sensorData.location];
+const locationImage = locationImages[sensorData && sensorData.location? sensorData.location : defaultSensorData.location];
 
 
   return (
@@ -73,9 +78,9 @@ const locationImage = locationImages[sensorData.location];
         />
 
         <View style={{ flex: 1, marginLeft: SIZES.radius, marginBottom: 15 }}>
-          <Text style={{ color: COLORS.black, fontSize: 16, fontWeight:'bold' }}>{sensorData.deviceName.name}</Text>
+          <Text style={{ color: COLORS.black, fontSize: 16, fontWeight:'bold' }}>{sensorData && sensorData.deviceName.name? sensorData.deviceName.name : defaultSensorData.deviceName.name}</Text>
           <Text style={{ color: COLORS.black,  fontSize: 16 }}>
-            {sensorData.createdAt}
+            {sensorData && sensorData.createdAt? sensorData.createdAt : defaultSensorData.createdAt}
           </Text>
         </View>
 
@@ -90,7 +95,7 @@ const locationImage = locationImages[sensorData.location];
           <Text
             style={{ color: COLORS.black, ...FONTS.h4, marginBottom: 20 }}
           >
-            {sensorData.status}
+            {sensorData &&sensorData.status? sensorData.status : defaultSensorData.status}
           </Text>
           <Text style={{ color: COLORS.black, ...FONTS.h4, marginTop: 5 }}>
             Set
@@ -104,8 +109,8 @@ const locationImage = locationImages[sensorData.location];
           <Text style={styles.header}>Code.</Text>
         </View>
         <View>
-          <Text style={styles.content}>{sensorData.deviceName.ModelNo}</Text>
-          <Text style={styles.content}>{sensorData.deviceName.Code}</Text>
+          <Text style={styles.content}>{sensorData && sensorData.deviceName.ModelNo? sensorData.deviceName.ModelNo : defaultSensorData.deviceName.ModelNo}</Text>
+          <Text style={styles.content}>{sensorData && sensorData.deviceName.Code? sensorData.deviceName.Code : defaultSensorData.deviceName.Code}</Text>
         </View>
       </View>
 

@@ -1,26 +1,117 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { useFonts } from "expo-font";
-import { useCallback } from "react";
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Home, Onboarding } from "./screens";
-import { SplashScreen } from "./screens";
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { useFonts } from "expo-font";
 import BottomTabNavigation from "./navigation/BottomTabNavigation";
+import { Home, Onboarding } from "./screens";
 import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Welcome from "./screens/auth/Welcome";
 import Living from "./screens/home/roomScreen/living";
-import Bedroom from "./screens/home/roomScreen/bedroom";
-import Alert_PopUp from "./screens/Alert/pop-up_screen";
 import DetailProfile from "./screens/profile/DetailProfile";
 import EditProfile from "./screens/profile/EditProfile";
+import Popup_socket from "./screens/Alert/pop-up-alert";
 import { COLORS } from "./constants/theme";
+import Entypo from '@expo/vector-icons/Entypo';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import { Platform } from 'react-native';
+import { Linking } from 'react-native';
+
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = await Notifications.getExpoPushTokenAsync({
+      projectId: Constants.expoConfig.extra.eas.projectId,
+    });
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  return token.data;
+}
+
 const Stack = createNativeStackNavigator();
 
-
-
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        await Font.loadAsync(Entypo.font);
+        // Artificially delay for two seconds to simulate a slow loading
+        // experience. Please remove this if you copy and paste the code!
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
   const [fontsLoaded] = useFonts({
     regular: require("./assets/fonts/regular.otf"),
     bold: require("./assets/fonts/bold.otf"),
@@ -33,7 +124,6 @@ export default function App() {
     medium_poppins: require("./assets/fonts/Poppins-Medium.ttf"),
     xtrabold_poppins: require("./assets/fonts/Poppins-ExtraBold.ttf"),
     semibold_poppins: require("./assets/fonts/Poppins-SemiBold.ttf"),
-
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -42,11 +132,12 @@ export default function App() {
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
+  if (!appIsReady) {
     return null;
   }
-
   return (
+
+
     <NavigationContainer>
       <Stack.Navigator>
 
@@ -107,7 +198,7 @@ export default function App() {
       
         <Stack.Screen
           name="Bedroom"
-          component={Bedroom}
+          component={Living}
           options={{
             headerShown: true,
             headerTitleAlign: 'center',
@@ -126,21 +217,20 @@ export default function App() {
       
         <Stack.Screen
           name="Bathroom"
-          component={Bedroom}
+          component={Living}
           options={{
             headerShown: true,
         
           }}
         />
 
-
-          {/* <Stack.Screen
+          <Stack.Screen
           name="PopUp"
-          component={Alert_PopUp}
+          component={Popup_socket}
           options={{
             headerShown: false,
           }}
-        /> */}
+        />
 
         <Stack.Screen
           name="DetailProfile"
