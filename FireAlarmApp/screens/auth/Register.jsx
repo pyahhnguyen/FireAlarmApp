@@ -20,6 +20,7 @@ import { TextInput } from "react-native-gesture-handler";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import Octicons from "react-native-vector-icons/Octicons";
 import axios from "axios";
+import Constants from 'expo-constants';
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -27,6 +28,8 @@ const Register = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState(""); 
   const navigation = useNavigation();
+  const apiHost = Constants.manifest.extra.API_HOST || '10.0.239.105';
+
 
   const handleRegister = () => {
     const user = {
@@ -38,7 +41,7 @@ const Register = () => {
   
     // send a post request to the backend to register the user
     axios
-      .post("http://10.0.239.105:3056/register", user)
+      .post(`http://${apiHost}:3056/register`, user)
       .then((response) => {
         console.log(response);
         Alert.alert(
@@ -74,7 +77,6 @@ const Register = () => {
           source={require("../../assets/images/firefighter.png")}
         />
       </View>
-
       <HeightSpace height={30} />
       <KeyboardAvoidingView>
         <View style={{ alignItems: "center" }}>

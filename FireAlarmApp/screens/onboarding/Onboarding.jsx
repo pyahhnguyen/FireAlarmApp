@@ -9,25 +9,22 @@ const Onboarding = () => {
 
     const navigation = useNavigation();
     // Trong Splash Screen hoặc màn hình đầu tiên được hiển thị
-    useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
+  //   useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
   
-        if (isLoggedIn && JSON.parse(isLoggedIn)) {
-          // Người dùng đã đăng nhập, chuyển đến màn hình chính
-          navigation.replace("Bottom");
-        } else {
-          // Người dùng chưa đăng nhập, chuyển đến màn hình đăng nhập
-          navigation.replace("Welcome");
-        }
-      } catch (err) {
-        console.log("Error checking login status:", err);
-      }
-    };
+  //       if (isLoggedIn && JSON.parse(isLoggedIn)) {
+  //         // Người dùng đã đăng nhập, chuyển đến màn hình chính
+  //         navigation.replace("Bottom");
+  //       }
+  //     } catch (err) {
+  //       console.log("Error checking login status:", err);
+  //     }
+  //   };
   
-    checkLoginStatus();
-  }, []);
+  //   checkLoginStatus();
+  // }, []);
   
 
     const slides = [

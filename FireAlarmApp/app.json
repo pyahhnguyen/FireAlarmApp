@@ -7,8 +7,8 @@
     "icon": "./assets/images/icons/splashicon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/icons/ffffff.png",
-      "resizeMode": "cover",
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -31,8 +31,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16"
-      }
+        "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16" 
+      },
+      "API_HOST": "10.0.239.105"
     }
   }
 }

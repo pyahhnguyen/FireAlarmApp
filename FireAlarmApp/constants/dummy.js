@@ -102,125 +102,115 @@ const chartOptions = [
 
 
 export const alertHistory = [
-    
-            {
-            "deviveId": 1,
-            "deviceType": "smoke",
-            "deviceName": {
-                "name": "Smoke Sensor",
-                "ModelNo": "SW-GS529N",
-                "Code": "SW-13"
-                        },
-            "deviceDescription": "Smoke Detected",
-            "deviceData": 2,
-            "location": "Living Room",
-            "createdAt": "2023-11-12T14:20:00.000Z",  
-            "status": "Alarm"
-            },
-
-
-            {
-            "deviveId": 2,
-            "deviceType": "heat",
-            "deviceName": {
-                "name": "Heat Sensor ",
-                "ModelNo": "HW-GS153N",
-                "Code": "HW-11"
-            },
-            "deviceDescription": "Heat Detected",
-            "deviceData": 3,
-            "location": "Kitchen",
-            "createdAt": "2023-11-12T14:21:00.000Z",
-            "status": "Alarm"
-            },
-
-
-            {
-            "deviveId": 3,
-            "deviceType": "gas",
-            "deviceName": {
-                "name": "Gas Sensor",
-                "ModelNo": "GW-GS529N",
-                "Code": "GW-15"
-            },
-            "deviceDescription": "Gas Detected",
-            "deviceData": 1,
-            "location": "Bed Room",
-            "createdAt": "2023-11-12T14:22:00.000Z",
-            "status": "Alarm"
-            },
-
-            {
-            "deviveId": 4,
-            "deviceType": "flame",
-            "deviceName": {
-                "name": "Flame Sensor",
-                "ModelNo": "FW-GS529N",
-                "Code": "FW-16"
-            },
-            "deviceDescription": "Flame Detected",
-            "deviceData": 4,
-            "location": "Bath Room",
-            "createdAt": "2023-11-12T14:23:00.000Z",
-            "status": "Alarm"
-            },
-            {
-            
-                "deviveId": 5,
-                "deviceType": "smoke",
-                "deviceName": {
-                "name": "Smoke Sensor",
-                "ModelNo": "SW-GS529N",
-                "Code": "SW-13"
-                },
-                "deviceDescription": "Smoke Detected",
-                "deviceData": 2,
-                "location": "Living Room",
-                "createdAt": "2023-11-12T14:20:00.000Z",  
-                "status": "Alarm"
-            },
-            {
-                "deviveId": 6,
-                "deviceType": "heat",
-                "deviceName": {
-                "name": "Heat Sensor ",
-                "ModelNo": "HW-GS153N",
-                "Code": "HW-11"
-                },
-                "deviceDescription": "Heat Detected",
-                "deviceData": 3,
-                "location": "Kitchen",
-                "createdAt": "2023-11-12T14:21:00.000Z",
-                "status": "Alarm"
-            },
-            {
-                "deviveId": 7,
-                "deviceType": "gas",
-                "deviceName": {
-                "name": "Gas Sensor",
-                "ModelNo": "GW-GS529N",
-                "Code": "GW-15"
-                },
-                "deviceDescription": "Gas Detected",
-                "deviceData": 1,
-                "location": "Bed Room",
-                "createdAt": "2023-11-12T14:22:00.000Z",
-                "status": "Alarm"
-            },
-            {
-                "deviveId": 8,
-                "deviceType": "flame",
-                "deviceName": {
-                "name": "Flame Sensor",
-                "ModelNo": "FW-GS529N",
-                "Code": "FW-16"
-                },
-                "deviceDescription": "Flame Detected",
-                "deviceData": 4,
-                "location": "Bath Room",
-                "createdAt": "2023-11-12T14:23:00.000Z",
-                "status": "Alarm"
-            },   
+  
+  
+    {
+      "deviceId": 1,
+      "deviceType": "Smoke Detector",
+      "name": "Smoke Sensor",
+      "ModelNo": "SW-GS529N",
+      "Code": "SW-13",
+      "deviceDescription": "Smoke Detected",
+      "deviceData": 2,
+      "location": "Living Room",
+      "resolveAt": "2024-01-15T19:23:17.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:23:17.405Z"
+    },
+    {
+      "deviceId": 2,
+      "deviceType": "Heat Detector",
+      "name": "Heat Sensor",
+      "ModelNo": "HW-GS153N",
+      "Code": "HW-11",
+      "deviceDescription": "Heat Detected",
+      "deviceData": 3,
+      "location": "Kitchen",
+      "resolveAt": "2024-01-15T19:21:10.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:21:10.405Z"
+    },
+    {
+      "deviceId": 3,
+      "deviceType": "Gas Detector",
+      "name": "Gas Sensor",
+      "ModelNo": "GW-GS529N",
+      "Code": "GW-15",
+      "deviceDescription": "Gas Detected",
+      "deviceData": 1,
+      "location": "Bed Room",
+      "resolveAt": "2024-01-15T19:20:17.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:20:17.405Z"
+    },
+    {
+      "deviceId": 4,
+      "deviceType": "Flame Detector",
+      "name": "Flame Sensor",
+      "ModelNo": "FW-GS529N",
+      "Code": "FW-16",
+      "deviceDescription": "Flame Detected",
+      "deviceData": 4,
+      "location": "Bath Room",
+      "resolveAt": "2024-01-15T19:18:08.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:18:10.405Z"
+    },
+    {
+      "deviceId": 5,
+      "deviceType": "Smoke Detector",
+      "name": "Smoke Sensor",
+      "ModelNo": "SW-GS529N",
+      "Code": "SW-13",
+      "deviceDescription": "Smoke Detected",
+      "deviceData": 2,
+      "location": "Living Room",
+      "resolveAt": "2024-01-15T19:17:09.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:17:09.405Z"
+    },
+    {
+      "deviceId": 6,
+      "deviceType": "Heat Detector",
+      "name": "Heat Sensor",
+      "ModelNo": "HW-GS153N",
+      "Code": "HW-11",
+      "deviceDescription": "Heat Detected",
+      "deviceData": 3,
+      "location": "Kitchen",
+      "resolveAt": "2024-01-15T19:15:17.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:15:17.405Z"
+    },
+    {
+      "deviceId": 7,
+      "deviceType": "Gas Detector",
+      "name": "Gas Sensor",
+      "ModelNo": "GW-GS529N",
+      "Code": "GW-15",
+      "deviceDescription": "Gas Detected",
+      "deviceData": 1,
+      "location": "Bed Room",
+      "resolveAt": "2024-01-15T19:12:11.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:12:11.405Z"
+    },
+    {
+      "deviceId": 8,
+      "deviceType": "Flame Detector",
+      "name": "Flame Sensor",
+      "ModelNo": "FW-GS529N",
+      "Code": "FW-16",
+      "deviceDescription": "Flame Detected",
+      "deviceData": 4,
+      "location": "Bath Room",
+      "resolveAt": "2024-01-15T19:10:08.405Z",
+      "status": "Alarm",
+      "triggerAt": "2024-01-15T19:10:06.405Z"
+    }
+  
+  
+      
 ]
 const dummyData = {alertHistory, chartOptions};
 

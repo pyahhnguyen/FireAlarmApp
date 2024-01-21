@@ -15,12 +15,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-
+import Constants from 'expo-constants';
 const h = Dimensions.get('screen').height;
 
 const Profile = () => {
   const [userData, setUserData] = useState('');
   const [userLogin, setLogin] = useState(true);
+  const apiHost = Constants.manifest.extra.API_HOST || 'localhost'
 
   const navigation = useNavigation();
 
@@ -30,7 +31,7 @@ const Profile = () => {
       console.log(token);
   
       if (token) {
-        axios.post('http://10.0.239.105:3056/userdata', { token })
+        axios.post(`http://${apiHost}:3056/userdata`, { token })
           .then(res => {
             console.log(res.data); // Log kết quả trả về từ API để kiểm tra
             

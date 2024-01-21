@@ -19,7 +19,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
-import { Linking } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 Notifications.setNotificationHandler({
@@ -68,29 +68,12 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-
-  useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
-
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-
 
 
   useEffect(() => {
@@ -111,6 +94,39 @@ export default function App() {
 
     prepare();
   }, []);
+
+
+  // Check authentication state on app startup
+  useEffect(() => {
+    // Retrieve authentication state from storage
+    const checkAuthentication = async () => {
+      const storedLoggedInStatus = await AsyncStorage.getItem('isLoggedIn');
+      setIsLoggedIn(storedLoggedInStatus === 'true');
+    };
+
+    checkAuthentication();
+  }, []);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+      const { navigation } = response.notification.request.content.data;
+      if (navigation && navigation.screenToOpen) {
+        navigation.navigate(navigation.screenToOpen);
+      }
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
 
   const [fontsLoaded] = useFonts({
     regular: require("./assets/fonts/regular.otf"),
@@ -139,35 +155,30 @@ export default function App() {
 
 
     <NavigationContainer>
-      <Stack.Navigator>
-
-        <Stack.Screen
-          name="Onboard"
-          component={Onboarding}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
+    <Stack.Navigator>
+      {isLoggedIn ? (
+        <>
+           <Stack.Screen
           name="Bottom"
           component={BottomTabNavigation}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="Living"
+            component={Living}
+            options={{
+              headerShown: true,
+              headerTitle: "Living Room",
+              headerTitleAlign: 'center',
+              headerStyle: {
+                backgroundColor: COLORS.background,
+                borderBottomRightRadius: 50,
+                borderBottomLeftRadius: 50,
+              },
+            }}
+          />
 
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
+          <Stack.Screen
           name="Home"
           component={Home}
           options={{ 
@@ -177,26 +188,8 @@ export default function App() {
              
               
             }, }}
-        />
-
-        <Stack.Screen
-          name="Living"
-          component={Living}
-          options={{ 
-            headerShown: true, 
-            headerTitle: "Living Room",
-            headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: COLORS.background,
-              borderBottomRightRadius: 50,
-              borderBottomLeftRadius: 50,
-              
-            },
-            
-          }}
-        />
-      
-        <Stack.Screen
+           />
+           <Stack.Screen
           name="Bedroom"
           component={Living}
           options={{
@@ -247,10 +240,54 @@ export default function App() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+              <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ headerShown: false }}
+          />
+          
+
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="Onboard"
+            component={Onboarding}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+          name="Bottom"
+          component={BottomTabNavigation}
+          options={{ headerShown: false }}
+        />
+          {/* Add other screens for non-logged-in users */}
+        </>
+      )}
+    </Stack.Navigator>
+  </NavigationContainer>
 
 
-
-      </Stack.Navigator>
-    </NavigationContainer>
+   
   );
 }
+

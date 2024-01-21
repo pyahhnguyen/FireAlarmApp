@@ -20,12 +20,14 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import axios from "axios";  
-
+import Constants from 'expo-constants';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const apiHost = Constants.manifest.extra.API_HOST || '10.0.239.105';
+
 
   const handleLogin = () => {
     const user = {
@@ -33,7 +35,7 @@ const Login = () => {
       password: password,
     };
     axios
-      .post("http://10.0.239.105:3056/login", user)
+      .post(`http://${apiHost}:3056/login`, user)
       .then((response) => {
         console.log(response);
         const token = response.data.token;

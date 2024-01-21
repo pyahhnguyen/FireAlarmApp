@@ -61,7 +61,7 @@ const renderItem = ({ item }) => (
       <Text style={{ ...FONTS.h4, color: COLORS.primary }}>
         {item.deviceDescription}
       </Text>
-      <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.createdAt}</Text>
+      <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.triggerAt}</Text>
     </View>
 
     <View
@@ -94,7 +94,7 @@ const renderItem = ({ item }) => (
         contentContainerStyle={{}}
         scrollEnabled={true}
         data={history}
-        keyExtractor={(item) => `${item.deviveId}`}  // Update to deviveId
+        keyExtractor={(item) => `${item.deviceId}`}  // Update to deviveId
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={ () => {
@@ -116,7 +116,7 @@ const renderItem = ({ item }) => (
 
       <Modal isVisible={isModalVisible} itemData={selectedItemData}>
         <Modal.Container>
-        <Modal.ID title={` Detector #${selectedItemData.deviveId} `} />
+        <Modal.ID title={` Detector #${selectedItemData.deviceId} `} />
         <Modal.Header title={selectedItemData.deviceDescription ? selectedItemData.deviceDescription.toUpperCase() : ''} />
           <Modal.Body>
             <Image

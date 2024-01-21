@@ -32,39 +32,8 @@ const TabHome = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const navigation = useNavigation(); 
-  // ignore error  below 
-
-  // const fetchData = async () => {
-  //   try {
-  //     setRefreshing(true); // Set refreshing to true while fetching
-  //     const response = await axios.get('http://10.0.239.105:3050/api/alert', {
-  //       headers: {
-  //         'userId': '659a4e55b88b9369f584b308', // Replace with your actual header
-  //       },
-  //     });
-  //    const data = response.data;
-  //     // Convert the JSON data to an array of sensor items
-  //     const sensorArray = Object.values(data);
-  //     // Sort the array based on the triggerAt field in descending order
-  //     sensorArray.sort((a, b) => new Date(b.triggerAt) - new Date(a.triggerAt));
-  //     // Add a deviceId field based on the array index
-  //     sensorArray.forEach((sensor, index) => {
-  //         sensor.deviceId = `${index + 1}`;
-  //     });
-      
-  //     setRecentAlert(data);
-  //     console.log('Retrieved recent data:', sensorArray);
-  //   } catch (error) {
-  //     console.error('Error retrieving data:', error);
-  //   } finally {
-  //     setRefreshing(false); // Set refreshing back to false after fetching
-  //   }
-  // };
 
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
  
 
 
@@ -85,14 +54,9 @@ const TabHome = () => {
 
 
   const data_chart = [
-    {
-      value: 5,
-      color: "#188527",
-      },
-      {
-      value: 8,
-      color: "#fc1717",
-    },
+    { value: 3, color: 'red' },
+    { value: 5, color: 'green' },
+  // ... other data entries
   ];
 
   
@@ -104,14 +68,21 @@ const TabHome = () => {
           padding: 20,
           borderRadius: 5,
           backgroundColor: COLORS.white,
-          alignItems: "center",
-          justifyContent: "center",
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',  // Thêm thuộc tính flexDirection để sắp xếp theo chiều ngang
         }}
       >
-        {/* <Text style={{ color: COLORS.black, ...FONTS.h3 }}>Recent Alerts</Text> */}
+        <View style={{ alignItems: 'center' , marginHorizontal:10}}>
+          <Text  style={{ color: COLORS.green, }}>Normal: {data_chart[1].value} </Text>
+        </View>
         <Donut data={data_chart} />
+        <View style={{ alignItems: 'center',marginHorizontal:10 }}>
+          <Text style={{ color: COLORS.red  }}>Alert:  {data_chart[0].value} </Text>
+        </View>
       </View>
     );
+    
   }
 
   function renderAlertHistory() {

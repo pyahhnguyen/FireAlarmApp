@@ -20,6 +20,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Welcome = () => {
 
   const navigation = useNavigation();
+
+  
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
