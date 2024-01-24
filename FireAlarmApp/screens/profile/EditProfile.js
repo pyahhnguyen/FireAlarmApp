@@ -15,9 +15,13 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import axios from 'axios';
+import Constants from 'expo-constants';
+
 const EditProfile = ({route}) => {
     const {UserData} = route.params;
     const navigation = useNavigation();
+    const apiHost = Constants.manifest.extra.API_HOST || 'localhost'
+
   // State variables to hold updated information
 
     const [name, setName] = useState(UserData.name);
@@ -36,7 +40,7 @@ const EditProfile = ({route}) => {
   const handleUpdateProfile = async () => {
     try {
       const response = await axios.put(
-        "http://10.0.239.105:3056/editprofile",
+        `http://${apiHost}:3056/editprofile`,
         {
           userId: UserData._id, // Assuming UserData has _id property
           name:name,

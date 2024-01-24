@@ -54,7 +54,7 @@ const TabHome = () => {
 
 
   const data_chart = [
-    { value: 3, color: 'red' },
+    { value: 1, color: 'red' },
     { value: 5, color: 'green' },
   // ... other data entries
   ];

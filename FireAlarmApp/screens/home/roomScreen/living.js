@@ -35,8 +35,8 @@ const Living = () => {
          <View>
             <Text style={styles.titleItem}>Sensor #1</Text>
             <Text style={styles.titleItem}>Type: Smoke Detector</Text>
-            <Text style={styles.titleItem}>Status: </Text>
-            <Text style={styles.titleItem}>Warning: </Text>
+            <Text style={styles.titleItem}>Status: Normal </Text>
+            <Text style={styles.titleItem}>Warning: 1</Text>
           </View>
 
 
@@ -51,7 +51,7 @@ const Living = () => {
     return (
       <View >
         <View>
-          <FlatList renderItem={renderItem} data={[1, 2, 3, 4, 5, 6, 7,8]} />
+          <FlatList renderItem={renderItem} data={[1, 2, 3, 4]} />
         </View>
       </View>
     );

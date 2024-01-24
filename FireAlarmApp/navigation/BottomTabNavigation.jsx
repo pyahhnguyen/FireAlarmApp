@@ -22,7 +22,6 @@ const tabBarStyle = {
 
 function BottomTabNavigation() {
 
-
   return (
     <Tab.Navigator
       initialRouteName="Home"

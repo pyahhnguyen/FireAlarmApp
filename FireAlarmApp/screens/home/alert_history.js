@@ -8,12 +8,14 @@ import {
   Button,
   Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
 import { FlatList } from "react-native-gesture-handler";
 import Modal from "../Alert/Modal_alert";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import Constants from 'expo-constants';
 const w = Dimensions.get('screen').width;
 const h = Dimensions.get('screen').height;
 
@@ -22,21 +24,67 @@ const h = Dimensions.get('screen').height;
 const AlertHistory = ({ customContainerStyle, history }) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [selectedItemData, setSelectedItemData] = React.useState(history);
+  const [refreshing, setRefreshing] = useState(false);
+  const [firstAlarmItem, setFirstAlarmItem] = useState(null);
+  const [historyALert, setHistoryAlert] = useState([]);
+  
+  const apiHost = Constants.manifest.extra.API_HOST || 'localhost'
+
 
   const handleModal = (item) => {
     setSelectedItemData(item);
     setIsModalVisible(!isModalVisible);
   };
 
-
   const navigation = useNavigation();
-
 
   const handleDetail = () => {
     setIsModalVisible(false);
   navigation.navigate('Alert', { sensorData: selectedItemData });
 };
 
+const fetchData = async () => {
+  try {
+    setRefreshing(true);
+
+    const response = await axios.get(`http://${apiHost}:3050/api/alert`, {
+      headers: {
+        'userId': '659a4e55b88b9369f584b308',
+      },
+    });
+
+    const data = response.data;
+    const sensorArray = Object.values(data);
+
+    const firstAlarmItem = sensorArray.find(sensor => sensor.status === "Alarm");
+
+    if (firstAlarmItem) {
+      // Check if the firstAlarmItem already exists in historyALert
+      const isAlreadyInHistory = historyALert.some(item => item.name === firstAlarmItem.name && item.triggerAt === firstAlarmItem.triggerAt);
+
+      if (!isAlreadyInHistory) {
+        // Add firstAlarmItem only if it's not already in the array
+        const updatedHistory = [...historyALert, firstAlarmItem];
+
+        const sortedHistory = updatedHistory.sort((a, b) => new Date(b.triggerAt) - new Date(a.triggerAt));
+        sortedHistory.forEach((sensor, index) => {
+          sensor.deviceId = `${index + 1}`;
+        });
+
+        setHistoryAlert(sortedHistory);
+        // console.log('History data:', sortedHistory);
+      }
+    }
+  } catch (error) {
+    console.error('Error retrieving data:', error);
+  } finally {
+    setRefreshing(false);
+  }
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
 
 
 const renderItem = ({ item }) => (
@@ -59,7 +107,7 @@ const renderItem = ({ item }) => (
 
     <View style={{ flex: 1, marginLeft: SIZES.radius }}>
       <Text style={{ ...FONTS.h4, color: COLORS.primary }}>
-        {item.deviceDescription}
+        {item.deviceType}
       </Text>
       <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.triggerAt}</Text>
     </View>
@@ -77,8 +125,6 @@ const renderItem = ({ item }) => (
   </TouchableOpacity>
 );
 
-  
-  
   return (
     <View
       style={{
@@ -93,7 +139,8 @@ const renderItem = ({ item }) => (
           <FlatList
         contentContainerStyle={{}}
         scrollEnabled={true}
-        data={history}
+        // data= {historyALert?historyALert:history}
+        data= {history}
         keyExtractor={(item) => `${item.deviceId}`}  // Update to deviveId
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
@@ -111,7 +158,6 @@ const renderItem = ({ item }) => (
         
         }
       />
-
 
 
       <Modal isVisible={isModalVisible} itemData={selectedItemData}>
