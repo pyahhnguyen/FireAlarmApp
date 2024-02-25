@@ -41,6 +41,34 @@ const apartmentSchema = new mongoose.Schema({
 });
 
 
+
+
 const Apartment = mongoose.model('Apartment', apartmentSchema);
 
 module.exports = Apartment;
+
+
+
+// const mongoose = require('mongoose');
+
+// const apartmentSchema = new mongoose.Schema({
+//     owner: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: 'User',
+//     },
+//     location: {
+//         latitude: {
+//             type: Number,
+//             required: true,
+//         },
+//         longitude: {
+//             type: Number,
+//             required: true,
+//         },
+//     },
+//     // Add other apartment details as needed
+// });
+
+// const Apartment = mongoose.model('Apartment', apartmentSchema);
+
+// module.exports = Apartment;

@@ -28,7 +28,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState(""); 
   const navigation = useNavigation();
-  const apiHost = Constants.manifest.extra.API_HOST || '10.0.239.105';
+  const apiHost = Constants.manifest.extra.API_HOST || 'localhost';
 
 
   const handleRegister = () => {

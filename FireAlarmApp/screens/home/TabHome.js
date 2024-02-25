@@ -30,12 +30,7 @@ const TabHome = () => {
   const [alertHistory, setAlertHistory] = React.useState(dummyData.alertHistory);
   const [recentalert, setRecentAlert] = React.useState()
   const [refreshing, setRefreshing] = useState(false);
-
-  const navigation = useNavigation(); 
-
-
- 
-
+  const navigation = useNavigation();
 
   React.useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
