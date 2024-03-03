@@ -83,7 +83,8 @@ const fetchData = async () => {
 };
 
 useEffect(() => {
-  fetchData();
+  ////// open if want to fetch data from server
+  // fetchData();
 }, []);
 
 

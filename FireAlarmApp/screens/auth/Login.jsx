@@ -26,28 +26,48 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-  const apiHost = Constants.manifest.extra.API_HOST || '10.0.239.105';
-
+  const apiHost = Constants.manifest.extra.API_HOST || 'localhost';
 
   const handleLogin = () => {
     const user = {
       email: email,
       password: password,
     };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'x-api-key': '2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b',
+    };
+
     axios
-      .post(`http://${apiHost}:3056/login`, user)
+      .post(`http://${apiHost}:3056/v1/api/user/login`, user, {headers: headers})
       .then((response) => {
-        console.log(response);
-        const token = response.data.token;
-        AsyncStorage.setItem("authToken", token);
-        AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
-        navigation.replace("Bottom");
+        const responseData = response.data;
+        console.log(responseData);
+        if (responseData && responseData.metadata && responseData.metadata.tokens && responseData.metadata.tokens.accessToken) {
+          const accessToken = responseData.metadata.tokens.accessToken;
+          const x_client_id = responseData.metadata.shop._id;
+          console.log('1. ACCESSTOKEN FROM RES LOGIN:', accessToken);
+          console.log('2. x_client_id:', x_client_id);
+          
+          // Save the accessToken to AsyncStorage
+          AsyncStorage.setItem("authAccessToken", accessToken);
+          AsyncStorage.setItem("x_client_id", x_client_id);
+
+          // ... any other logic you want to perform after successful login
+          AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+          navigation.replace("Bottom");
+        } else {
+          // Handle the case where tokens or accessToken is not present in the response
+          console.error("Tokens or accessToken not present in the response");
+        }
       })
       .catch((err) => {
         Alert.alert("Login Failed", "Invalid email");
         console.log(err);
       });
   };
+
 
 
   return (

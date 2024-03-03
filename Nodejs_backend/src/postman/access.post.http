@@ -1,0 +1,16 @@
+@url_dev=http://localhost:3056/v1/api
+
+
+### signup 
+POST {{url_dev}}/user/signup
+Content-Type:application/json
+x-api-key:2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b
+
+{
+    "name": "ShopDev04",
+    "email": "phugia04@gmail.com",
+    "password": "123456",
+    "phone": "0987654321",
+}
+
+    

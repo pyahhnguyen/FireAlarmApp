@@ -39,9 +39,15 @@ const Register = () => {
       phone: phone, // Add the phone field here
     };
   
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'x-api-key': '2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b',
+    };
+
     // send a post request to the backend to register the user
     axios
-      .post(`http://${apiHost}:3056/register`, user)
+      .post(`http://${apiHost}:3056/v1/api/user/signup`, user, { headers: headers })
       .then((response) => {
         console.log(response);
         Alert.alert(
@@ -51,7 +57,7 @@ const Register = () => {
         
         navigation.navigate('Login');
         setName("");
-        setEmail("");
+        setEmail(""); 
         setPassword("");
         setPhone(""); // Clear the phone field after registration
       })
@@ -64,8 +70,6 @@ const Register = () => {
       });
   };
   
-
-
 
   return (
     <SafeAreaView

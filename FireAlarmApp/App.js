@@ -107,6 +107,7 @@ export default function App() {
     checkAuthentication();
   }, []);
 
+  
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
@@ -185,7 +186,7 @@ export default function App() {
             headerShown: false,
             headerStyle: {
               backgroundColor: "transparent",
-             
+              
               
             }, }}
            />
@@ -251,7 +252,6 @@ export default function App() {
             options={{ headerShown: false }}
           />
           
-
         </>
       ) : (
         <>
@@ -280,7 +280,7 @@ export default function App() {
           component={BottomTabNavigation}
           options={{ headerShown: false }}
         />
-       
+    
           {/* Add other screens for non-logged-in users */}
         </>
       )}

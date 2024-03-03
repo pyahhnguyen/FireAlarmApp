@@ -46,9 +46,6 @@ const Device = () => {
       );
     }
 
- 
-
-
     return (
       <View >
         
