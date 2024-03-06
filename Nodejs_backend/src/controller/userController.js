@@ -2,6 +2,8 @@
 const {UserService} = require("../services/user.service")
 const { Ok, Created, SuccessResponse} = require('../core/success.response')
 
+
+
 class AccessController {
     
     userData = async(req, res, next) => {

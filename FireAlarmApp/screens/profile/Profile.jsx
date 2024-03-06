@@ -17,44 +17,55 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Constants from 'expo-constants';
 const h = Dimensions.get('screen').height;
-import { Alert } from "react-native";
 
 const Profile = () => {
   const [userData, setUserData] = useState('');
   const [userLogin, setLogin] = useState(true);
   const apiHost = Constants.manifest.extra.API_HOST || 'localhost';
   const navigation = useNavigation();
-  
+ 
   async function getData() {
     try {
-      const token = await AsyncStorage.getItem('authToken');
-      console.log(token);
-  
-      if (token) {
-        axios.post(`http://${apiHost}:3056/userdata`, { token })
-          .then(res => {
-            console.log(res.data); // Log kết quả trả về từ API để kiểm tra
-            
-            if (res.data && res.data.data && res.data.data.email) {
-              // Kiểm tra và log dữ liệu email
-              console.log('Email:', res.data.data.email);
-  
-              // Cập nhật state
-              setUserData(res.data.data);
-            } else {
-              console.error('Email not found in API response');
-            }
-          })
-          .catch(error => {
-            console.error('Error fetching user data:', error);
-          });
+      const userdata = await AsyncStorage.getItem('userdata');
+        // console.log('userdata:', JSON.parse(userdata));
+      if (userdata) {
+        setUserData(JSON.parse(userdata));
       }
     } catch (error) {
-      console.error('Error retrieving token from AsyncStorage:', error);  
+      console.error('Error retrieving token from AsyncStorage:', error);
     }
   }
+
+  
+  //   async function getData() {
+  //   try {
+  //     const x_client_id = await AsyncStorage.getItem('x_client_id');
+           
+  //     if (x_client_id) {
+  //       axios.post(`http://${apiHost}:3056/v1/user/userdata`, { x_client_id })
+  //         .then(res => {
+  //           console.log(res.data); // Log kết quả trả về từ API để kiểm tra
+            
+  //           if (res.data && res.data.data && res.data.data.email) {
+  //             // Kiểm tra và log dữ liệu email
+  //             console.log('Email:', res.data.data.email);
+  
+  //             // Cập nhật state
+  //             setUserData(res.data.data);
+  //           } else {
+  //             console.error('Email not found in API response');
+  //           }
+  //         })
+  //         .catch(error => {
+  //           console.error('Error fetching user data:', error);
+  //         });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error retrieving token from AsyncStorage:', error);  
+  //   }
+  // }
     useEffect(() => {
-        // getData();
+       getData();
     }, []);
 
     const logout = async () => {
@@ -68,7 +79,6 @@ const Profile = () => {
           console.error("Access token not found. User may not be logged in.");
           return;
         }
-    
         // Construct headers dynamically using retrieved values
         const headers = {
           'Content-Type': 'application/json',

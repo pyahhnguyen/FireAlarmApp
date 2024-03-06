@@ -29,7 +29,6 @@ const [refreshing, setRefreshing] = useState(false);
 const apiHost = Constants.manifest.extra.API_HOST || 'localhost'
 
 
-
 const fetchData = async () => {
   try {
     setRefreshing(true); // Set refreshing to true while fetching
@@ -62,10 +61,7 @@ const fetchData = async () => {
 
 useEffect(() => {
   // fetchData();
-}, []);
-
-
-
+}, [])
 
 
 // Define a mapping between locations and floor plan images

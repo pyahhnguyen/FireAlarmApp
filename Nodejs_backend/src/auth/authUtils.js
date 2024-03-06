@@ -1,5 +1,3 @@
-
-
 const JWT = require('jsonwebtoken')
 const asyncHandler = require('../helper/asyncHanlde')
 const { findByUserId } = require('../services/keytoken.service')
@@ -39,11 +37,9 @@ const createTokenPair = async (payload, publicKey, privateKey ) => {
     }
 }
 
-
 //chech authentication for logout 
 const authentication  = asyncHandler(async (req, res, next) => {
-    
-    /*
+   /*
     1- check userId missing?
     2- get accessToken 
     3- verify accessToken
@@ -67,14 +63,13 @@ const authentication  = asyncHandler(async (req, res, next) => {
             req.keyStore = keyStore
             req.user = decodeUser
             req.refreshToken = refreshToken
-
             return next()
         } catch (error) {
             throw error
         }          
      }
 
-    //3
+    //4 
     const accessToken = req.headers[HEADER.AUTHORIZATION]
     if(!accessToken) throw new AuthFailureError('Invalid Request')
     try {
@@ -88,15 +83,12 @@ const authentication  = asyncHandler(async (req, res, next) => {
 }
 
 
+
+// verify JWT
 )
 const verifyJWT = async (token, keySecret) => {
     return await JWT.verify(token, keySecret)
-
 }
-
-
-
-
 
 module.exports = {
     createTokenPair,

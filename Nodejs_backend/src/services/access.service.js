@@ -1,4 +1,4 @@
-const shopModel = require("../models/user.model");
+const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const KeyTokenService = require("./keytoken.service");
@@ -28,9 +28,9 @@ class AccessService {
     throw new ForbiddenError('Something wrong happened, please login again !')
   }
    
-  if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('Shop not registered !')
+  if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('user not registered !')
   const foundUser = await findByEmail({email})    
-  if(!foundUser) throw new AuthFailureError('Error: Shop not registered !')
+  if(!foundUser) throw new AuthFailureError('Error: user not registered !')
 
   // create new key pair
   const tokens = await createTokenPair({userId, email}, keyStore.publicKey, keyStore.privateKey)
@@ -82,16 +82,16 @@ class AccessService {
 
   static login = async ({ email, password, refreshToken = null }) => {
     // 1
-    const foundShop = await findByEmail({ email });
-    if (!foundShop) throw new BadRequestError("Error: Shop not registered !");
+    const foundUser = await findByEmail({ email });
+    if (!foundUser) throw new BadRequestError("Error: user not registered !");
     // 2
-    const match = bcrypt.compare(password, foundShop.password);
+    const match = bcrypt.compare(password, foundUser.password);
     if (!match) throw new AuthFailureError("Authentication error");
     // 3
     const privateKey = crypto.randomBytes(64).toString("hex");
     const publicKey = crypto.randomBytes(64).toString("hex");
     // 4
-    const {_id: userId } = foundShop;
+    const {_id: userId } = foundUser;
     const tokens = await createTokenPair(
       { userId, email },
       publicKey,
@@ -105,9 +105,9 @@ class AccessService {
       userId
     })
     return {
-      shop: getInfoData({
+      user: getInfoData({
         fileds: ["_id", "name", "email", "phone"],
-        object: foundShop,
+        object: foundUser,
       }),
       tokens
     };
@@ -117,13 +117,13 @@ class AccessService {
 
   static signUp = async ({ name, email, password, phone }) => {
     // step1: check mail existed?
-    const holderShop = await shopModel.findOne({ email }).lean();
-    if (holderShop) {
+    const holderUser = await userModel.findOne({ email }).lean();
+    if (holderUser) {
       throw new BadRequestError("Error: User already registered !");
     }
     const passwordHash = await bcrypt.hash(password, 10);
     // Hash password for security evetns 
-    const newShop = await shopModel.create({
+    const newUser = await userModel.create({
       name,
       email,
       password: passwordHash,
@@ -132,8 +132,8 @@ class AccessService {
     });
 
     // step2: create key pair
-    if (newShop) {
-      //   // created privateKey , publicKey
+    if (newUser) {
+    // created privateKey , publicKey
       //   const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
       //     modulusLength: 4096,
       //     publicKeyEncoding: {
@@ -150,7 +150,7 @@ class AccessService {
 
       console.log({ privateKey, publicKey }); // save collection KeyStore
       const keyStore = await KeyTokenService.createKeyToken({
-        userId: newShop._id,
+        userId: newUser._id,
         publicKey,
         privateKey,
       });
@@ -164,7 +164,7 @@ class AccessService {
 
       //create token pair
       const tokens = await createTokenPair(
-        { userId: newShop._id, email },
+        { userId: newUser._id, email },
         publicKey,
         privateKey
       );
@@ -172,9 +172,9 @@ class AccessService {
       return {
         // code: 201,
         // metadata: {
-        shop: getInfoData({
+        user: getInfoData({
           fileds: ["_id", "name", "email", "phone"],
-          object: newShop,
+          object: newUser,
         }),
         tokens,
         // }

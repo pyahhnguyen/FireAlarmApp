@@ -46,13 +46,15 @@ const Login = () => {
         console.log(responseData);
         if (responseData && responseData.metadata && responseData.metadata.tokens && responseData.metadata.tokens.accessToken) {
           const accessToken = responseData.metadata.tokens.accessToken;
-          const x_client_id = responseData.metadata.shop._id;
+          const x_client_id = responseData.metadata.user._id;
+          const userdata = responseData.metadata.user;
           console.log('1. ACCESSTOKEN FROM RES LOGIN:', accessToken);
           console.log('2. x_client_id:', x_client_id);
           
           // Save the accessToken to AsyncStorage
           AsyncStorage.setItem("authAccessToken", accessToken);
           AsyncStorage.setItem("x_client_id", x_client_id);
+          AsyncStorage.setItem("userdata", JSON.stringify(userdata));
 
           // ... any other logic you want to perform after successful login
           AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
@@ -61,6 +63,8 @@ const Login = () => {
           // Handle the case where tokens or accessToken is not present in the response
           console.error("Tokens or accessToken not present in the response");
         }
+
+        
       })
       .catch((err) => {
         Alert.alert("Login Failed", "Invalid email");

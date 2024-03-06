@@ -1,35 +1,46 @@
 'use strict'
-const shopModel = require('../models/user.model')
+const userModel = require('../models/user.model')
 const { getInfoData } = require('../utils/index')
 
 
 const findByEmail = async ({ email, select = {
     email: 1, password:2, name: 1, roles: 1, status: 1, phone: 1 
 } }) => {
-    return await shopModel.findOne({email}).select(select).lean()
+    return await userModel.findOne({email}).select(select).lean()
 }
 
 class UserService {
+    static userData = async (req, res) => {
+        try {
+            const { id } = req.body;
 
-   static userData = async ({ email }) => {
-    const foundShop = await findByEmail({ email });
-    return {
-    shop: getInfoData({
-        fileds: ["_id", "name", "email", "phone"],
-        object: foundShop,
-        }),
-        
-        };
-    
-    }
-    }
+            // Assuming you're using Mongoose to interact with MongoDB
+            const user = await userModel.findById(id);
 
+            if (user) {
+                // Modify the response format as needed based on your user model
+                return res.send({ status: "Ok", data: user });
+            } else {
+                return res.status(404).send({ error: "User not found" });
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+
+            // Handle specific Mongoose error, e.g., if the provided ID is not a valid ObjectId
+            if (error.name === "CastError") {
+                return res.status(400).send({ error: "Invalid user ID" });
+            }
+
+            return res.status(500).send({ error: "Internal server error" });
+        }
+    };
+}
+  
 
 module.exports = {
     findByEmail,
     UserService
 }
-
 
 
 
