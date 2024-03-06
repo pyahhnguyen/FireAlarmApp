@@ -14,7 +14,7 @@ router.use(permission('0000'));
 router.use('/v1/api', require('./Access/index'));
 
 // user route
-// router.use('/v1/api', require('./user/User.route'));
+router.use('/v1/api', require('./user/User.route'));
 
 // Root routes
 router.get("/", (req, res) => {

@@ -72,12 +72,12 @@ const Register = () => {
   
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
+    <View
+    style={{ flex: 1, backgroundColor: COLORS.lightWhite }}
     >
       <View>
         <Image
-          style={{ width: 100, height: 100, marginTop: 60 }}
+          style={{ width: 100, height: 100, marginTop: 60 ,alignItems: "center", marginLeft: "auto", marginRight: "auto"}}
           source={require("../../assets/images/firefighter.png")}
         />
       </View>
@@ -104,6 +104,7 @@ const Register = () => {
               backgroundColor: "#CDCFCE",
               paddingVertical: 5,
               borderRadius: 5,
+              marginHorizontal: 20,
             }}
           >
             <Octicons
@@ -138,6 +139,7 @@ const Register = () => {
               backgroundColor: "#CDCFCE",
               paddingVertical: 5,
               borderRadius: 5,
+              marginHorizontal: 20,
             }}
           >
             <MaterialIcons
@@ -171,6 +173,7 @@ const Register = () => {
       backgroundColor: "#CDCFCE",
       paddingVertical: 5,
       borderRadius: 5,
+      marginHorizontal: 20,
     }}
   >
     <MaterialIcons
@@ -205,6 +208,7 @@ const Register = () => {
               backgroundColor: "#CDCFCE",
               paddingVertical: 5,
               borderRadius: 5,
+              marginHorizontal: 20,
             }}
           >
             <AntDesign
@@ -236,6 +240,7 @@ const Register = () => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
+            marginHorizontal: 20,
           }}
         >
           <ReusableText
@@ -285,7 +290,7 @@ const Register = () => {
           </View>
         </Pressable>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 

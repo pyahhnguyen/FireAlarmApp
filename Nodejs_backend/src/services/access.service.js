@@ -2,9 +2,10 @@ const shopModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const KeyTokenService = require("./keytoken.service");
+const keytokenModel = require("../models/keytoken.model");
 const { createTokenPair } = require("../auth/authUtils");
 const { getInfoData } = require("../utils");
-const { BadRequestError, ConflictRequestError } = require("../core/error.response");
+const { BadRequestError, ConflictRequestError, ForbiddenError, AuthFailureError } = require("../core/error.response");
 
 // service ///
 const {findByEmail} = require('./user.service')
@@ -17,6 +18,50 @@ const RoleUser = {
 };
 
 class AccessService {
+
+ // hanlde refresh token
+ static handleRefreshToken = async ({refreshToken, user, keyStore}) => {
+
+  const {userId, email} = user;
+  if(keyStore.refreshTokensUsed.includes(refreshToken)){
+    await KeyTokenService.deleteKeyByUserId(userId)
+    throw new ForbiddenError('Something wrong happened, please login again !')
+  }
+   
+  if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('Shop not registered !')
+  const foundUser = await findByEmail({email})    
+  if(!foundUser) throw new AuthFailureError('Error: Shop not registered !')
+
+  // create new key pair
+  const tokens = await createTokenPair({userId, email}, keyStore.publicKey, keyStore.privateKey)
+ // update new key pair
+ if (keyStore) {
+  const filter = { refreshToken: refreshToken };
+  const update = {
+    $set: {
+      refreshToken: tokens.refreshToken,
+    },
+    $addToSet: {
+      refreshTokensUsed: refreshToken,
+    },
+  };
+  await keytokenModel.updateOne(filter, update);
+      // Rest of your code
+      return {
+        user,
+        tokens,
+      };
+    } else {
+      // Handle the case where no matching document is found
+      return {
+        status: "error",
+        code: 404,
+        message: "No document found for the given refreshToken",
+      };
+    }
+
+}
+
 
   // service logout
   static logout = async( keyStore ) => {
@@ -61,7 +106,7 @@ class AccessService {
     })
     return {
       shop: getInfoData({
-        fileds: ["_id", "name", "email", 'phone'],
+        fileds: ["_id", "name", "email", "phone"],
         object: foundShop,
       }),
       tokens

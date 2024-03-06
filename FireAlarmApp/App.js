@@ -178,7 +178,6 @@ export default function App() {
               },
             }}
           />
-
           <Stack.Screen
           name="Home"
           component={Home}
@@ -186,7 +185,7 @@ export default function App() {
             headerShown: false,
             headerStyle: {
               backgroundColor: "transparent",
-              
+          
               
             }, }}
            />
@@ -280,7 +279,85 @@ export default function App() {
           component={BottomTabNavigation}
           options={{ headerShown: false }}
         />
-    
+      
+          <Stack.Screen
+            name="Living"
+            component={Living}
+            options={{
+              headerShown: true,
+              headerTitle: "Living Room",
+              headerTitleAlign: 'center',
+              headerStyle: {
+                backgroundColor: COLORS.background,
+                borderBottomRightRadius: 50,
+                borderBottomLeftRadius: 50,
+              },
+            }}
+          />
+          <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ 
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: "transparent",
+          
+              
+            }, }}
+           />
+           <Stack.Screen
+          name="Bedroom"
+          component={Living}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: COLORS.background,
+            },
+        
+          }}
+        />
+
+        <Stack.Screen
+          name="Kitchen"
+          component={Living}
+          options={{ headerShown: true }}
+        />
+      
+        <Stack.Screen
+          name="Bathroom"
+          component={Living}
+          options={{
+            headerShown: true,
+        
+          }}
+        />
+
+          <Stack.Screen
+          name="PopUp"
+          component={Popup_socket}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="DetailProfile"
+          component={DetailProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+       
+   
           {/* Add other screens for non-logged-in users */}
         </>
       )}

@@ -27,39 +27,7 @@ const Home = () => {
   const w = Dimensions.get('screen').width;
   const h = Dimensions.get('screen').height;
   const navigation = useNavigation();
-  //   const ws = new WebSocket("ws://10.0.227.224:3001");
-  //   ws.onmessage = (event) => {
-  //     const data = JSON.parse(event.data);
-
-  //     if (Array.isArray(data)) {
-  //       const updatedSensors = [...sensors]; // Tạo một bản sao của danh sách cảm biến hiện tại
-
-  //       data.forEach((sensorData) => {
-  //         if (sensorData.data && sensorData.data.type) {
-  //           const sensorType = sensorData.data.type;
-
-  //           // Tìm cảm biến trong danh sách dựa trên loại cảm biến
-  //           const sensorToUpdate = updatedSensors.find(
-  //             (sensor) =>
-  //               sensor.title.toLowerCase() === sensorType.toLowerCase()
-  //           );
-
-  //           if (sensorToUpdate) {
-  //             sensorToUpdate.data = sensorData.data.value.toString();
-  //           }
-  //         }
-  //       });
-
-  //       setSensors(updatedSensors);
-  //     }
-  //   };
-
-  //   return () => {
-  //     ws.close();
-  //   };
-  // }, [sensors]);
-
-
+ 
   function renderHeader() {
     const renderItem = ({ item, index }) => (
       <TouchableOpacity
@@ -94,9 +62,8 @@ const Home = () => {
         <Text style={styles.title}>{item.title}</Text>
       </TouchableOpacity>
     );
-
-
     return (
+     
       <View
         style={{
           width: "100%",
@@ -198,6 +165,7 @@ const Home = () => {
           </View>
         </ImageBackground>
       </View>
+   
     );
   }
  
@@ -206,20 +174,18 @@ const Home = () => {
       <TabHome />
     )
   }
-
   return (
-    <View style= {styles.SafeAreaView}>
-    <View style={styles.container} showsVerticalScrollIndicator={false}>
+    // <View style= {styles.SafeAreaView}>
+    <View style={styles.container} >
       <View style={{ flex: 1, paddingBottom: 130 }}>
         {renderHeader()}
         {renderTabHome()}
         </View >   
         
-     </View>
+     {/* </View> */}
     
     </View>
   );
-
 
   // // Find the latest temperature data
   // const latestTemperatureData = sensorData

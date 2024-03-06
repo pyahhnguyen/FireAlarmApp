@@ -61,7 +61,7 @@ const fetchData = async () => {
 };
 
 useEffect(() => {
-  fetchData();
+  // fetchData();
 }, []);
 
 

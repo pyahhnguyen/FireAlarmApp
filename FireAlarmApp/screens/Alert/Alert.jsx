@@ -53,7 +53,7 @@ const Alert = ({ route}) => {
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
  
   // // truyen data đi sensorData = history
