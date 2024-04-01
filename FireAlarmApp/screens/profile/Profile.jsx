@@ -5,7 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { COLORS, SIZES } from "../../constants/theme";
@@ -15,41 +15,39 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import Constants from 'expo-constants';
-const h = Dimensions.get('screen').height;
+import Constants from "expo-constants";
+const h = Dimensions.get("screen").height;
 
 const Profile = () => {
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState("");
   const [userLogin, setLogin] = useState(true);
-  const apiHost = Constants.manifest.extra.API_HOST || 'localhost';
+  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
   const navigation = useNavigation();
- 
   async function getData() {
     try {
-      const userdata = await AsyncStorage.getItem('userdata');
-        // console.log('userdata:', JSON.parse(userdata));
+      const userdata = await AsyncStorage.getItem("userdata");
+      // console.log('userdata:', JSON.parse(userdata));
       if (userdata) {
         setUserData(JSON.parse(userdata));
       }
     } catch (error) {
-      console.error('Error retrieving token from AsyncStorage:', error);
+      console.error("Error retrieving token from AsyncStorage:", error);
     }
   }
 
-  
   //   async function getData() {
   //   try {
   //     const x_client_id = await AsyncStorage.getItem('x_client_id');
-           
+
   //     if (x_client_id) {
   //       axios.post(`http://${apiHost}:3056/v1/user/userdata`, { x_client_id })
   //         .then(res => {
   //           console.log(res.data); // Log kết quả trả về từ API để kiểm tra
-            
+
   //           if (res.data && res.data.data && res.data.data.email) {
   //             // Kiểm tra và log dữ liệu email
   //             console.log('Email:', res.data.data.email);
-  
+
   //             // Cập nhật state
   //             setUserData(res.data.data);
   //           } else {
@@ -61,59 +59,65 @@ const Profile = () => {
   //         });
   //     }
   //   } catch (error) {
-  //     console.error('Error retrieving token from AsyncStorage:', error);  
+  //     console.error('Error retrieving token from AsyncStorage:', error);
   //   }
   // }
-    useEffect(() => {
-       getData();
-    }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-    const logout = async () => {
-      try {
-        // Retrieve values from AsyncStorage
-        const accessToken = await AsyncStorage.getItem('authAccessToken');
-        const x_client_id = await AsyncStorage.getItem('x_client_id');
-    
-        // Check if the access token is present
-        if (!accessToken) {
-          console.error("Access token not found. User may not be logged in.");
-          return;
-        }
-        // Construct headers dynamically using retrieved values
-        const headers = {
-          'Content-Type': 'application/json',
-          'x-api-key': '2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b',
-          'authorization': accessToken,
-          'x-client-id': x_client_id
-        };
-    
-        // Make the request with error handling
-        axios
-          .post(`http://${apiHost}:3056/v1/api/user/logout`, {}, { headers })
-          .then(response => {
-            console.log('Logout Response:', response.data);
-            // Handle successful logout
-          })
-          .catch(error => {
-            console.error('Logout Error:', error);
-    
-            // Implement more specific error handling based on error types and response status codes
-            if (error.response && error.response.status === 404) {
-              console.error('404: Not Found. Check API endpoint or server availability.');
-            } else if (error.response) {
-              console.error('API Error:', error.response.data, error.response.status);
-            } else {
-              console.error('Network Error:', error);
-            }
-          });
-      } catch (error) {
-        console.error('AsyncStorage error:', error);
+  const logout = async () => {
+    try {
+      // Retrieve values from AsyncStorage
+      const accessToken = await AsyncStorage.getItem("authAccessToken");
+      const x_client_id = await AsyncStorage.getItem("x_client_id");
+
+      // Check if the access token is present
+      if (!accessToken) {
+        console.error("Access token not found. User may not be logged in.");
+        return;
       }
-      clearAuthToken();
-    };
-  
-  const clearAuthToken = async () => {
+      // Construct headers dynamically using retrieved values
+      const headers = {
+        "Content-Type": "application/json",
+        "x-api-key":
+          "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
+        authorization: accessToken,
+        "x-client-id": x_client_id,
+      };
 
+      // Make the request with error handling
+      axios
+        .post(`http://${apiHost}:3056/v1/api/user/logout`, {}, { headers })
+        .then((response) => {
+          console.log("Logout Response:", response.data);
+          // Handle successful logout
+        })
+        .catch((error) => {
+          console.error("Logout Error:", error);
+
+          // Implement more specific error handling based on error types and response status codes
+          if (error.response && error.response.status === 404) {
+            console.error(
+              "404: Not Found. Check API endpoint or server availability."
+            );
+          } else if (error.response) {
+            console.error(
+              "API Error:",
+              error.response.data,
+              error.response.status
+            );
+          } else {
+            console.error("Network Error:", error);
+          }
+        });
+    } catch (error) {
+      console.error("AsyncStorage error:", error);
+    }
+    clearAuthToken();
+  };
+
+  const clearAuthToken = async () => {
     await AsyncStorage.setItem("isLoggedIn", JSON.stringify(false));
     console.log("auth token cleared");
     navigation.replace("Login");
@@ -121,7 +125,7 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={'transparent'} />
+      <StatusBar backgroundColor={"transparent"} />
       <View style={{ width: "100%" }}>
         <ImageBackground
           source={require("../../assets/images/profile_background.jpg")}
@@ -142,7 +146,11 @@ const Profile = () => {
           style={styles.profile}
         />
         <Text style={styles.name}>
-        {userLogin === true ? (userData ? userData.name : "Please login") : ""}
+          {userLogin === true
+            ? userData
+              ? userData.name
+              : "Please login"
+            : ""}
         </Text>
         {userLogin === false ? (
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
@@ -159,11 +167,12 @@ const Profile = () => {
         {userLogin === false ? (
           <View></View>
         ) : (
-          
           <View style={styles.menuWapper}>
-
-            <TouchableOpacity onPress={() => navigation.navigate('DetailProfile', {UserData: userData})}>
-
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("DetailProfile", { UserData: userData })
+              }
+            >
               <View style={styles.menuItem(0.2)}>
                 <MaterialCommunityIcons
                   name="account"
@@ -231,12 +240,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightWhite,
   },
   cover: {
-   
     width: "100%",
     resizeMode: "cover",
   },
   profileContainer: {
-    marginTop: h-(h-300),
+    marginTop: h - (h - 300),
     flex: 1,
     alignItems: "center",
   },

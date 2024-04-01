@@ -21,6 +21,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import axios from "axios";  
 import Constants from 'expo-constants';
+import { StatusBar } from "expo-status-bar";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -56,6 +58,7 @@ const Login = () => {
           AsyncStorage.setItem("x_client_id", x_client_id);
           AsyncStorage.setItem("userdata", JSON.stringify(userdata));
 
+          
           // ... any other logic you want to perform after successful login
           AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
           navigation.replace("Bottom");
@@ -73,11 +76,11 @@ const Login = () => {
   };
 
 
-
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.lightWhite }}
     >
+        <StatusBar backgroundColor={'transparent'} />
       <View>
         <Image
           style={{ width: 100, height: 100, marginTop: 60, alignItems: "center", marginLeft: "auto", marginRight: "auto"}}

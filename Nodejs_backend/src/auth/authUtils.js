@@ -37,16 +37,17 @@ const createTokenPair = async (payload, publicKey, privateKey ) => {
     }
 }
 
+
 //chech authentication for logout 
 const authentication  = asyncHandler(async (req, res, next) => {
-   /*
-    1- check userId missing?
+/*
+    1- check userId missing?    
     2- get accessToken 
     3- verify accessToken
     4- check user in dbs
     5- check keystore with userId 
     6- return next
-    */
+*/
     const userId = req.headers[HEADER.CLIENT_ID]
     if(!userId) throw new AuthFailureError('Invalid Request')
 
@@ -67,7 +68,7 @@ const authentication  = asyncHandler(async (req, res, next) => {
         } catch (error) {
             throw error
         }          
-     }
+    }
 
     //4 
     const accessToken = req.headers[HEADER.AUTHORIZATION]
@@ -82,14 +83,11 @@ const authentication  = asyncHandler(async (req, res, next) => {
     }          
 }
 
-
-
 // verify JWT
 )
 const verifyJWT = async (token, keySecret) => {
     return await JWT.verify(token, keySecret)
 }
-
 module.exports = {
     createTokenPair,
     authentication,

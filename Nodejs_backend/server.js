@@ -9,8 +9,8 @@ const server_express = app.listen(PORT, () => {
 
 process.on("SIGINT", () => {
   server_express.close(() => {
-    wss.close(() => {
-      console.log("WebSocket server and Express server closed");
-    });
+    // wss.close(() => {
+      console.log("Server closed !!!");
+    // });
   });
 });

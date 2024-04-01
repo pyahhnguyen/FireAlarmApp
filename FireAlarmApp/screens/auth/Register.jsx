@@ -20,16 +20,16 @@ import { TextInput } from "react-native-gesture-handler";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import Octicons from "react-native-vector-icons/Octicons";
 import axios from "axios";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
+import { StatusBar } from "expo-status-bar";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState(""); 
+  const [phone, setPhone] = useState("");
   const navigation = useNavigation();
-  const apiHost = Constants.manifest.extra.API_HOST || 'localhost';
-
+  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
 
   const handleRegister = () => {
     const user = {
@@ -38,26 +38,28 @@ const Register = () => {
       password: password,
       phone: phone, // Add the phone field here
     };
-  
 
     const headers = {
-      'Content-Type': 'application/json',
-      'x-api-key': '2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b',
+      "Content-Type": "application/json",
+      "x-api-key":
+        "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
     };
 
     // send a post request to the backend to register the user
     axios
-      .post(`http://${apiHost}:3056/v1/api/user/signup`, user, { headers: headers })
+      .post(`http://${apiHost}:3056/v1/api/user/signup`, user, {
+        headers: headers,
+      })
       .then((response) => {
         console.log(response);
         Alert.alert(
           "Registration Successful",
           "You have registered successfully. Please login to continue"
         );
-        
-        navigation.navigate('Login');
+
+        navigation.navigate("Login");
         setName("");
-        setEmail(""); 
+        setEmail("");
         setPassword("");
         setPhone(""); // Clear the phone field after registration
       })
@@ -69,15 +71,20 @@ const Register = () => {
         console.log("Registration failed", err);
       });
   };
-  
 
   return (
-    <View
-    style={{ flex: 1, backgroundColor: COLORS.lightWhite }}
-    >
+    <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+      <StatusBar backgroundColor={"transparent"} />
       <View>
         <Image
-          style={{ width: 100, height: 100, marginTop: 60 ,alignItems: "center", marginLeft: "auto", marginRight: "auto"}}
+          style={{
+            width: 100,
+            height: 100,
+            marginTop: 60,
+            alignItems: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
           source={require("../../assets/images/firefighter.png")}
         />
       </View>
@@ -164,38 +171,38 @@ const Register = () => {
         </View>
         <HeightSpace height={30} />
 
-<View>
-  <View
-    style={{
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 5,
-      backgroundColor: "#CDCFCE",
-      paddingVertical: 5,
-      borderRadius: 5,
-      marginHorizontal: 20,
-    }}
-  >
-    <MaterialIcons
-      style={{ marginLeft: 10 }}
-      name="local-phone"
-      size={24}
-      color="gray"
-    />
-    <TextInput
-      value={phone}
-      onChangeText={(text) => setPhone(text)}
-      style={{
-        marginLeft: 10,
-        width: 300,
-        color: "gray",
-        marginVertical: 10,
-        fontSize: phone ? 16 : 16,
-      }}
-      placeholder="Enter your phone number"
-    />
-  </View>
-</View>
+        <View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 5,
+              backgroundColor: "#CDCFCE",
+              paddingVertical: 5,
+              borderRadius: 5,
+              marginHorizontal: 20,
+            }}
+          >
+            <MaterialIcons
+              style={{ marginLeft: 10 }}
+              name="local-phone"
+              size={24}
+              color="gray"
+            />
+            <TextInput
+              value={phone}
+              onChangeText={(text) => setPhone(text)}
+              style={{
+                marginLeft: 10,
+                width: 300,
+                color: "gray",
+                marginVertical: 10,
+                fontSize: phone ? 16 : 16,
+              }}
+              placeholder="Enter your phone number"
+            />
+          </View>
+        </View>
 
         <HeightSpace height={30} />
 
@@ -296,6 +303,4 @@ const Register = () => {
 
 export default Register;
 
-const styles = StyleSheet.create({
- 
-});
+const styles = StyleSheet.create({});

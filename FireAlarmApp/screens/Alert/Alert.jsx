@@ -8,8 +8,6 @@ import Constants from 'expo-constants';
 
 
 
-
-
 const Alert = ({ route}) => {
   const { sensorData } = route.params || { sensorData: null };
   const defaultSensorData = sensorData || alertHistory[0];
@@ -28,7 +26,7 @@ const Alert = ({ route}) => {
           'userId': '659a4e55b88b9369f584b308', // Replace with your actual header
         },
       });
-     const data = response.data;
+      const data = response.data;
       // Convert the JSON data to an array of sensor items
       const sensorArray = Object.values(data);
       // Sort the array based on the triggerAt field in descending order
@@ -55,15 +53,14 @@ const Alert = ({ route}) => {
   useEffect(() => {
     // fetchData();
   }, []);
- 
   // // truyen data đi sensorData = history
   // const [detailSensor, setDetailSensor] = React.useState(sensorData);
 
   const navigation = useNavigation();
 
-  handleDevice = () => {
-    navigation.navigate('Location', { detailSensor: sensorData } );
-  };
+    handleDevice = () => {
+      navigation.navigate('Location', { detailSensor: sensorData } );
+    };
 
 // Define a mapping between sensor types and images
 
@@ -93,7 +90,7 @@ const locationImages = {
 
 // Select the image based on the location
 const locationImage = locationImages[sensorData && sensorData.location? sensorData.location : 
-     (firstAlarmItem && firstAlarmItem.location) ? firstAlarmItem.location :
+    (firstAlarmItem && firstAlarmItem.location) ? firstAlarmItem.location :
     defaultSensorData.location];
 
 

@@ -30,19 +30,15 @@ class UserService {
             if (error.name === "CastError") {
                 return res.status(400).send({ error: "Invalid user ID" });
             }
-
             return res.status(500).send({ error: "Internal server error" });
         }
     };
 }
-  
 
 module.exports = {
     findByEmail,
     UserService
 }
-
-
 
 // router.post("/userdata", async (req, res) => {
 //     const { token } = req.body;

@@ -35,7 +35,7 @@ const permission = (permission) =>{
         if(!req.objKey.permissions){
             return res.status(403).json({
                 message: "Permission denied"
-           
+    
             })
         }
         console.log("Permission:::: ", req.objKey.permissions)
@@ -47,12 +47,11 @@ const permission = (permission) =>{
         }
     
         return next()
-     
+
     }
 }
 
 module.exports = {
     apikey,
     permission,
-   
 }

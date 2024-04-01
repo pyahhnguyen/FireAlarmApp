@@ -12,7 +12,6 @@ const WebSocket = require("ws");
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
 const wss = new WebSocket.Server({ server }); // Create a WebSocket server
-
 // init middlewares
 
 app.use(morgan("dev")); // print request logs on console
@@ -22,7 +21,6 @@ app.use(bodyParser.urlencoded({
     extended: true  // Sửa từ extends thành extended
 }));
 app.use(bodyParser.json()); // parse application/json
-
 
 // init MongoDb
 require("./db/init_mongo");
@@ -38,16 +36,15 @@ app.use((req, res, next) => {
 })
 
 app.use((error, req, res, next) => {
-  const statusCode = error.status || 500;
-  return res.status(statusCode).json({
+    const statusCode = error.status || 500;
+    return res.status(statusCode).json({
     status: 'error',
     code: statusCode,
     stack: error.stack,
     message: error.message || 'Internal Server Error'
     })
-   
-})
+})  
 
-module.exports = {server, app, wss};
+module.exports = {server, app, wss};    
 
 

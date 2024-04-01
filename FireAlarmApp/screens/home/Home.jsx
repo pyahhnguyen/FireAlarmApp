@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../constants/theme";
-import Room from "../../components/Room/Room";
+import { StatusBar } from "expo-status-bar";
 import { ROOM_LIST } from "../../assets/data/room";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
@@ -62,7 +62,9 @@ const Home = () => {
         <Text style={styles.title}>{item.title}</Text>
       </TouchableOpacity>
     );
-    return (
+
+
+  return (
      
       <View
         style={{
@@ -71,6 +73,8 @@ const Home = () => {
           ...styles.shadow,
         }}
       >
+          <StatusBar backgroundColor={'transparent'} />
+  
         <ImageBackground
           source={require("../../assets/images/51c2d5.png")}
           resizeMode="cover"

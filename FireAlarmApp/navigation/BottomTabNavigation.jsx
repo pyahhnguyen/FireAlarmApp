@@ -21,12 +21,11 @@ const tabBarStyle = {
 };
 
 function BottomTabNavigation() {
-
   return (
     <Tab.Navigator
       initialRouteName="Home"
       tabBarHideKeyboard={true}
-      barStyle={{ paddingBottom: 20}}
+      barStyle={{ paddingBottom: 20 }}
       screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -51,10 +50,8 @@ function BottomTabNavigation() {
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{         
-          headerShown: false,      
-        
-           
+        options={{
+          headerShown: false,
         }}
       />
 
@@ -62,30 +59,17 @@ function BottomTabNavigation() {
         name="Alert"
         component={Alert}
         options={{
-          // tabBarLabel: "Alert",
-          // tabBarLabelStyle: ({ focused }) => ({
-          //   color: focused ? activeColor : inactiveColor,
-          // }),
           tabBarStyle: tabBarStyle,
           headerShown: true,
           headerTitleAlign: "center",
           headerTintColor: COLORS.black,
-          headerStyle:{
+          headerStyle: {
             backgroundColor: COLORS.background,
             height: 100,
             borderBottomRightRadius: 10,
             borderBottomLeftRadius: 10,
           },
-          // headerBackground: () => (
-          //   <ImageBackground
-          //     source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
-          //     style={{ flex: 1 }}
-          //     resizeMode="cover"
-          //   />
-          // ),
-        
-          }
-        }
+            }}
       />
 
       <Tab.Screen
@@ -97,7 +81,7 @@ function BottomTabNavigation() {
           tabBarStyle: tabBarStyle,
           headerTintColor: COLORS.black,
           backgroundColor: COLORS.lightWhite,
-          headerStyle:{
+          headerStyle: {
             backgroundColor: COLORS.background,
             height: 100,
             borderBottomLeftRadius: 10,
@@ -110,7 +94,6 @@ function BottomTabNavigation() {
           //     resizeMode="cover"
           //   />
           // ),
-          
         }}
       />
 
@@ -122,7 +105,7 @@ function BottomTabNavigation() {
           tabBarStyle: tabBarStyle,
           headerTintColor: COLORS.black,
           headerTitleAlign: "center",
-          headerStyle:{
+          headerStyle: {
             backgroundColor: COLORS.background,
             height: 100,
             borderBottomLeftRadius: 10,
@@ -144,13 +127,8 @@ function BottomTabNavigation() {
         options={{
           headerShown: false,
           tabBarStyle: tabBarStyle,
-         
         }}
       />
-      
-      
-      
-
     </Tab.Navigator>
   );
 }

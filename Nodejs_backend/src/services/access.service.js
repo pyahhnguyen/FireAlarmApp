@@ -20,14 +20,14 @@ const RoleUser = {
 class AccessService {
 
  // hanlde refresh token
- static handleRefreshToken = async ({refreshToken, user, keyStore}) => {
+static handleRefreshToken = async ({refreshToken, user, keyStore}) => {
 
   const {userId, email} = user;
   if(keyStore.refreshTokensUsed.includes(refreshToken)){
     await KeyTokenService.deleteKeyByUserId(userId)
     throw new ForbiddenError('Something wrong happened, please login again !')
   }
-   
+  
   if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('user not registered !')
   const foundUser = await findByEmail({email})    
   if(!foundUser) throw new AuthFailureError('Error: user not registered !')
@@ -35,7 +35,7 @@ class AccessService {
   // create new key pair
   const tokens = await createTokenPair({userId, email}, keyStore.publicKey, keyStore.privateKey)
  // update new key pair
- if (keyStore) {
+  if (keyStore) {
   const filter = { refreshToken: refreshToken };
   const update = {
     $set: {
@@ -59,9 +59,7 @@ class AccessService {
         message: "No document found for the given refreshToken",
       };
     }
-
 }
-
 
   // service logout
   static logout = async( keyStore ) => {
@@ -76,7 +74,6 @@ class AccessService {
   4- generate tokens
   5- get data return login 
 */
-
 
   // service login
 

@@ -5,8 +5,6 @@ const { Ok, Created, SuccessResponse} = require('../core/success.response')
 
 class AccessController {
     
-  
-
   handleRefreshToken = async(req, res, next) => {
     new SuccessResponse({
       message: 'Get a Refresh Token OK!',
@@ -42,8 +40,9 @@ class AccessController {
         }
       }).send(res)
         // return res.status(201).json(await AccessService.signUp(req.body))
-     }
+    }
 }
+
 
 
 module.exports = new AccessController();
