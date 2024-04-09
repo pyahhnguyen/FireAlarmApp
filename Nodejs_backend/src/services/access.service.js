@@ -82,7 +82,7 @@ static handleRefreshToken = async ({refreshToken, user, keyStore}) => {
     const foundUser = await findByEmail({ email });
     if (!foundUser) throw new BadRequestError("Error: user not registered !");
     // 2
-    const match = bcrypt.compare(password, foundUser.password);
+    const match = await bcrypt.compare(password, foundUser.password);
     if (!match) throw new AuthFailureError("Authentication error");
     // 3
     const privateKey = crypto.randomBytes(64).toString("hex");

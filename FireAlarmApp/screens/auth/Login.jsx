@@ -19,71 +19,82 @@ import ReusableBtn from "../../components/Button/ReusableBtn";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
-import axios from "axios";  
-import Constants from 'expo-constants';
+import axios from "axios";
+import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Thêm state mới để lưu trữ thông báo lỗi
+
   const navigation = useNavigation();
-  const apiHost = Constants.manifest.extra.API_HOST || 'localhost';
+  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
 
   const handleLogin = () => {
     const user = {
       email: email,
       password: password,
     };
-
+    setError("");
     const headers = {
-      'Content-Type': 'application/json',
-      'x-api-key': '2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b',
+      "Content-Type": "application/json",
+      "x-api-key":
+        "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
     };
 
     axios
-      .post(`http://${apiHost}:3056/v1/api/user/login`, user, {headers: headers})
+      .post(`http://${apiHost}:3056/v1/api/user/login`, user, {
+        headers: headers,
+      })
       .then((response) => {
         const responseData = response.data;
         console.log(responseData);
-        if (responseData && responseData.metadata && responseData.metadata.tokens && responseData.metadata.tokens.accessToken) {
+        if (
+          responseData &&
+          responseData.metadata &&
+          responseData.metadata.tokens &&
+          responseData.metadata.tokens.accessToken
+        ) {
           const accessToken = responseData.metadata.tokens.accessToken;
           const x_client_id = responseData.metadata.user._id;
           const userdata = responseData.metadata.user;
-          console.log('1. ACCESSTOKEN FROM RES LOGIN:', accessToken);
-          console.log('2. x_client_id:', x_client_id);
-          
+          console.log("1. ACCESSTOKEN FROM RES LOGIN:", accessToken);
+          console.log("2. x_client_id:", x_client_id);
+
           // Save the accessToken to AsyncStorage
           AsyncStorage.setItem("authAccessToken", accessToken);
           AsyncStorage.setItem("x_client_id", x_client_id);
           AsyncStorage.setItem("userdata", JSON.stringify(userdata));
 
-          
           // ... any other logic you want to perform after successful login
-          AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+          AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));
           navigation.replace("Bottom");
         } else {
           // Handle the case where tokens or accessToken is not present in the response
           console.error("Tokens or accessToken not present in the response");
         }
-
-        
       })
       .catch((err) => {
-        Alert.alert("Login Failed", "Invalid email");
+        // Alert.alert("Login Failed", "Invalid email");
+        setError("Invalid email or password"); // Cập nhật thông báo lỗi
         console.log(err);
       });
   };
 
-
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: COLORS.lightWhite }}
-    >
-        <StatusBar backgroundColor={'transparent'} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+      <StatusBar backgroundColor={"transparent"} />
       <View>
         <Image
-          style={{ width: 100, height: 100, marginTop: 60, alignItems: "center", marginLeft: "auto", marginRight: "auto"}}
+          style={{
+            width: 100,
+            height: 100,
+            marginTop: 60,
+            alignItems: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
           source={require("../../assets/images/firefighter.png")}
         />
       </View>
@@ -146,7 +157,6 @@ const Login = () => {
               paddingVertical: 5,
               borderRadius: 5,
               marginHorizontal: 20,
-
             }}
           >
             <AntDesign
@@ -181,12 +191,22 @@ const Login = () => {
             marginHorizontal: 20,
           }}
         >
-          <ReusableText 
+          <ReusableText
             text={"Forgot Password?"}
-            family={"medium"}
+            family={"medium"} // Assuming this is a custom prop for font family
             size={SIZES.small}
             color={COLORS.black}
           />
+          {error ? (
+            <Text
+              style={{
+                color: COLORS.red,
+                fontSize: SIZES.h4, // Adjusted from size to fontSize
+              }}
+            >
+              {error}
+            </Text>
+          ) : null}
         </View>
 
         <HeightSpace height={30} />
