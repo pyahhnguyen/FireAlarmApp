@@ -7,7 +7,7 @@ The Smart Fire Alarm System is designed to detect and alert early fire hazards i
 
 **System block diagram:**
 
-![[System block diagram]](/image/firealarm.jpg)
+![[System block diagram]](/FireAlarmApp/assets/images/firealarm.jpg)
 
 **Sensors block:**
 + Includes fire detection sensors such as gas sensors, heat sensors, infrared sensors, flame sensors...
