@@ -11,9 +11,7 @@ The Smart Fire Alarm System is designed to detect and alert early fire hazards i
 
 **Sensors block:**
 + Includes fire detection sensors such as gas sensors, heat sensors, infrared sensors, flame sensors...
-Collect data about fire hazards from the environment and send it to the central processor.
-+ Includes fire detection sensors such as gas sensors, heat sensors, infrared sensors, flame sensors...
-Collect data about fire hazards from the environment and send it to the central processor.
++ Collect data about fire hazards from the environment and send it to the central processor.
 
 **Software:**
 + Real Time Processing Block: Analyzes data from sensors and sends alerts when signs of fire are detected.
