@@ -7,11 +7,12 @@ import {
   PopUp,
   Button,
   Dimensions,
+  FlatList
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
-import { FlatList } from "react-native-gesture-handler";
+// import { FlatList } from "react-native-gesture-handler";
 import Modal from "../Alert/Modal_alert";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -28,7 +29,7 @@ const AlertHistory = ({ customContainerStyle, history }) => {
   const [firstAlarmItem, setFirstAlarmItem] = useState(null);
   const [historyALert, setHistoryAlert] = useState([]);
   
-  const apiHost = Constants.manifest.extra.API_HOST || 'localhost'
+  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
 
   const handleModal = (item) => {
@@ -137,7 +138,7 @@ const renderItem = ({ item }) => (
         ...customContainerStyle,
       }}
     >
-          <FlatList
+      <FlatList
         contentContainerStyle={{}}
         scrollEnabled={true}
         // data= {historyALert?historyALert:history}

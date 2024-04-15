@@ -7,9 +7,9 @@ import {
   Dimensions,
   TouchableOpacity,
   Button,
+  FlatList
 } from "react-native";
 import React, { useEffect } from "react";
-import { FlatList } from "react-native-gesture-handler";
 import { COLORS, SIZES } from "../../constants/theme";
 import axios from "axios";
 

@@ -6,11 +6,10 @@ import {
   Pressable,
   Dimensions,
   LogBox,
+
 } from "react-native";
 import { COLORS } from "../../constants/theme";
-import WeatherAlert from "./Weather_alert";
 import { ScrollView } from 'react-native-virtualized-view'
-
 import AlertHistory from "./alert_history";
 import dummyData, {
   alertHistory,
@@ -31,7 +30,6 @@ const TabHome = () => {
   const [recentalert, setRecentAlert] = React.useState()
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
-
   React.useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
@@ -96,7 +94,7 @@ const TabHome = () => {
         >
           {renderChart()}
         </View>
-
+        
         <Text
           style={{
             marginLeft: SIZES.padding,

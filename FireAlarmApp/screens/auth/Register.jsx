@@ -29,7 +29,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const navigation = useNavigation();
-  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
+  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
   const handleRegister = () => {
     const user = {

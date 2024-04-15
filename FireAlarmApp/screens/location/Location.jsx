@@ -24,7 +24,7 @@ const Location = ({ route }) => {
 
   const [firstAlarmItem, setFirstAlarmItem] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
+  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
   const fetchData = async () => {
     try {

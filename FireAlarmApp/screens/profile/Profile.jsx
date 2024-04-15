@@ -21,7 +21,7 @@ const h = Dimensions.get("screen").height;
 const Profile = () => {
   const [userData, setUserData] = useState("");
   const [userLogin, setLogin] = useState(true);
-  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
+  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
   const navigation = useNavigation();
   async function getData() {
     try {
@@ -35,33 +35,7 @@ const Profile = () => {
     }
   }
 
-  //   async function getData() {
-  //   try {
-  //     const x_client_id = await AsyncStorage.getItem('x_client_id');
 
-  //     if (x_client_id) {
-  //       axios.post(`http://${apiHost}:3056/v1/user/userdata`, { x_client_id })
-  //         .then(res => {
-  //           console.log(res.data); // Log kết quả trả về từ API để kiểm tra
-
-  //           if (res.data && res.data.data && res.data.data.email) {
-  //             // Kiểm tra và log dữ liệu email
-  //             console.log('Email:', res.data.data.email);
-
-  //             // Cập nhật state
-  //             setUserData(res.data.data);
-  //           } else {
-  //             console.error('Email not found in API response');
-  //           }
-  //         })
-  //         .catch(error => {
-  //           console.error('Error fetching user data:', error);
-  //         });
-  //     }
-  //   } catch (error) {
-  //     console.error('Error retrieving token from AsyncStorage:', error);
-  //   }
-  // }
   useEffect(() => {
     getData();
   }, []);
@@ -128,7 +102,7 @@ const Profile = () => {
       <StatusBar backgroundColor={"transparent"} />
       <View style={{ width: "100%" }}>
         <ImageBackground
-          source={require("../../assets/images/profile_background.jpg")}
+          source={require("../../assets/images/map.png")}
           resizeMode="cover"
           style={{
             flex: 1,

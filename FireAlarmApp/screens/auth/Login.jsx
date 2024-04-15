@@ -29,7 +29,7 @@ const Login = () => {
   const [error, setError] = useState(""); // Thêm state mới để lưu trữ thông báo lỗi
 
   const navigation = useNavigation();
-  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
+  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
   const handleLogin = () => {
     const user = {

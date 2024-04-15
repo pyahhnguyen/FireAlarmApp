@@ -13,11 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
+import { StatusBar } from "expo-status-bar";
+
 
 const EditProfile = ({ route }) => {
   const { UserData } = route.params;
   const navigation = useNavigation();
-  const apiHost = Constants.manifest.extra.API_HOST || "localhost";
+  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
   // State variables to hold updated information
 
@@ -59,6 +61,7 @@ const EditProfile = ({ route }) => {
 
   return (
     <SafeAreaView>
+      <StatusBar backgroundColor={"transparent"} />
       <View
         style={{
           width: "100%",
