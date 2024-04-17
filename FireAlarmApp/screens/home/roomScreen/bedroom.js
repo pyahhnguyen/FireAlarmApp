@@ -1,7 +1,5 @@
 import { StyleSheet, Text, View, useState } from 'react-native'
 import React from 'react'
-import SensorList from '../../../components/Sensor/SensorList'
-import { SENSOR_LIST } from '../../../assets/data/room'
 
 
 const Bedroom = () => {

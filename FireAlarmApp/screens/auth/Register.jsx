@@ -7,6 +7,7 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Alert,
+  TextInput
 } from "react-native";
 import React, { useState } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
@@ -16,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { COLORS, SIZES } from "../../constants/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { TextInput } from "react-native-gesture-handler";
+
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import Octicons from "react-native-vector-icons/Octicons";
 import axios from "axios";

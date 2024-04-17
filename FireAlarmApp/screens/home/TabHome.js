@@ -7,6 +7,7 @@ import {
   Dimensions,
   LogBox,
 
+  
 } from "react-native";
 import { COLORS } from "../../constants/theme";
 import { ScrollView } from 'react-native-virtualized-view'
@@ -30,6 +31,7 @@ const TabHome = () => {
   const [recentalert, setRecentAlert] = React.useState()
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
+
   React.useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
@@ -85,7 +87,7 @@ const TabHome = () => {
   const StatusContent = () => (
 
     <ScrollView>
-      <View style={{ marginBottom: 250, flex: 1 }}>
+      <View style={{ marginBottom: 180, flex: 1 }}>
         <View
           style={{
             justifyContent: "space-between",
@@ -109,8 +111,6 @@ const TabHome = () => {
       </View>
     </ScrollView>
   );
-
-
 
   const NewsContent = () => (
     <View style={{ marginTop: 20, marginBottom: 280 }}>
@@ -143,7 +143,7 @@ export default TabHome;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
+    marginTop: 90,
     backgroundColor: "transparent",
   },
   container_device: {

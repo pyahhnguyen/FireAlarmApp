@@ -6,6 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Pressable,
+  TextInput
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
@@ -13,7 +14,6 @@ import WidthSpace from "../../components/Reusable/WidthSpace";
 import HeightSpace from "../../components/Reusable/HeightSpace";
 import { COLORS, SIZES } from "../../constants/theme";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { TextInput } from "react-native-gesture-handler";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import { useNavigation } from "@react-navigation/native";

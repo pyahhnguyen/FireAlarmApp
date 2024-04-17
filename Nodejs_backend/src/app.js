@@ -25,6 +25,9 @@ app.use(bodyParser.json()); // parse application/json
 // init MongoDb
 require("./db/init_mongo");
 
+// init mqtt
+require("./services/mqtt.service");
+
 //init routes
 app.use('', require("./routes"));
 

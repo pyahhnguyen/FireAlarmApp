@@ -21,7 +21,7 @@ const roomSchema = new mongoose.Schema({
         ref: 'Sensor',
         required: true,
     },
-  
+
       //status room 
 });
 
