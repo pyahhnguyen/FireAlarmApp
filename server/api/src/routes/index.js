@@ -19,7 +19,7 @@ router.use('/v1/api', require('./Access/index'));
 // Root routes
 router.get("/", (req, res) => {
   return res.status(200).json({
-    message: "Welcome to the backend of SafeGuard.com",
+    message: "Welcome to the backend of FireReaction",
   });
 });
 
