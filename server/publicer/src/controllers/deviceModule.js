@@ -2,7 +2,7 @@
 const awsIot = require('aws-iot-device-sdk');
 const deviceConfig = require('../config/config.json');
 const path = require('path');
-require('dotenv')
+require('dotenv').config();
 
 function setupDevice() {
   
