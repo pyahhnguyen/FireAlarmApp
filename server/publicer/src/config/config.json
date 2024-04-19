@@ -1,8 +1,8 @@
 {
     "ENDPOINT": "a5kpujtmyqbrl-ats.iot.us-east-1.amazonaws.com",
     "CLIENT_ID": "testClient",
-    "TOPIC": "phugia/humidity",
     "DB_NAME": "test",
+    "TOPIC":"#",
     "COLLECTION_NAME": "apartments"
 }
   

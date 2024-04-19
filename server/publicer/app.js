@@ -1,9 +1,50 @@
-const WebSocket = require('ws');
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 require('dotenv').config();
-const startDeviceAndForwardMessages = require('./src/publicer');
+// MongoDB initialization (assumed to be setup in db/init_mongo)
+require("./src/db/init_mongo");
+const mongoose = require('mongoose');
 
-// Initialize WebSocket Server
-const wss = new WebSocket.Server({ port: 8080 });
+// startDeviceAndForwardMessages = require('./src/controllers/wsPublicer')
 
-// Starting the device and forwarding messages
-startDeviceAndForwardMessages(wss);
+const websocket = require('./src/sockets/socket');
+// const startDeviceAndForwardMessages = require('./src/publicer');
+
+const app = express();
+const server = http.createServer(app);
+
+const PORT = process.env.PORT || 3000;
+
+// Socket.IO server attached to the same HTTP server
+const io = new Server(server);
+
+server.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
+
+// Initialize WebSocket (Socket.IO) with the server
+websocket(io);
+// startDeviceAndForwardMessages(io)
+
+
+process.on('SIGINT', function() {
+  console.log("Caught interrupt signal");
+  
+  // If you have an HTTP server:
+  server.close(() => {
+      console.log('HTTP server closed');
+  });
+
+  // If you are using MongoDB with Mongoose, for example:
+  mongoose.connection.close(false, () => {
+      console.log('MongoDb connection closed.');
+  });
+
+  // If you have other cleanup tasks, address them here:
+  // For AWS IoT or other connections that need to be closed:
+  // device.end(true, () => console.log('AWS IoT Disconnected'));
+
+  // After all are closed, exit:
+  process.exit(0);
+});
