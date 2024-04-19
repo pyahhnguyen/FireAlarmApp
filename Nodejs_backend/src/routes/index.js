@@ -8,8 +8,6 @@ router.use(apikey);
 
 // check permission 
 router.use(permission('0000'));
-
-
 // authen route
 router.use('/v1/api', require('./Access/index'));
 

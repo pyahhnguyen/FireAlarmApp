@@ -65,7 +65,7 @@ const Location = ({ route }) => {
   // Define a mapping between locations and floor plan images
   const locationImages = {
     "Living Room": require("../../assets/images/Planner_Living_fire.png"),
-    Kitchen: require("../../assets/images/Planner_Kitchen_fire.png"),
+    'Kitchen': require("../../assets/images/Planner_Kitchen_fire.png"),
     "Bed Room": require("../../assets/images/Planner_Bedroom_fire.png"),
     "Bath Room": require("../../assets/images/Planner_Bathroom_fire.png"),
     // Add more locations as needed
@@ -86,13 +86,13 @@ const Location = ({ route }) => {
       <TouchableOpacity
         style={{
           borderRadius: 5,
-          backgroundColor: COLORS.alert,
           ...styles.shadow,
-          overflow: "hidden",
           height: h / 9,
           width: w - 40,
-          marginVertical: 5,
+          marginVertical: 3,
+       
         }}
+        // onPress={() => {}
       >
         <View style={[styles.card]}>
           <Image
@@ -171,28 +171,29 @@ const Location = ({ route }) => {
         </View>
       </View>
 
-      {/* // Device List  */}
-      <View
-        style={{
-          flexDirection: "column", // row
-          justifyContent: "center", // Center vertically
-          alignItems: "center", // Center horizontally
-          marginBottom: 50,
-        }}
-      >
+     {/* device */}
+    
+    <View style={styles.deviceContainer}>
         <View>
           <Text style={styles.device_header}>Devices</Text>
         </View>
-        <View style={{ backgroundColor: "transparent" }}>
+
+        <View  
+        style={{
+          backgroundColor: COLORS.lightWhite,
+                    
+        }}>
           <FlatList // sửa lại data input
             renderItem={renderItem}
-            data={[1, 2, 3]}
+            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             scrollEnabled={true}
             showsVerticalScrollIndicator={false}
           />
         </View>
       </View>
-    </View>
+        
+      </View>
+   
   );
 };
 
@@ -215,6 +216,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: SIZES.radius,
     color: COLORS.primary,
+    
   },
   content: {
     fontSize: 16,
@@ -248,9 +250,9 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: COLORS.alert,
-    borderRadius: SIZES.radius,
+    borderRadius: 5,
     flexDirection: "row",
-    marginVertical: 5,
+    paddingVertical: 2,
     // justifyContent: 'space-between',
   },
   image: {
@@ -263,6 +265,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+  deviceContainer: {
+    backgroundColor: COLORS.lightWhite,
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 10,
+    marginBottom: 300,
+  },
+
 });
 
 export default Location;

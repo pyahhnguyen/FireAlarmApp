@@ -5,6 +5,11 @@ const notificationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    deviceToken: {
+        type: Array,
+        default: [],
+    },
+
     type: {
         type: String,
         required: true,

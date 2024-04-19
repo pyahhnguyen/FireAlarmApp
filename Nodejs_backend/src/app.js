@@ -7,7 +7,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require("http"); // Import the 'http' module for creating an HTTP server
 const WebSocket = require("ws");
-// const apiKey = require("./routes/Auth/checkAuth")
 
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
@@ -24,12 +23,9 @@ app.use(bodyParser.json()); // parse application/json
 
 // init MongoDb
 require("./db/init_mongo");
-
-// init mqtt
-require("./services/mqtt.service");
-
 //init routes
 app.use('', require("./routes"));
+
 
 //handling error
 app.use((req, res, next) => {

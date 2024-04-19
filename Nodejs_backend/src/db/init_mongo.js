@@ -20,7 +20,6 @@ class Database {
     }
   }
 
-
   // Get instance
   static getInstance() {
     if (!Database.instance) {

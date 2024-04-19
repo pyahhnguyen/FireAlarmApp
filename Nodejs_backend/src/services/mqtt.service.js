@@ -52,7 +52,7 @@ device.on('message', (topic, payload) => {
     console.log(`Received message from topic '${topic}': ${payload.toString()}`);
     
     // Publish the processed data to the backend MQTT broker
-    client.publish(BACKEND_MQTT_TOPIC, processedData);
+    // client.publish(BACKEND_MQTT_TOPIC, processedData);
 });
 
 // Keep the application running
@@ -63,3 +63,8 @@ process.on('SIGINT', () => {
     process.exit();
 });
 
+
+module.exports = {
+    device, // Expose AWS IoT device instance for potential use in other modules
+    client // Expose MQTT client for potential use in other modules
+};

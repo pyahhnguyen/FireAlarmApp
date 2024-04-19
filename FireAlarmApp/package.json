@@ -33,19 +33,19 @@
     "react-native-image-slider-box": "^2.0.7",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-modal": "^13.0.1",
-    "react-native-mqtt": "^0.1.0-beta4",
     "react-native-pie-chart": "^3.0.1",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",
     "react-native-snap-carousel": "^4.0.0-beta.6",
-    "react-native-svg": "13.4.0",
+    "react-native-svg": "^13.9.0",
     "react-native-virtualized-view": "^1.0.0",
     "react-native-websocket": "^1.0.2",
     "react-native-webview": "13.2.2",
     "react-redux": "^9.1.0",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

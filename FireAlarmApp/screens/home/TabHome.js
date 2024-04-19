@@ -94,7 +94,7 @@ const TabHome = () => {
             marginVertical: SIZES.fourteen,
           }}
         >
-          {renderChart()}
+          {/* {renderChart()} */}
         </View>
         
         <Text
