@@ -2,8 +2,8 @@ const io = require('socket.io-client');
 
 // Assuming your server is running locally on port 3000
 const socketUrl = 'http://localhost:5000';
-const userId = '65dde8cde00e7c1aa09330ef';  // Example User ID
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZThjZGUwMGU3YzFhYTA5MzMwZWYiLCJlbWFpbCI6ImtoYWlodW5nMDNAZ21haWwuY29tIiwiaWF0IjoxNzEzNTg0MDIyLCJleHAiOjE3MTQxODg4MjJ9.FwMYsFYhy5mTl4opLOHoe8nNKvZSZY4z2duh5nri5cI';  // Example Token
+const userId = '65dde2c8e00e7c1aa09330e7';  // Example User ID
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZTJjOGUwMGU3YzFhYTA5MzMwZTciLCJlbWFpbCI6InBodWdpYTA1QGdtYWlsLmNvbSIsImlhdCI6MTcxMDkxOTE4MywiZXhwIjoxNzExNTIzOTgzfQ.l1h1yiQ4iGwqcSavUP47qrQUa-8DF6YDGO1oTbxGnEw';  // Example Token
 
 const options = {
   query: { token, userId },
