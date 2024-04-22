@@ -12,7 +12,7 @@ import { COLORS, FONTS, SIZES } from "../../constants/theme";
 import { alertHistory } from "../../constants/dummy";
 import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
-import Constants from "expo-constants";
+import {IPHOST,PORT_EX} from "@env"
 
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
@@ -24,12 +24,12 @@ const Location = ({ route }) => {
 
   const [firstAlarmItem, setFirstAlarmItem] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
+
 
   const fetchData = async () => {
     try {
       setRefreshing(true); // Set refreshing to true while fetching
-      const response = await axios.get(`http://${apiHost}:3050/api/alert`, {
+      const response = await axios.get(`http://${IPHOST}:${PORT_EX}/api/alert`, {
         headers: {
           userId: "659a4e55b88b9369f584b308", // Replace with your actual header
         },

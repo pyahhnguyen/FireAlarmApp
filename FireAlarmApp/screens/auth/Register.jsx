@@ -23,6 +23,7 @@ import Octicons from "react-native-vector-icons/Octicons";
 import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
+import {IPHOST,PORT_EX} from "@env"
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const navigation = useNavigation();
-  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
+ 
 
   const handleRegister = () => {
     const user = {
@@ -48,7 +49,7 @@ const Register = () => {
 
     // send a post request to the backend to register the user
     axios
-      .post(`http://${apiHost}:3056/v1/api/user/signup`, user, {
+      .post(`http://${IPHOST}:${PORT_EX}/v1/api/user/signup`, user, {
         headers: headers,
       })
       .then((response) => {

@@ -6,11 +6,9 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require("http"); // Import the 'http' module for creating an HTTP server
-const WebSocket = require("ws");
+
 
 const app = express();
-const server = http.createServer(app); // Create an HTTP server
-const wss = new WebSocket.Server({ server }); // Create a WebSocket server
 // init middlewares
 
 app.use(morgan("dev")); // print request logs on console
@@ -44,6 +42,6 @@ app.use((error, req, res, next) => {
     })
 })  
 
-module.exports = {server, app, wss};    
+module.exports = { app};    
 
 

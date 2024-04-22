@@ -22,6 +22,7 @@ import { Alert } from "react-native";
 import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
+import {IPHOST,PORT_EX} from "@env"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,7 +30,6 @@ const Login = () => {
   const [error, setError] = useState(""); // Thêm state mới để lưu trữ thông báo lỗi
 
   const navigation = useNavigation();
-  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
   const handleLogin = () => {
     const user = {
@@ -44,7 +44,7 @@ const Login = () => {
     };
 
     axios
-      .post(`http://${apiHost}:3056/v1/api/user/login`, user, {
+      .post(`http://${IPHOST}:${PORT_EX}/v1/api/user/login`, user, {
         headers: headers,
       })
       .then((response) => {
@@ -57,15 +57,20 @@ const Login = () => {
           responseData.metadata.tokens.accessToken
         ) {
           const accessToken = responseData.metadata.tokens.accessToken;
+          const refreshToken = responseData.metadata.tokens.refreshToken;
           const x_client_id = responseData.metadata.user._id;
           const userdata = responseData.metadata.user;
-          console.log("1. ACCESSTOKEN FROM RES LOGIN:", accessToken);
-          console.log("2. x_client_id:", x_client_id);
+
+          //console.log("1. ACCESSTOKEN FROM RES LOGIN:", accessToken);
+
+          //console.log("2. x_client_id:", x_client_id);
+          //console.log("3. REFRESHTOKEN FROM LOGIN:", refreshToken);
 
           // Save the accessToken to AsyncStorage
           AsyncStorage.setItem("authAccessToken", accessToken);
           AsyncStorage.setItem("x_client_id", x_client_id);
           AsyncStorage.setItem("userdata", JSON.stringify(userdata));
+          AsyncStorage.setItem("refreshToken", refreshToken);
 
           // ... any other logic you want to perform after successful login
           AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));

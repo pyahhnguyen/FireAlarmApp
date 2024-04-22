@@ -7,6 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/theme";
 import { ImageBackground } from "react-native";
+import DeviceStackNavigator from "./DeviceStack.Navigator";
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
@@ -69,7 +70,7 @@ function BottomTabNavigation() {
             borderBottomRightRadius: 10,
             borderBottomLeftRadius: 10,
           },
-            }}
+        }}
       />
 
       <Tab.Screen
@@ -97,29 +98,8 @@ function BottomTabNavigation() {
         }}
       />
 
-      <Tab.Screen
-        name="Device"
-        component={Device}
-        options={{
-          headerShown: true,
-          tabBarStyle: tabBarStyle,
-          headerTintColor: COLORS.black,
-          headerTitleAlign: "center",
-          headerStyle: {
-            backgroundColor: COLORS.background,
-            height: 100,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
-          },
-          // headerBackground: () => (
-          //   <ImageBackground
-          //     source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
-          //     style={{ flex: 1 }}
-          //     resizeMode="cover"
-          //   />
-          // ),
-        }}
-      />
+<Tab.Screen name="Device" component={DeviceStackNavigator} options={{ headerShown: false }} />
+
 
       <Tab.Screen
         name="Profile"

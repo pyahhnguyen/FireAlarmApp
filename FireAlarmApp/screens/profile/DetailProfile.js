@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
-// import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';

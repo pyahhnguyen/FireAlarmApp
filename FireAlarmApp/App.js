@@ -10,9 +10,12 @@ import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Welcome from "./screens/auth/Welcome";
 import Living from "./screens/home/roomScreen/living";
+import Bedroom from "./screens/home/roomScreen/bedroom";
 import DetailProfile from "./screens/profile/DetailProfile";
 import EditProfile from "./screens/profile/EditProfile";
 import Popup_socket from "./screens/Alert/pop-up-alert";
+import DetailDevice from "./screens/device/DetailDevice";
+import Alert_Histor_Detailer from "./screens/home/alert_history_detail";
 import { COLORS } from "./constants/theme";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as Device from "expo-device";
@@ -21,8 +24,6 @@ import Constants from "expo-constants";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -30,7 +31,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
-
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -56,15 +56,16 @@ async function registerForPushNotificationsAsync() {
       alert("Failed to get push token for push notification!");
       return;
     }
-    token = await Notifications.getExpoPushTokenAsync({
+    token = await Notifications.getDevicePushTokenAsync({
       projectId: Constants.expoConfig.extra.eas.projectId,
     });
     console.log(token);
   } else {
     alert("Must use physical device for Push Notifications");
   }
+  AsyncStorage.setItem("deviceToken", token.data);
   return token.data;
-  
+
 }
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +76,7 @@ export default function App() {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+
 
   useEffect(() => {
     async function prepare() {
@@ -91,7 +93,6 @@ export default function App() {
         setAppIsReady(true);
       }
     }
-
     prepare();
   }, []);
 
@@ -100,7 +101,7 @@ export default function App() {
     // Retrieve authentication state from storage
     const checkAuthentication = async () => {
       const storedLoggedInStatus = await AsyncStorage.getItem("isLoggedIn");
-      setIsLoggedIn(storedLoggedInStatus === "true");
+      setIsLoggedIn(storedLoggedInStatus);
     };
     checkAuthentication();
   }, []);
@@ -173,6 +174,7 @@ export default function App() {
                   borderBottomRightRadius: 50,
                   borderBottomLeftRadius: 50,
                 },
+
               }}
             />
             <Stack.Screen
@@ -187,7 +189,7 @@ export default function App() {
             />
             <Stack.Screen
               name="Bedroom"
-              component={Living}
+              component={Bedroom}
               options={{
                 headerShown: true,
                 headerTitleAlign: "center",
@@ -199,13 +201,13 @@ export default function App() {
 
             <Stack.Screen
               name="Kitchen"
-              component={Living}
+              component={Bedroom}
               options={{ headerShown: true }}
             />
 
             <Stack.Screen
               name="Bathroom"
-              component={Living}
+              component={Bedroom}
               options={{
                 headerShown: true,
               }}
@@ -244,6 +246,23 @@ export default function App() {
               component={Register}
               options={{ headerShown: false }}
             />
+
+            <Stack.Screen
+              name="Alert History"
+              component={Alert_Histor_Detailer}
+              options={{
+                headerShown: true,
+                headerTitleAlign: "center",
+                headerTintColor: COLORS.black,
+                headerStyle: {
+                  backgroundColor: COLORS.background,
+                  height: 100,
+                  borderBottomRightRadius: 10,
+                  borderBottomLeftRadius: 10,
+                },
+              }}
+            />
+
           </>
         ) : (
           <>
@@ -267,86 +286,6 @@ export default function App() {
               component={Login}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name="Bottom"
-              component={BottomTabNavigation}
-              options={{ headerShown: false }}
-            />
-
-            <Stack.Screen
-              name="Living"
-              component={Living}
-              options={{
-                headerShown: true,
-                headerTitle: "Living Room",
-                headerTitleAlign: "center",
-                headerStyle: {
-                  backgroundColor: COLORS.background,
-                  borderBottomRightRadius: 50,
-                  borderBottomLeftRadius: 50,
-                },
-              }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerShown: false,
-                headerStyle: {
-                  backgroundColor: "transparent",
-                },
-              }}
-            />
-            <Stack.Screen
-              name="Bedroom"
-              component={Living}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerStyle: {
-                  backgroundColor: COLORS.background,
-                },
-              }}
-            />
-
-            <Stack.Screen
-              name="Kitchen"
-              component={Living}
-              options={{ headerShown: true }}
-            />
-
-            <Stack.Screen
-              name="Bathroom"
-              component={Living}
-              options={{
-                headerShown: true,
-              }}
-            />
-
-            <Stack.Screen
-              name="PopUp"
-              component={Popup_socket}
-              options={{
-                headerShown: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="DetailProfile"
-              component={DetailProfile}
-              options={{
-                headerShown: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="EditProfile"
-              component={EditProfile}
-              options={{
-                headerShown: false,
-              }}
-            />
-
             {/* Add other screens for non-logged-in users */}
           </>
         )}

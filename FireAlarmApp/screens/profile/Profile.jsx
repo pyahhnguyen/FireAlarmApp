@@ -15,13 +15,14 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import Constants from "expo-constants";
 const h = Dimensions.get("screen").height;
+import {IPHOST,PORT_EX} from "@env"
+
+
 
 const Profile = () => {
   const [userData, setUserData] = useState("");
   const [userLogin, setLogin] = useState(true);
-  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
   const navigation = useNavigation();
   async function getData() {
     try {
@@ -45,6 +46,7 @@ const Profile = () => {
       // Retrieve values from AsyncStorage
       const accessToken = await AsyncStorage.getItem("authAccessToken");
       const x_client_id = await AsyncStorage.getItem("x_client_id");
+      console.log("accessToken:", accessToken);
 
       // Check if the access token is present
       if (!accessToken) {
@@ -62,7 +64,7 @@ const Profile = () => {
 
       // Make the request with error handling
       axios
-        .post(`http://${apiHost}:3056/v1/api/user/logout`, {}, { headers })
+        .post(`http://${IPHOST}:${PORT_EX}/v1/api/user/logout`, {}, { headers })
         .then((response) => {
           console.log("Logout Response:", response.data);
           // Handle successful logout
@@ -93,6 +95,7 @@ const Profile = () => {
 
   const clearAuthToken = async () => {
     await AsyncStorage.setItem("isLoggedIn", JSON.stringify(false));
+    AsyncStorage.removeItem("authAccessToken");
     console.log("auth token cleared");
     navigation.replace("Login");
   };

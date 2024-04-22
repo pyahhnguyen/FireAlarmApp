@@ -1,47 +1,54 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  useState,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-  Button,
-  FlatList
-} from "react-native";
-import React, { useEffect } from "react";
-import { COLORS, SIZES } from "../../constants/theme";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, FlatList } from "react-native";
 import axios from "axios";
-
+import { COLORS, SIZES } from "../../constants/theme";
+import { device_data } from "../../constants/device-data";
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
+import { useNavigation } from "@react-navigation/native";
+
 const Device = () => {
-  // const [sensors, setSensors] = useState(SENSOR_LIST);
+  const [sensors, setSensors] = useState([]);
+  const navigation = useNavigation();
+
+ // useEffect(() => {
+    // Dummy data loading logic, replace URL with your actual API endpoint
+  //}, []);
+
+  const sensorTypeImages = {
+    "smoke": require("../../assets/images/Smoke-Alarms-Smoke-Detectors.jpg"),
+    "heat": require("../../assets/images/heat_sensor.jpg"),
+    "gas": require("../../assets/images/gas_sensor.jpg"),
+    "flame": require("../../assets/images/Flame-Sensor-Detector.jpg"),
+  };
+  
+  const handlePress = (item) => {
+    navigation.navigate('Detail Device', { item }); // Pass item data to details screen
+  };
+
+
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
+        onPress={() => handlePress(item)}
         style={{
-          marginVertical: 10,
-          marginLeft: 25,
+          marginVertical: 8,
+          marginHorizontal: 12,
           borderRadius: 5,
           backgroundColor: COLORS.white,
           ...styles.shadow,
-          height: h / 9,
-          width: w - 50,
-          position: "relative",
         }}
       >
-        <View style={[styles.card]}>
+        <View style={styles.card}>
           <Image
             style={styles.image}
-            source={require("../../assets/images/Co2.png")}
+            source={sensorTypeImages[item.device_type]}
           />
-          <View>
-            <Text style={styles.titleItem}>Sensor #1</Text>
-            <Text style={styles.titleItem}>Type: Smoke Detector</Text>
-            <Text style={styles.titleItem}>Location:</Text>
-            <Text style={styles.titleItem}>Status: </Text>
-            <Text style={styles.titleItem}>Warning: </Text>
+          <View style={styles.sensorContent}>
+            <Text style={styles.titleBold}>{item.device_name || "MQ2 Smoke Alarm"}</Text>
+            <Text style={styles.titleItem}>FFR-SS-Input: {item.code || "29352"}</Text>
+            <Text style={styles.titleItem}>Status: {item.status || "Active"}</Text>
+            <Text style={styles.titleItem}>Warning: {item.warning || "None"}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -49,70 +56,53 @@ const Device = () => {
   };
 
   return (
-    <View>
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addButtonText}>Add Device</Text>
-      </TouchableOpacity>
-      <View>
-        <FlatList renderItem={renderItem} data={[1, 2, 3]} />
-      </View>
+    <View style={styles.container}>
+      <FlatList
+        data={device_data}
+        renderItem={renderItem}
+        keyExtractor={item => item.device_id}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 10,
-    marginVertical: 15,
+    flex: 1,
     backgroundColor: COLORS.white,
-    borderRadius: 10,
-  },
-  cardContainer: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    // backgroundColor: COLORS.,
+   //marginBottom: h/20
   },
   card: {
     backgroundColor: COLORS.white,
     borderRadius: SIZES.radius,
     flexDirection: "row",
-    marginVertical: 10,
-    // justifyContent: 'space-between',
+    paddingVertical: 10,
   },
   image: {
-    width: w / 4,
+    width: w / 4.5,
+    height: w / 4.5,
     resizeMode: "contain",
-    height: w / 4,
     backgroundColor: COLORS.lightWhite,
-    borderRadius: 20,
-    marginLeft: 10,
-    marginRight: 40,
+    borderRadius: 5,
+    marginHorizontal: 20,
   },
   shadow: {
-    shadowColor: "#121211",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 10.32,
-    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  addButton: {
-    backgroundColor: COLORS.primary,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginVertical: 15,
-    alignSelf: "center",
+  titleItem: {
+    fontSize: 14,
   },
-  addButtonText: {
-    color: COLORS.white,
+  titleBold: {
     fontSize: 16,
     fontWeight: "bold",
   },
-  titleItem: {
-    fontSize: 12,
+  sensorContent: {
+    justifyContent: "center",
+    marginLeft: 5,
   },
 });
 

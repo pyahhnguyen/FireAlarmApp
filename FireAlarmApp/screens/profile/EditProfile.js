@@ -14,12 +14,11 @@ import { useState } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-
+import {IPHOST,PORT_EX} from "@env"
 
 const EditProfile = ({ route }) => {
   const { UserData } = route.params;
   const navigation = useNavigation();
-  const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
   // State variables to hold updated information
 
@@ -40,7 +39,7 @@ const EditProfile = ({ route }) => {
 
   const handleUpdateProfile = async () => {
     try {
-      const response = await axios.put(`http://${apiHost}:3056/editprofile`, {
+      const response = await axios.put(`http://${IPHOST}:${PORT_EX}/editprofile`, {
         userId: UserData._id, // Assuming UserData has _id property
         name: name,
         phone: phone,

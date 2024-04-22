@@ -41,7 +41,7 @@ const AlertHistory = ({ customContainerStyle, history }) => {
 
   const handleDetail = () => {
     setIsModalVisible(false);
-  navigation.navigate('Alert', { sensorData: selectedItemData });
+  navigation.navigate('Alert History', { sensorData: selectedItemData });
 };
 
 const fetchData = async () => {
