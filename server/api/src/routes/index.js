@@ -1,20 +1,20 @@
  // routes/index.js
 const express = require("express");
 const router = express.Router();
-const { apikey, permission } = require("../auth/chechAuth");
+const { apikey, permission } = require("../auth/checkAuth");
 
 // check apiKey
-router.use(apikey);
+//router.use(apikey);
 
 // check permission 
-router.use(permission('0000'));
+//router.use(permission('0000'));
 
 
 // authen route
-router.use('/v1/api', require('./Access/index'));
+router.use('/v1/api', require('./access/access.route'));
 
 // user route
-// router.use('/v1/api', require('./user/User.route'));
+router.use('/v1/api', require('./user/user.route'));
 
 // Root routes
 router.get("/", (req, res) => {

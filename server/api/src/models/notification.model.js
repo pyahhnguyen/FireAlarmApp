@@ -1,21 +1,33 @@
 const mongoose = require('mongoose');
 
-const notificationSchema = new mongoose.Schema({
-    user: {
+const notificationSettingsSchema = new mongoose.Schema({
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    },
-    type: {
-        type: String,
+        ref: 'users',
         required: true,
+        unique: true
     },
-    timestamp: {
-        type: Date,
-        default: Date.now,
+    enablePushNotifications: {
+        type: Boolean,
+        default: true
     },
-    // Add other notification details as needed
+    enableEmailNotifications: {
+        type: Boolean,
+        default: true
+    },
+    enablePhoneNotifications: {
+        type: Boolean,
+        default: true
+    },
+    notificationTimezone: {
+        type: String,
+        default: 'UTC'
+    },
+    deviceTokens: [{ 
+        token: String,
+        active: { type: Boolean, default: true } 
+    }]
 });
 
-const Notification = mongoose.model('Notification', notificationSchema);
-
-module.exports = Notification;
+const NotificationSettings = mongoose.model('NotificationSettings', notificationSettingsSchema);
+module.exports = NotificationSettings;
