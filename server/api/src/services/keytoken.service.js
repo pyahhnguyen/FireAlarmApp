@@ -1,4 +1,3 @@
-
 const keytokenModel = require('../models/keytoken.model')
 const { Types: { ObjectId } } = require('mongoose')
 class KeyTokenService {

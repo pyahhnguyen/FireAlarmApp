@@ -13,11 +13,12 @@ const websocket = require('./src/sockets/socket');
 
 const app = express();
 const server = http.createServer(app);
-
-const PORT = process.env.PORT || 3000;
-
 // Socket.IO server attached to the same HTTP server
 const io = new Server(server);
+
+const PORT = process.env.PORT || 5000;
+
+
 
 server.listen(PORT, () => {
   console.log("Server running on port " + PORT);

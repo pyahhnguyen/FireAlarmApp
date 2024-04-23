@@ -1,55 +1,65 @@
 const socketIo = require('socket.io');
 const JWT = require('jsonwebtoken');
 const setupDevice = require('../controllers/deviceModule');
-const getUserTopics = require('./topicManagement');
+const getUserTopics = require('./getUserTopics');
 const { findByUserId } = require('../services/service.key.token');
 
-module.exports = async (httpServer) => {
-    const io = socketIo(httpServer);
+module.exports = async (io) => {
     const device = setupDevice();
+    // Log the initiation of the device setup
+    console.log("Setting up device...");
 
-    // Global listener for device messages, dispatching to rooms
-    device.on('message', (topic, payload) => {
-        console.log(`Received message from topic '${topic}': ${payload.toString()}`);
-        io.to(topic).emit('message', payload.toString());
-    });
 
-    // Middleware for token verification
     io.use(async (socket, next) => {
         const token = socket.handshake.query.token;
+        const userId = socket.handshake.query.userId;
+    
         if (!token) {
             return next(new Error('Authentication error: Token required'));
         }
-
-        const userId = socket.handshake.query.userId; // Assuming userID is passed along with the token
+    
         if (!userId) {
             return next(new Error('Authentication error: User ID required'));
         }
-
+    
         try {
             const keyStore = await findByUserId(userId);
-            const user = JWT.verify(token, keyStore.publicKey); // Verify token with the user's public key
-            socket.user = user; // Attach user info to the socket session
-            next();
+            if (!keyStore) {
+                return next(new Error('Authentication error: Key store not found'));
+            }
+
+            JWT.verify(token, keyStore.privateKey, (err, decoded) => {
+                if (err) {
+                    return next(new Error('Authentication error'));
+                }
+                socket.user = decoded;
+                next();
+            });
         } catch (error) {
-            console.error('Authentication error:', error);
             next(new Error('Authentication error'));
         }
     });
 
-    // Handling connections after successful authentication
     io.on('connection', async (socket) => {
-        try {
-            const topics = await getUserTopics(socket.user.userId); // Use the attached user info
-            topics.forEach(topic => {
-                device.subscribe(topic);  // Subscribe to each topic
-                socket.join(topic);       // Join to Socket.IO room corresponding to the topic
-            });
-            socket.emit('subscribed', `Subscribed to topics: ${topics.join(', ')}`);
-        } catch (error) {
-            console.error('Failed to fetch topics or setup subscriptions:', error);
-            socket.emit('error', 'Failed to setup topics or subscriptions');
-            socket.disconnect(true);
-        }
-    });
+            console.log(`Socket connected: ${socket.id}`);
+            
+            try {
+                const topics = await getUserTopics(socket.user.userId);
+                console.logs(topics)
+                topics.forEach(topic => {
+                    device.subscribe(topic);
+
+                    device.on('message', (topic, payload) => {
+                        io.to(topic).emit('message', payload.toString());
+                    });
+                    socket.join(topic);
+                });
+
+                socket.emit('subscribed', `Subscribed to topics: ${topics.join(', ')}`);
+            } catch (error) {
+                console.error('Failed to fetch topics or setup subscriptions:', error);
+                socket.emit('error', 'Failed to setup topics or subscriptions');
+                socket.disconnect(true);
+            }
+        });
 };
