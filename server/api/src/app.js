@@ -40,13 +40,15 @@ app.use((req, res, next) => {
     next(error);
 });
 
+
 app.use((error, req, res, next) => {
-    res.status(error.status || 500).json({
-        status: 'error',
-        code: error.status || 500,
-        message: error.message || 'Internal Server Error',
-        stack: error.stack
-    });
-});
+    const statusCode = error.status || 500;
+    return res.status(statusCode).json({
+    status: 'error',
+    code: statusCode,
+    stack: error.stack,
+    message: error.message || 'Internal Server Error'
+    })
+})  
 
 module.exports = { server, app };

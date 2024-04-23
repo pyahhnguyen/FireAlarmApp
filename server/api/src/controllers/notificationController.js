@@ -1,15 +1,20 @@
 const mongoose = require('mongoose');
 const Notification = require("../models/notification.model");
-const createApplicationEndpoint = require('../services/snsnotification.service');
+const {createApplicationEndpoint} = require('../services/snsnotification.service');
 
 const getDeviceToken = async (req, res, next) => {
+    const  HEADER = {
+        CLIENT_ID : 'x-client-id',
+        DEVICE_TOKEN : 'x-devicetoken'
+    }
+    
     try {
         console.log(req.headers); 
         // Fetch notification settings for the user
-        const notificationSettings = await Notification.findOne({ userId: mongoose.Types.ObjectId(req.headers.userId) }).orFail();
+        const notificationSettings = await Notification.findOne({ userId: new mongoose.Types.ObjectId(req.headers[HEADER.CLIENT_ID]) }).orFail();
 
         // Find the device token in the list
-        const existingToken = notificationSettings.deviceTokens.find(token => token.token === req.headers.devicetoken);
+        const existingToken = notificationSettings.deviceTokens.find(token => token.token === req.headers[HEADER.DEVICE_TOKEN]);
 
         if (existingToken) {
             if (existingToken.active) {
@@ -22,9 +27,9 @@ const getDeviceToken = async (req, res, next) => {
             }
         } else {
             // Create a new application endpoint if token not found
-            await createApplicationEndpoint(req.headers.devicetoken);
+            await createApplicationEndpoint(req.headers[HEADER.DEVICE_TOKEN]);
             // Add new token to the list
-            notificationSettings.deviceTokens.push({ token: req.headers.devicetoken, active: true });
+            notificationSettings.deviceTokens.push({ token: req.headers[HEADER.DEVICE_TOKEN], active: true });
             await notificationSettings.save();
             res.send({ body: "New device subscribed and endpoint created" });
         }
