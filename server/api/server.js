@@ -11,4 +11,16 @@ process.on("SIGINT", () => {
       console.log("Server closed !!!");
     // });
   });
+
+  // If you are using MongoDB with Mongoose, for example:
+  mongoose.connection.close(false, () => {
+      console.log('MongoDb connection closed.');
+  });
+
+  // If you have other cleanup tasks, address them here:
+  // For AWS IoT or other connections that need to be closed:
+  // device.end(true, () => console.log('AWS IoT Disconnected'));
+
+  // After all are closed, exit:
+  process.exit(0);
 });

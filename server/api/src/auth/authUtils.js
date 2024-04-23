@@ -1,19 +1,21 @@
-const JWT = require('jsonwebtoken')
-const asyncHandler = require('../helper/asyncHanlde')
-const { findByUserId } = require('../services/keytoken.service')
-const {AuthFailureError, NotFoundError } = require('../core/error.response')
+const { JsonWebTokenError } = require('jsonwebtoken'); // Import JsonWebTokenError from jsonwebtoken library
 
-// const  HEADER = {
+const JWT = require('jsonwebtoken');
+const asyncHandler = require('../helper/asyncHanlde');
+const { findByUserId } = require('../services/keytoken.service');
+const { AuthFailureError, NotFoundError } = require('../core/error.response');
+
+// const HEADER = {
 //     API_KEY :'x-api-key',
 //     CLIENT_ID : 'x-client-id',
 //     AUTHORIZATION : 'authorization',
 //     REFRESHTOKEN : 'x-refresh-token'
-// }
+// };
 
-const  HEADER = {
+const HEADER = {
     CLIENT_ID : 'x-client-id',
     REFRESHTOKEN : 'x-refresh-token'
-}
+};
 
 const createTokenPair = async (payload, privateKey) => {
     try {
@@ -32,8 +34,7 @@ const createTokenPair = async (payload, privateKey) => {
         console.error("Error creating tokens:", error);
         throw error;
     }
-}
-
+};
 
 const authentication = asyncHandler(async (req, res, next) => {
     //     1- check userId missing?    
@@ -80,10 +81,11 @@ const authentication = asyncHandler(async (req, res, next) => {
 });
 
 const verifyJWT = async (token, keySecret) => {
-    return await JWT.verify(token, keySecret)
-}
+    return await JWT.verify(token, keySecret);
+};
+
 module.exports = {
     createTokenPair,
     authentication,
     verifyJWT
-}
+};
