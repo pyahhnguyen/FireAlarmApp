@@ -7,14 +7,12 @@ import {
   ImageBackground,
   Image,
   Dimensions,
-  
 } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../constants/theme";
 import { StatusBar } from "expo-status-bar";
 import { ROOM_LIST } from "../../assets/data/room";
 import { useState, useEffect } from "react";
-import { io } from "socket.io-client";
 import { Ionicons } from "@expo/vector-icons";
 import WeatherAlert from "../../screens/home/Weather_alert";
 import TabHome from "./TabHome";
@@ -22,17 +20,16 @@ import TabHome from "./TabHome";
 import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
- 
   const [rooms, setRooms] = useState(ROOM_LIST);
-  const w = Dimensions.get('screen').width;
-  const h = Dimensions.get('screen').height;
+  const w = Dimensions.get("screen").width;
+  const h = Dimensions.get("screen").height;
   const navigation = useNavigation();
- 
+
   function renderHeader() {
     const renderItem = ({ item, index }) => (
       <TouchableOpacity
         style={{
-          width: (w - 15*2)/2,
+          width: (w - 15 * 2) / 2,
           height: 140,
           paddingBottom: 20,
           marginLeft: index === 0 ? SIZES.xSmall : 0,
@@ -45,7 +42,6 @@ const Home = () => {
         onPress={() => {
           navigation.navigate(item.screen); // Navigate to the specified screen
         }}
-    
       >
         {/* Image */}
 
@@ -63,18 +59,16 @@ const Home = () => {
       </TouchableOpacity>
     );
 
-
-  return (
-     
+    return (
       <View
         style={{
           width: "100%",
-          height: h /3.2,
+          height: h / 3.2,
           ...styles.shadow,
         }}
       >
-          <StatusBar backgroundColor={'transparent'} />
-  
+        <StatusBar backgroundColor={"transparent"} />
+
         <ImageBackground
           source={require("../../assets/images/51c2d5.png")}
           resizeMode="cover"
@@ -106,31 +100,16 @@ const Home = () => {
               Hi, Welcome back!
             </Text>
 
-            <TouchableOpacity
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                ...styles.shadow,
-              }}
-              onPress={() => console.log("Notification on clicked")}
-            >
-              <Ionicons
-                name="notifications"
-                size={24}
-                color={COLORS.primary}
-                style={{ flex: 1 }}
-              />
-            </TouchableOpacity>
           </View>
 
           {/* Weather */}
-           <View
+          <View
             style={{
               alignItems: "center",
               justifyContent: "center",
               ...styles.shadow,
             }}
-           >
+          >
             <WeatherAlert />
           </View>
           {/* Rooms */}
@@ -157,8 +136,6 @@ const Home = () => {
               contentContainerStyle={{
                 marginTop: SIZES.base,
                 paddingBottom: SIZES.xSmall,
-               
-                
               }}
               data={rooms}
               renderItem={renderItem}
@@ -169,25 +146,21 @@ const Home = () => {
           </View>
         </ImageBackground>
       </View>
-   
     );
   }
- 
+
   function renderTabHome() {
-    return (
-      <TabHome />
-    )
+    return <TabHome />;
   }
   return (
     // <View style= {styles.SafeAreaView}>
-    <View style={styles.container} >
+    <View style={styles.container}>
       <View style={{ flex: 1, paddingBottom: 130 }}>
         {renderHeader()}
         {renderTabHome()}
-        </View >   
-        
-     {/* </View> */}
-    
+      </View>
+
+      {/* </View> */}
     </View>
   );
 
@@ -217,7 +190,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   SafeAreaView: {
     flex: 1,
-    
+
     // backgroundColor: COLORS.red,
   },
   container: {
@@ -243,7 +216,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "medium",
-    color: COLORS.primary,  
+    color: COLORS.primary,
     fontFamily: "medium",
     justifyContent: "center",
     textAlign: "center",

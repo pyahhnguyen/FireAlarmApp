@@ -6,7 +6,7 @@ import { device_data } from "../../constants/device-data";
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
 import { useNavigation } from "@react-navigation/native";
-
+import { StatusBar } from "expo-status-bar";
 const Device = () => {
   const [sensors, setSensors] = useState([]);
   const navigation = useNavigation();
@@ -46,7 +46,7 @@ const Device = () => {
           />
           <View style={styles.sensorContent}>
             <Text style={styles.titleBold}>{item.device_name || "MQ2 Smoke Alarm"}</Text>
-            <Text style={styles.titleItem}>FFR-SS-Input: {item.code || "29352"}</Text>
+            <Text style={styles.titleItem}>Honeywell BW-Input: {item.code || "29352"}</Text>
             <Text style={styles.titleItem}>Status: {item.status || "Active"}</Text>
             <Text style={styles.titleItem}>Warning: {item.warning || "None"}</Text>
           </View>
@@ -56,7 +56,9 @@ const Device = () => {
   };
 
   return (
+    
     <View style={styles.container}>
+      <StatusBar backgroundColor="transparent" />
       <FlatList
         data={device_data}
         renderItem={renderItem}

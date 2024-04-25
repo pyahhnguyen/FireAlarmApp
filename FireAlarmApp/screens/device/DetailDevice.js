@@ -51,7 +51,7 @@ const DeviceDetails = ({ route }) => {
         />
         <View style={{ flex: 1, alignContent: "center", marginLeft: 20 }}>
           <Text style={{ color: COLORS.black, fontSize: 16, fontWeight: 'bold' }}>{item.code} {item.device_name}</Text>
-          <Text style={{ color: COLORS.black, fontSize: 16, }}>FFR-SS-Input:{item.code}</Text>
+          <Text style={{ color: COLORS.black, fontSize: 16, }}>Honeywell BW-Input:{item.code}</Text>
         </View>
       </View>
 

@@ -22,7 +22,7 @@ import { Alert } from "react-native";
 import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-import {IPHOST,PORT_EX} from "@env"
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,6 +30,10 @@ const Login = () => {
   const [error, setError] = useState(""); // Thêm state mới để lưu trữ thông báo lỗi
 
   const navigation = useNavigation();
+  
+  const apiUrl = Constants.expoConfig.extra.IP_HOST;
+  const portex = Constants.expoConfig.extra.EXPORT_PORT;
+  // console.log(`http://${apiUrl}:${portex}/v1/api/user/login`); 
 
   const handleLogin = () => {
     const user = {
@@ -44,7 +48,8 @@ const Login = () => {
     };
 
     axios
-      .post(`http://${IPHOST}:${PORT_EX}/v1/api/user/login`, user, {
+      .post(`http://${apiUrl}:3056/v1/api/user/login`, user, {
+
         headers: headers,
       })
       .then((response) => {
@@ -61,7 +66,7 @@ const Login = () => {
           const x_client_id = responseData.metadata.user._id;
           const userdata = responseData.metadata.user;
 
-          //console.log("1. ACCESSTOKEN FROM RES LOGIN:", accessToken);
+          // console.log("1. ACCESSTOKEN FROM RES LOGIN:", accessToken);
 
           //console.log("2. x_client_id:", x_client_id);
           //console.log("3. REFRESHTOKEN FROM LOGIN:", refreshToken);

@@ -1,6 +1,6 @@
 import  React, {useState, useEffect} from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Modal from "./Modal_alert";
+import   Modal from "./Modal_alert";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
 import { Dimensions } from "react-native";
@@ -11,7 +11,7 @@ import alertHistory from "../../constants/dummy";
 const w = Dimensions.get('screen').width;
 const h = Dimensions.get('screen').height;
 
-const Popup_socket = () => {
+const Popup_alert = () => {
     const [isModalVisible, setIsModalVisible] = React.useState(false);
     const [selectedItemData, setSelectedItemData] = React.useState(alertHistory);
     const navigation = useNavigation();
@@ -19,12 +19,13 @@ const Popup_socket = () => {
 
     const handleDetail = () => {
         setIsModalVisible(false);
-      navigation.navigate('Alert');
+      navigation.navigate('Alert History');
     };
     
 
     return (
-    <View>
+    <View >
+            <StatusBar backgroundColor={"transparent"} />
     <Modal isVisible={isModalVisible} itemData={selectedItemData}>
     <Modal.Container>
     <Modal.ID title={` Detector #${selectedItemData.deviveId} `} />
@@ -118,7 +119,7 @@ const Popup_socket = () => {
 }
 
 
-export default Popup_socket
+export default Popup_alert
 
 const styles = StyleSheet.create({
     btnText1: {

@@ -1,13 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home, Profile, Chat, Location } from "../screens";
-import Device from "../screens/device/Device";
-import Alert from "../screens/Alert/Alert";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/theme";
-import { ImageBackground } from "react-native";
 import DeviceStackNavigator from "./DeviceStack.Navigator";
+import AlertStackNavigator from "./AlertStack.Navigator";
+import HomeStackNavigator from "./HomeStack.Navigator";
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
@@ -33,12 +31,10 @@ function BottomTabNavigation() {
 
           if (route.name === "Home") {
             iconName = "home";
-          } else if (route.name === "Device") {
+          } else if (route.name === "Devices") {
             iconName = "reader";
-          } else if (route.name === "Alert") {
+          } else if (route.name === "Alerts") {
             iconName = "bonfire";
-          } else if (route.name === "Location") {
-            iconName = "location";
           } else if (route.name === "Profile") {
             iconName = "person";
           }
@@ -50,56 +46,28 @@ function BottomTabNavigation() {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStackNavigator}
         options={{
           headerShown: false,
+          unmountOnBlur: true, // Add this line
+
         }}
       />
 
       <Tab.Screen
-        name="Alert"
-        component={Alert}
-        options={{
-          tabBarStyle: tabBarStyle,
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTintColor: COLORS.black,
-          headerStyle: {
-            backgroundColor: COLORS.background,
-            height: 100,
-            borderBottomRightRadius: 10,
-            borderBottomLeftRadius: 10,
-          },
-        }}
+        name="Alerts"
+        component={AlertStackNavigator}
+        options={{ headerShown: false }}
       />
 
       <Tab.Screen
-        name="Location"
-        component={Location}
+        name="Devices"
+        component={DeviceStackNavigator}
         options={{
-          headerShown: true,
-          headerTitleAlign: "center",
-          tabBarStyle: tabBarStyle,
-          headerTintColor: COLORS.black,
-          backgroundColor: COLORS.lightWhite,
-          headerStyle: {
-            backgroundColor: COLORS.background,
-            height: 100,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
-          },
-          // headerBackground: () => (
-          //   <ImageBackground
-          //     source={require('../assets/images/blue_g.jpg')} // Change this to the path of your image
-          //     style={{ flex: 1 }}
-          //     resizeMode="cover"
-          //   />
-          // ),
+          headerShown: false,
+          unmountOnBlur: true, // Add this line
         }}
       />
-
-<Tab.Screen name="Device" component={DeviceStackNavigator} options={{ headerShown: false }} />
-
 
       <Tab.Screen
         name="Profile"

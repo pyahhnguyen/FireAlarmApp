@@ -6,7 +6,7 @@ import { alertHistory } from "../../constants/dummy";
 import axios from "axios";
 
 
-const Alert_Histor_Detail = ({ route }) => {
+const Alert_History_Detail = ({ route }) => {
     const { sensorData } = route.params || { sensorData: null };
     const defaultSensorData = sensorData || alertHistory[0];
     const w = Dimensions.get('screen').width;;
@@ -66,7 +66,7 @@ const Alert_Histor_Detail = ({ route }) => {
     const sensorTypeImages = {
         "Smoke Detector": require("../../assets/images/Smoke-Alarms-Smoke-Detectors.jpg"),
         "Heat Detector": require("../../assets/images/heat_sensor.jpg"),
-        "gas Detector": require("../../assets/images/gas_sensor.jpg"),
+        "Gas Detector": require("../../assets/images/gas_sensor.jpg"),
         "Flame Detector": require("../../assets/images/Flame-Sensor-Detector.jpg"),
     };
 
@@ -264,4 +264,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Alert_Histor_Detail;
+export default Alert_History_Detail;

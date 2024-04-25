@@ -14,7 +14,7 @@ import { useState } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-import {IPHOST,PORT_EX} from "@env"
+// import {IPHOST,PORT_EX} from "@env"
 
 const EditProfile = ({ route }) => {
   const { UserData } = route.params;

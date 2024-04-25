@@ -20,8 +20,6 @@ import Constants from 'expo-constants';
 const w = Dimensions.get('screen').width;
 const h = Dimensions.get('screen').height;
 
-
-
 const AlertHistory = ({ customContainerStyle, history }) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [selectedItemData, setSelectedItemData] = React.useState(history);
@@ -41,7 +39,7 @@ const AlertHistory = ({ customContainerStyle, history }) => {
 
   const handleDetail = () => {
     setIsModalVisible(false);
-  navigation.navigate('Alert History', { sensorData: selectedItemData });
+  navigation.navigate('Alert_History', { sensorData: selectedItemData });
 };
 
 const fetchData = async () => {

@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from 'expo-constants';
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
-import { IPHOST, PORT_WS } from '@env'
+// import { IPHOST, PORT_WS } from '@env'
 
 const Living = () => {
   const [connectionStatus, setConnectionStatus] = useState('Connecting...');

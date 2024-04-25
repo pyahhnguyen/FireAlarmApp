@@ -1,3 +1,5 @@
+
+
 {
   "expo": {
     "name": "FireAlarmApp",
@@ -30,10 +32,10 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "eas": {
+      "eas": {  
         "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16" 
       },
-      "API_HOST": "192.168.1.123"
+      "IP_HOST": "10.0.238.153"
     }
   
   }

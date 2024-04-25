@@ -16,14 +16,16 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const h = Dimensions.get("screen").height;
-import {IPHOST,PORT_EX} from "@env"
-
-
+import Constants from "expo-constants";
+// import {IPHOST,PORT_EX} from "@env"
 
 const Profile = () => {
   const [userData, setUserData] = useState("");
   const [userLogin, setLogin] = useState(true);
   const navigation = useNavigation();
+
+  const apiUrl = Constants.expoConfig.extra.IP_HOST;
+
   async function getData() {
     try {
       const userdata = await AsyncStorage.getItem("userdata");
@@ -47,11 +49,13 @@ const Profile = () => {
       const accessToken = await AsyncStorage.getItem("authAccessToken");
       const x_client_id = await AsyncStorage.getItem("x_client_id");
       console.log("accessToken:", accessToken);
-
+      console.log("x_client_id:", x_client_id);
       // Check if the access token is present
       if (!accessToken) {
-        console.error("Access token not found. User may not be logged in.");
-        return;
+        console.error("Access token not found. User may not be logged in or token may have expired.");
+        clearAuthToken();
+
+        return; 
       }
       // Construct headers dynamically using retrieved values
       const headers = {
@@ -64,7 +68,7 @@ const Profile = () => {
 
       // Make the request with error handling
       axios
-        .post(`http://${IPHOST}:${PORT_EX}/v1/api/user/logout`, {}, { headers })
+        .post(`http://${apiUrl}:3056/v1/api/user/logout`, {}, { headers })
         .then((response) => {
           console.log("Logout Response:", response.data);
           // Handle successful logout
@@ -94,12 +98,14 @@ const Profile = () => {
   };
 
   const clearAuthToken = async () => {
-    await AsyncStorage.setItem("isLoggedIn", JSON.stringify(false));
-    AsyncStorage.removeItem("authAccessToken");
+ 
+    await AsyncStorage.removeItem('isLoggedIn');
+    await AsyncStorage.removeItem("authAccessToken");
     console.log("auth token cleared");
     navigation.replace("Login");
+   
   };
-
+  
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"transparent"} />

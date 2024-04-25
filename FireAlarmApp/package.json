@@ -18,6 +18,7 @@
     "@redux-devtools/extension": "^3.3.0",
     "@stripe/stripe-react-native": "0.28.0",
     "axios": "^1.4.0",
+    "dotenv": "^16.4.5",
     "expo": "^49.0.23",
     "expo-constants": "~14.4.2",
     "expo-dev-client": "~2.4.13",
@@ -39,6 +40,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-snap-carousel": "^4.0.0-beta.6",
     "react-native-svg": "^13.9.0",
+    "react-native-uuid": "^2.0.2",
     "react-native-virtualized-view": "^1.0.0",
     "react-native-websocket": "^1.0.2",
     "react-native-webview": "13.2.2",
@@ -46,6 +48,7 @@
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
     "socket.io-client": "^4.7.5",
+    "uuid": "^9.0.1",
     "ws": "^8.16.0"
   },
   "devDependencies": {

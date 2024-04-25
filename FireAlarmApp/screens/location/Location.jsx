@@ -12,7 +12,7 @@ import { COLORS, FONTS, SIZES } from "../../constants/theme";
 import { alertHistory } from "../../constants/dummy";
 import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
-import {IPHOST,PORT_EX} from "@env"
+// import {IPHOST,PORT_EX} from "@env"
 
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
