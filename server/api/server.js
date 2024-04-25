@@ -1,4 +1,5 @@
 const {app} = require("./src/app");
+const mongoose = require("mongoose")
 const PORT = process.env.PORT || 3000;
 
 const server_express = app.listen(PORT, () => {
