@@ -8,7 +8,7 @@ import {
   Pressable,
   TextInput
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
 import WidthSpace from "../../components/Reusable/WidthSpace";
 import HeightSpace from "../../components/Reusable/HeightSpace";
@@ -18,78 +18,50 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
 import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
+// import { login } from '../../redux/actions';
+
+// Context
+import AuthGlobal from "../../Context/store/AuthGlobal";
+import { loginUser } from "../../Context/actions/Auth.actions";
 
 
-const Login = () => {
+const Login = (props) => {
+  const context = useContext(AuthGlobal);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // Thêm state mới để lưu trữ thông báo lỗi
-
   const navigation = useNavigation();
   
   const apiUrl = Constants.expoConfig.extra.IP_HOST;
   const portex = Constants.expoConfig.extra.EXPORT_PORT;
   // console.log(`http://${apiUrl}:${portex}/v1/api/user/login`); 
 
+
+// Check if user is authenticated
+  useEffect(() => {
+    if (context.stateUser.isAuthenticated === true) {
+      props.navigation.navigate("Bottom");
+    }
+  }, [context.stateUser.isAuthenticated]);
+
+
+// Function handleLogin
   const handleLogin = () => {
+    
     const user = {
       email: email,
       password: password,
     };
-    setError("");
-    const headers = {
-      "Content-Type": "application/json",
-      "x-api-key":
-        "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
-    };
-
-    axios
-      .post(`http://${apiUrl}:3056/v1/api/user/login`, user, {
-
-        headers: headers,
-      })
-      .then((response) => {
-        const responseData = response.data;
-        console.log(responseData);
-        if (
-          responseData &&
-          responseData.metadata &&
-          responseData.metadata.tokens &&
-          responseData.metadata.tokens.accessToken
-        ) {
-          const accessToken = responseData.metadata.tokens.accessToken;
-          const refreshToken = responseData.metadata.tokens.refreshToken;
-          const x_client_id = responseData.metadata.user._id;
-          const userdata = responseData.metadata.user;
-
-          // console.log("1. ACCESSTOKEN FROM RES LOGIN:", accessToken);
-
-          //console.log("2. x_client_id:", x_client_id);
-          //console.log("3. REFRESHTOKEN FROM LOGIN:", refreshToken);
-
-          // Save the accessToken to AsyncStorage
-          AsyncStorage.setItem("authAccessToken", accessToken);
-          AsyncStorage.setItem("x_client_id", x_client_id);
-          AsyncStorage.setItem("userdata", JSON.stringify(userdata));
-          AsyncStorage.setItem("refreshToken", refreshToken);
-
-          // ... any other logic you want to perform after successful login
-          AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));
-          navigation.replace("Bottom");
-        } else {
-          // Handle the case where tokens or accessToken is not present in the response
-          console.error("Tokens or accessToken not present in the response");
-        }
-      })
-      .catch((err) => {
-        // Alert.alert("Login Failed", "Invalid email");
-        setError("Invalid email or password"); // Cập nhật thông báo lỗi
-        console.log(err);
-      });
+    if (email === "" || password === "") {
+      setError("Please fill in your credentials");
+    } else {
+      loginUser(user, context.dispatch);
+      navigation.replace("Bottom");
+    }
+    
   };
 
   return (

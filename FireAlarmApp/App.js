@@ -5,10 +5,8 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { useFonts } from "expo-font";
 import BottomTabNavigation from "./navigation/BottomTabNavigation";
-import { Onboarding } from "./screens";
-import Register from "./screens/auth/Register";
+import UserNavigator from "./navigation/UserStack.Navigation";
 import Login from "./screens/auth/Login";
-import Welcome from "./screens/auth/Welcome";
 import Living from "./screens/home/roomScreen/living";
 import Bedroom from "./screens/home/roomScreen/bedroom";
 import DetailProfile from "./screens/profile/DetailProfile";
@@ -21,6 +19,7 @@ import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Auth from "./Context/store/Auth";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -103,24 +102,6 @@ export default function App() {
     prepare();
   }, []);
 
-  // Check authentication state on app startup
-  useEffect(() => {
-    // Retrieve authentication state from storage
-    const checkAuthentication = async () => {
-      const storedLoggedInStatus = await AsyncStorage.getItem("isLoggedIn");
-      console.log("Stored logged in status:", storedLoggedInStatus);
-
-      // console.log("Stored logged in status:", typeof storedLoggedInStatus);
-      if (storedLoggedInStatus === 'true') {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-      }
-    };
-    checkAuthentication();
-  }, []);
-
-
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
@@ -144,7 +125,6 @@ export default function App() {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-  
 
   const [fontsLoaded] = useFonts({
     regular: require("./assets/fonts/regular.otf"),
@@ -170,120 +150,93 @@ export default function App() {
     return null;
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {isLoggedIn ? (
-          <>
-            <Stack.Screen
-              name="Bottom" // Make sure this name matches the one you're navigating to
-              component={BottomTabNavigation}
-              options={{ headerShown: false }}
-            />
+    <Auth>
+      <NavigationContainer>
+        <Stack.Navigator>
 
-            <Stack.Screen
-              name="Living"
-              component={Living}
-              options={{
-                headerShown: true,
-                headerTitle: "Living Room",
-                headerTitleAlign: "center",
-                headerStyle: {
-                  backgroundColor: COLORS.background,
-                  borderBottomRightRadius: 50,
-                  borderBottomLeftRadius: 50,
-                },
-              }}
-            />
+          <Stack.Screen
+            name="Bottom" // Make sure this name matches the one you're navigating to
+            component={BottomTabNavigation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Living"
+            component={Living}
+            options={{
+              headerShown: true,
+              headerTitle: "Living Room",
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: COLORS.background,
+                borderBottomRightRadius: 50,
+                borderBottomLeftRadius: 50,
+              },
+            }}
+          />
 
-            <Stack.Screen
-              name="Bedroom"
-              component={Bedroom}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerStyle: {
-                  backgroundColor: COLORS.background,
-                },
-              }}
-            />
+          <Stack.Screen
+            name="Bedroom"
+            component={Bedroom}
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: COLORS.background,
+              },
+            }}
+          />
 
-            <Stack.Screen
-              name="Kitchen"
-              component={Bedroom}
-              options={{ headerShown: true }}
-            />
+          <Stack.Screen
+            name="Kitchen"
+            component={Bedroom}
+            options={{ headerShown: true }}
+          />
 
-            <Stack.Screen
-              name="Bathroom"
-              component={Bedroom}
-              options={{
-                headerShown: true,
-              }}
-            />
+          <Stack.Screen
+            name="Bathroom"
+            component={Bedroom}
+            options={{
+              headerShown: true,
+            }}
+          />
 
-            <Stack.Screen
-              name="PopUp"
-              component={Popup_alert}
-              options={{
-                headerShown: false,
-              }}
-            />
+          <Stack.Screen
+            name="PopUp"
+            component={Popup_alert}
+            options={{
+              headerShown: false,
+            }}
+          />
 
-            <Stack.Screen
-              name="DetailProfile"
-              component={DetailProfile}
-              options={{
-                headerShown: false,
-              }}
-            />
+          <Stack.Screen
+            name="DetailProfile"
+            component={DetailProfile}
+            options={{
+              headerShown: false,
+            }}
+          />
 
+          <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="UserNavigator" // Make sure this name matches the one you're navigating to
+            component={UserNavigator}
+            options={{ headerShown: false }}
+          />
             <Stack.Screen
-              name="EditProfile"
-              component={EditProfile}
-              options={{
-                headerShown: false,
-              }}
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
+          
 
-
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Bottom" // Make sure this name matches the one you're navigating to
-              component={BottomTabNavigation}
-              options={{ headerShown: false }}
-            />
-
-            <Stack.Screen
-              name="Onboard"
-              component={Onboarding}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Welcome"
-              component={Welcome}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Auth>
   );
 }

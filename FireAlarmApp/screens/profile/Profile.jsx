@@ -38,7 +38,6 @@ const Profile = () => {
     }
   }
 
-
   useEffect(() => {
     getData();
   }, []);
