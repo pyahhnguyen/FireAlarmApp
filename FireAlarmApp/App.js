@@ -144,6 +144,7 @@ export default function App() {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+  
 
   const [fontsLoaded] = useFonts({
     regular: require("./assets/fonts/regular.otf"),

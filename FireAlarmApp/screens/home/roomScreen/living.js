@@ -8,6 +8,8 @@ const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
 // import { IPHOST, PORT_WS } from '@env'
 
+const apiUrl = Constants.expoConfig.extra.IP_HOST;
+
 const Living = () => {
   const [connectionStatus, setConnectionStatus] = useState('Connecting...');
   const [receivedMessage, setReceivedMessage] = useState('');
@@ -25,7 +27,7 @@ const Living = () => {
         setX_client_id(storedUserId);
         setRefreshToken(storedToken);
 
-        const socketUrl = `http://${IPHOST}:${PORT_WS}`; // Modify with your server URL
+        const socketUrl = `http://${apiUrl}:${PORT_WS}`; // Modify with your server URL
 
         const options = {
           query: { token: storedToken, userId: storedUserId },
@@ -64,7 +66,7 @@ const Living = () => {
       }
     };
 
-    fetchData();
+    // fetchData();
   }, []);
 
   return (
