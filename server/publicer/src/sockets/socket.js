@@ -57,24 +57,25 @@ module.exports = async (io) => {
         console.log(`Socket connected: ${socket.id}`);
 
         try {
-            console.log(`Fetching topics for user: ${socket.user.userId}`);
+            // console.log(`Fetching topics for user: ${socket.user.userId}`);
             const topics = await getUserTopics(socket.user.userId);
-            console.log(`Topics fetched: ${topics.join(', ')}`);
+            // console.log(`Topics fetched: ${topics.join(', ')}`);
 
             // Subscribe to topics and set up event listeners only once
             topics.forEach(topic => {
                 console.log(`Subscribing to topic: ${topic}`);
+                console.log(topics)
                 device.subscribe(topic);
 
                 // Event listener for messages on this topic
                 const messageListener = (msgTopic, payload) => {
                     if (msgTopic === topic) { // Only emit if the message is for this topic
-                        console.log(`Received message from topic '${msgTopic}': ${payload.toString()}`);
-                        console.log(`Attempting to send message to topic '${msgTopic}' with payload '${payload}'`);
+                        // console.log(`Received message from topic '${msgTopic}': ${payload.toString()}`);
+                        // console.log(`Attempting to send message to topic '${msgTopic}' with payload '${payload}'`);
                         io.to(msgTopic).emit('message', payload.toString());
 
                         // Save the message to history for the user
-                        // historyManager.addMessage(socket.user.userId, msgTopic, payload.toString());
+                        historyManager.addMessage(socket.user.userId, msgTopic, payload.toString());
                     }
                 };
 
