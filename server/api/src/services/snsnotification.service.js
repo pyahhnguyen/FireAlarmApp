@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-
+require('dotenv').config();
 // Initialize the SNS client
 AWS.config.update({
     region: 'us-east-1', // Example region
