@@ -75,7 +75,7 @@ module.exports = async (io) => {
                         io.to(msgTopic).emit('message', payload.toString());
 
                         // Save the message to history for the user
-                        historyManager.addMessage(socket.user.userId, msgTopic, payload.toString());
+                        // historyManager.addMessage(socket.user.userId, msgTopic, payload.toString());
                     }
                 };
 

@@ -16,7 +16,7 @@ function setupDevice() {
 
   device.on('connect', function() {
     console.log("Connected to AWS IoT");
-    // console.log('Subscribing to topic:', deviceConfig.TOPIC);
+   
   });
 
   device.on('reconnect', () => {

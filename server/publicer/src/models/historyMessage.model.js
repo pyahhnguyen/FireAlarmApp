@@ -25,7 +25,6 @@ var historySchema = new Schema({
         required: true,
     
     },
-    
 },
     {
         collection: COLLECTION_NAME,
