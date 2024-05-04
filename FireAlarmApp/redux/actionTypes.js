@@ -1,1 +1,2 @@
-export const SET_LOGIN_STATE = "SET_LOGIN_STATE"
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

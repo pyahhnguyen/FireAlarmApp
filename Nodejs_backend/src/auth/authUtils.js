@@ -37,7 +37,6 @@ const createTokenPair = async (payload, publicKey, privateKey ) => {
     }
 }
 
-
 //chech authentication for logout 
 const authentication  = asyncHandler(async (req, res, next) => {
 /*

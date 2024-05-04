@@ -11,8 +11,8 @@ const Auth = props => {
         isAuthenticated: null,
         user: {}
     });
+    
     const [showChild, setShowChild] = useState(false);
-
     useEffect(() => {
         setShowChild(true);
         if (AsyncStorage.jwt) {
@@ -23,7 +23,6 @@ const Auth = props => {
         }
         return () => setShowChild(false);
     }, [])
-
 
     if (!showChild) {
         return null;

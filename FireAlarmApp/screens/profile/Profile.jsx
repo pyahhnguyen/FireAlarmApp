@@ -15,96 +15,84 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-const h = Dimensions.get("screen").height;
 import Constants from "expo-constants";
-// import {IPHOST,PORT_EX} from "@env"
+import { Logout, login } from "../../redux/action";
+import { useDispatch } from "react-redux";
+h = Dimensions.get("screen").height;
 
 const Profile = () => {
   const [userData, setUserData] = useState("");
   const [userLogin, setLogin] = useState(true);
   const navigation = useNavigation();
-
   const apiUrl = Constants.expoConfig.extra.IP_HOST;
+  const dispatch = useDispatch();
 
   async function getData() {
     try {
-      const userdata = await AsyncStorage.getItem("userdata");
-      // console.log('userdata:', JSON.parse(userdata));
-      if (userdata) {
-        setUserData(JSON.parse(userdata));
+      const Logindata = await AsyncStorage.getItem("loginData");
+      if (Logindata) {
+        const loginData = JSON.parse(Logindata);
+        if (
+          loginData.metadata &&
+          loginData.metadata.tokens &&
+          loginData.metadata.user
+        ) {
+          const refreshToken = loginData.metadata.tokens.refreshToken;
+          const accessToken = loginData.metadata.tokens.accessToken;
+          const userdata = loginData.metadata.user;
+          const userId = userdata._id;
+          setUserData(userdata);
+        } else {
+          console.error(
+            "Login data does not contain tokens property:",
+            loginData
+          );
+        }
       }
     } catch (error) {
       console.error("Error retrieving token from AsyncStorage:", error);
     }
   }
-
   useEffect(() => {
     getData();
   }, []);
 
   const logout = async () => {
     try {
-      // Retrieve values from AsyncStorage
-      const accessToken = await AsyncStorage.getItem("authAccessToken");
-      const x_client_id = await AsyncStorage.getItem("x_client_id");
-      console.log("accessToken:", accessToken);
-      console.log("x_client_id:", x_client_id);
-      // Check if the access token is present
-      if (!accessToken) {
-        console.error("Access token not found. User may not be logged in or token may have expired.");
-        clearAuthToken();
-
-        return; 
+      const Logindata = await AsyncStorage.getItem("loginData");
+      if (Logindata) {
+        const loginData = JSON.parse(Logindata);
+        if (
+          loginData.metadata &&
+          loginData.metadata.tokens &&
+          loginData.metadata.user
+        ) {
+          const refreshToken = loginData.metadata.tokens.refreshToken;
+          const accessToken = loginData.metadata.tokens.accessToken;
+          const userId = loginData.metadata.user._id;
+          dispatch(Logout(userId, accessToken));
+        
+        } else {
+          console.error(
+            "Login data does not contain tokens property:",
+            loginData
+          );
+        }
       }
-      // Construct headers dynamically using retrieved values
-      const headers = {
-        "Content-Type": "application/json",
-        "x-api-key":
-          "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
-        authorization: accessToken,
-        "x-client-id": x_client_id,
-      };
-
-      // Make the request with error handling
-      axios
-        .post(`http://${apiUrl}:3056/v1/api/user/logout`, {}, { headers })
-        .then((response) => {
-          console.log("Logout Response:", response.data);
-          // Handle successful logout
-        })
-        .catch((error) => {
-          console.error("Logout Error:", error);
-
-          // Implement more specific error handling based on error types and response status codes
-          if (error.response && error.response.status === 404) {
-            console.error(
-              "404: Not Found. Check API endpoint or server availability."
-            );
-          } else if (error.response) {
-            console.error(
-              "API Error:",
-              error.response.data,
-              error.response.status
-            );
-          } else {
-            console.error("Network Error:", error);
-          }
-        });
     } catch (error) {
-      console.error("AsyncStorage error:", error);
+      console.error("Error retrieving token from AsyncStorage:", error);
     }
-    clearAuthToken();
+    
   };
 
   const clearAuthToken = async () => {
- 
-    await AsyncStorage.removeItem('isLoggedIn');
+    await AsyncStorage.removeItem("isLoggedIn");
     await AsyncStorage.removeItem("authAccessToken");
+    await AsyncStorage.removeItem("userdata");
     console.log("auth token cleared");
     navigation.replace("Login");
-   
   };
-  
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"transparent"} />
@@ -137,7 +125,7 @@ const Profile = () => {
         {userLogin === false ? (
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <View style={styles.loginBtn}>
-              <Text style={styles.menuText}>L O G I N </Text>
+              <Text style={styles.menuText}>LOGIN</Text>
             </View>
           </TouchableOpacity>
         ) : (
@@ -246,7 +234,7 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     backgroundColor: COLORS.secondary,
-    padding: 2,
+    padding: 5,
     borderWidth: 0.1,
     borderColor: COLORS.primary,
     borderRadius: SIZES.xxLarge,

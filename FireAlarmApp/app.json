@@ -1,5 +1,4 @@
 
-
 {
   "expo": {
     "name": "FireAlarmApp",
@@ -35,7 +34,7 @@
       "eas": {  
         "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16" 
       },
-      "IP_HOST": "10.0.238.153"
+      "IP_HOST":"10.0.246.189"
     }
   
   }

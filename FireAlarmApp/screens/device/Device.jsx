@@ -26,7 +26,6 @@ const Device = () => {
     navigation.navigate('Detail Device', { item }); // Pass item data to details screen
   };
 
-
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity

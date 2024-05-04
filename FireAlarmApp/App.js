@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+} from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
@@ -7,12 +13,6 @@ import { useFonts } from "expo-font";
 import BottomTabNavigation from "./navigation/BottomTabNavigation";
 import UserNavigator from "./navigation/UserStack.Navigation";
 import Login from "./screens/auth/Login";
-import Living from "./screens/home/roomScreen/living";
-import Bedroom from "./screens/home/roomScreen/bedroom";
-import DetailProfile from "./screens/profile/DetailProfile";
-import EditProfile from "./screens/profile/EditProfile";
-import Popup_alert from "./screens/Alert/pop-up-alert";
-import { COLORS } from "./constants/theme";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -20,6 +20,12 @@ import Constants from "expo-constants";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Auth from "./Context/store/Auth";
+import AuthGlobal from "./Context/store/AuthGlobal";
+import CommonStackNavigation from "./navigation/CommonStack.Navigator";
+import store from "./redux/store";
+import { Provider, useSelector, useDispatch } from "react-redux";
+import { setLoginState } from "./redux/action";
+import { View, Image } from "react-native"; // Assuming you have the setLoginState action creator defined in your action file
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -55,7 +61,9 @@ async function registerForPushNotificationsAsync() {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
-      handleRegistrationError("Failed to get push token for push notification!");
+      handleRegistrationError(
+        "Failed to get push token for push notification!"
+      );
       return;
     }
     token = await Notifications.getDevicePushTokenAsync({
@@ -67,11 +75,44 @@ async function registerForPushNotificationsAsync() {
   }
   AsyncStorage.setItem("deviceToken", token.data);
   return token.data;
-
 }
-const Authened = createNativeStackNavigator();
-const UnAuthened = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
+
+const RootNavigation = () => {
+  const [loading, setLoading] = useState(true);
+  const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const loginData = await AsyncStorage.getItem("loginData");
+        console.log('loginData:', loginData);
+        if (loginData) {
+          dispatch(setLoginState(JSON.parse(loginData)));
+        }
+      } catch (error) {
+        console.error("Error checking login status:", error);
+      } finally {
+        setLoading(false); // Set loading to false regardless of the outcome
+      }
+    };
+    checkLoginStatus();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{resizeMode:"contain" }}>
+        <Image source={require("./assets/images/splash.png")} />
+      </View>
+    );
+  }
+  return (
+    <NavigationContainer>
+      {isLoggedIn ? <CommonStackNavigation /> : <UserNavigator />}
+    </NavigationContainer>
+  );
+};
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -81,16 +122,11 @@ export default function App() {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-
-
   useEffect(() => {
     async function prepare() {
       try {
-        // Pre-load fonts, make any API calls you need to do here
         await Font.loadAsync(Entypo.font);
-        // Artificially delay for two seconds to simulate a slow loading
-        // experience. Please remove this if you copy and paste the code!
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 200));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -98,15 +134,10 @@ export default function App() {
         setAppIsReady(true);
       }
     }
-
     prepare();
   }, []);
-
-
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setDeviceToken(token)
-    );
+    registerForPushNotificationsAsync().then((token) => setDeviceToken(token));
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -126,7 +157,7 @@ export default function App() {
     };
   }, []);
 
-  const [fontsLoaded] = useFonts({
+  const fonts = {
     regular: require("./assets/fonts/regular.otf"),
     bold: require("./assets/fonts/bold.otf"),
     light: require("./assets/fonts/light.otf"),
@@ -138,105 +169,17 @@ export default function App() {
     medium_poppins: require("./assets/fonts/Poppins-Medium.ttf"),
     xtrabold_poppins: require("./assets/fonts/Poppins-ExtraBold.ttf"),
     semibold_poppins: require("./assets/fonts/Poppins-SemiBold.ttf"),
-  });
+  };
 
-  const onLayoutRootView = useCallback(async () => {
-    if (!fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  const [fontsLoaded] = useFonts(fonts);
 
-  if (!appIsReady) {
+  if (!appIsReady || !fontsLoaded) {
     return null;
   }
+  
   return (
-    <Auth>
-      <NavigationContainer>
-        <Stack.Navigator>
-
-          <Stack.Screen
-            name="Bottom" // Make sure this name matches the one you're navigating to
-            component={BottomTabNavigation}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Living"
-            component={Living}
-            options={{
-              headerShown: true,
-              headerTitle: "Living Room",
-              headerTitleAlign: "center",
-              headerStyle: {
-                backgroundColor: COLORS.background,
-                borderBottomRightRadius: 50,
-                borderBottomLeftRadius: 50,
-              },
-            }}
-          />
-
-          <Stack.Screen
-            name="Bedroom"
-            component={Bedroom}
-            options={{
-              headerShown: true,
-              headerTitleAlign: "center",
-              headerStyle: {
-                backgroundColor: COLORS.background,
-              },
-            }}
-          />
-
-          <Stack.Screen
-            name="Kitchen"
-            component={Bedroom}
-            options={{ headerShown: true }}
-          />
-
-          <Stack.Screen
-            name="Bathroom"
-            component={Bedroom}
-            options={{
-              headerShown: true,
-            }}
-          />
-
-          <Stack.Screen
-            name="PopUp"
-            component={Popup_alert}
-            options={{
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Screen
-            name="DetailProfile"
-            component={DetailProfile}
-            options={{
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Screen
-            name="EditProfile"
-            component={EditProfile}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="UserNavigator" // Make sure this name matches the one you're navigating to
-            component={UserNavigator}
-            options={{ headerShown: false }}
-          />
-            <Stack.Screen
-                name="Login"
-                component={Login}
-                options={{ headerShown: false }}
-            />
-          
-
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Auth>
+    <Provider store={store}>
+      <RootNavigation />
+    </Provider>
   );
 }

@@ -1,15 +1,29 @@
-import { initialState } from './initialState';
-import * as t from './actionTypes';
+export const initialState = {
+    isLoggedIn: false,
+    userId: '',
+    accessToken: '',
+    refreshToken: '',
+    userdata: '',
+};
 
-export const loginReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case t.SET_LOGIN_STATE:
+        case 'LOGIN':
             return {
-                ...state,
+                ...state, //copy all previous states
                 ...action.payload, // this is what we expect to get back from API call and login page input
                 isLoggedIn: true, // we set this as true on login
+            };
+        case 'LOGOUT':
+            return {
+                ...state,
+                initialState,
+                isLoggedIn: false,
             };
         default:
             return state;
     }
-};
+}
+
+export default userReducer;
+

@@ -11,3 +11,5 @@ export const device_data = [
     { device_id: '10', devive_code:"L1M08",   device_name:"Flame Detector SharpEye ",         device_type: 'flame',location:"Living Room", code:"40/40I", status: 'Normal', warning:'0' },
 
 ]
+
+// Receive data from the server api and display it in the app

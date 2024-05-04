@@ -6,7 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Pressable,
-  TextInput
+  TextInput,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
@@ -17,53 +17,31 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ReusableBtn from "../../components/Button/ReusableBtn";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-// import { login } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/action';
 
-// Context
-import AuthGlobal from "../../Context/store/AuthGlobal";
-import { loginUser } from "../../Context/actions/Auth.actions";
+const Login = () => {
 
-
-const Login = (props) => {
-  const context = useContext(AuthGlobal);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // Thêm state mới để lưu trữ thông báo lỗi
   const navigation = useNavigation();
-  
+
   const apiUrl = Constants.expoConfig.extra.IP_HOST;
-  const portex = Constants.expoConfig.extra.EXPORT_PORT;
-  // console.log(`http://${apiUrl}:${portex}/v1/api/user/login`); 
 
+  const dispatch = useDispatch();
 
-// Check if user is authenticated
-  useEffect(() => {
-    if (context.stateUser.isAuthenticated === true) {
-      props.navigation.navigate("Bottom");
-    }
-  }, [context.stateUser.isAuthenticated]);
-
-
-// Function handleLogin
   const handleLogin = () => {
-    
     const user = {
       email: email,
-      password: password,
+      password: password, 
     };
-    if (email === "" || password === "") {
-      setError("Please fill in your credentials");
-    } else {
-      loginUser(user, context.dispatch);
-      navigation.replace("Bottom");
-    }
-    
+    dispatch(login(user));
+    // navigation.replace("BottomTabs");  
   };
-
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <StatusBar backgroundColor={"transparent"} />
@@ -196,7 +174,6 @@ const Login = (props) => {
         <View style={{ marginLeft: "auto", marginRight: "auto" }}>
           <ReusableBtn
             onPress={handleLogin}
-            // onPress={() => navigation.navigate("Bottom")}
             btnText={"Login"}
             width={SIZES.width - 150}
             backgroundColor={COLORS.primary}

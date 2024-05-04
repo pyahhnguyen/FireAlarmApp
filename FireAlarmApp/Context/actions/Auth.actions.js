@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 export const loginUser = (user, dispatch) => {
-    fetch(`http://10.0.238.153:3056/v1/api/user/login`, {
+    fetch(`http://10.0.243.84:3056/v1/api/user/login`, {
         method: "POST",
         body: JSON.stringify(user),
         headers: {

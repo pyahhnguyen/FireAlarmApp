@@ -1,8 +1,1 @@
-export const initialState = {
-    isLoggedIn: false,
-    userId: '',
-    token: '',
-    refreshToken: '',
-    expiresOn: '',
-    data: '',
-};
+export const isLoggedIn = (state) => state.loggedIn;
