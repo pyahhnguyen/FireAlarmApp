@@ -7,7 +7,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require("http"); // Import the 'http' module for creating an HTTP server
 
-
 const app = express();
 // init middlewares
 
@@ -23,7 +22,6 @@ app.use(bodyParser.json()); // parse application/json
 require("./db/init_mongo");
 //init routes
 app.use('', require("./routes"));
-
 
 //handling error
 app.use((req, res, next) => {

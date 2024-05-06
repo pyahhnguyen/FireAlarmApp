@@ -25,7 +25,8 @@ import CommonStackNavigation from "./navigation/CommonStack.Navigator";
 import store from "./redux/store";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import { setLoginState } from "./redux/action";
-import { View, Image } from "react-native"; // Assuming you have the setLoginState action creator defined in your action file
+import { View, Image ,ActivityIndicator } from "react-native"; 
+import { COLORS } from "./constants/theme";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -107,9 +108,28 @@ const RootNavigation = () => {
       </View>
     );
   }
+
+  // if (loading) {
+  //   return (
+  //     <View style={{flex: 1, justifyContent: 'center'}}>
+  //       <ActivityIndicator size="large" color={COLORS.lightWhite} />
+  //     </View>
+  //   )
+  // }
+
   return (
     <NavigationContainer>
-      {isLoggedIn ? <CommonStackNavigation /> : <UserNavigator />}
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {isLoggedIn ? (
+          <Stack.Screen name="CommonStack" component={CommonStackNavigation} />
+        ) : (
+          <Stack.Screen name="UserNavigator" component={UserNavigator} />
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

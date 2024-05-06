@@ -17,8 +17,6 @@ const Living = () => {
   const [refreshToken, setRefreshToken] = useState(null);
   const [client_id, setX_client_id] = useState(null);
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -65,7 +63,6 @@ const Living = () => {
         console.error('Error fetching data from AsyncStorage:', error);
       }
     };
-
     // fetchData();
   }, []);
 

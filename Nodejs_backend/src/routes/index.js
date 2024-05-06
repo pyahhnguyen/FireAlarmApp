@@ -11,6 +11,9 @@ router.use(permission('0000'));
 // authen route
 router.use('/v1/api', require('./Access/index'));
 
+// sensor route
+router.use('/v1/api', require('./sensor/index'));
+
 // user route
 // router.use('/v1/api', require('./user/User.route'));
 

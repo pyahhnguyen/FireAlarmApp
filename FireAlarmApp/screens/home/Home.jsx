@@ -163,28 +163,6 @@ const Home = () => {
       {/* </View> */}
     </View>
   );
-
-  // // Find the latest temperature data
-  // const latestTemperatureData = sensorData
-  //   .filter((item) => item.data.type === 'temperature')
-  //   .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
-  // return (
-  //   <View style={styles.container}>
-  //     <MainHeader title="Hi, Welcome back!" />
-  //     {/* <ScreenHeader /> */}
-  //     <ScrollView showsVerticalScrollIndicator={false}>
-  //       <Text style={styles.textStyle}>Rooms</Text>
-  //       <Room list_room={ROOM_LIST} />
-  //       <SectionHeader title="News" />
-  //       <SectionHeader title="Devices" />
-  //       {sensors.length > 0 ? (
-  //         <SensorList list={sensors} />
-  //       ) : (
-  //         <ActivityIndicator size="large" color={COLORS.primary} />
-  //       )}
-  //     </ScrollView>
-  //   </View>
-  // );
 };
 
 const styles = StyleSheet.create({
