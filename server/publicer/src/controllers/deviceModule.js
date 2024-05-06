@@ -5,7 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 function setupDevice() {
-  
+
   const device = awsIot.device({
     keyPath: path.resolve(__dirname, process.env.PATH_TO_PRIVATE_KEY),
     certPath: path.resolve(__dirname, process.env.PATH_TO_CERTIFICATE),
@@ -14,11 +14,15 @@ function setupDevice() {
     host: deviceConfig.ENDPOINT
   });
 
-  device.on('connect', function() {
+  device.on('connect', function () {
     console.log("Connected to AWS IoT");
-   
+
   });
 
+  device.on('message', function (topic, payload) {
+    console.log(`Message received on AWS IoT topic ${topic}:`);
+    console.log(payload.toString()); // Converts Buffer to string
+});
   device.on('reconnect', () => {
     console.log('Reconnecting...');
   });
