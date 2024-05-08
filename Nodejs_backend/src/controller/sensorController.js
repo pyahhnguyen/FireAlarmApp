@@ -2,7 +2,7 @@
 const { Ok, Created, SuccessResponse } = require('../core/success.response')
 const SensorService = require('../services/sensor.service')
 
-class sensorController {s
+class sensorController {
     alertProcess = async (req, res, next) => {
         new SuccessResponse({
             metadata: await SensorService.alertProcess(req.body)

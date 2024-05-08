@@ -20,6 +20,9 @@ app.use(bodyParser.json()); // parse application/json
 
 // init MongoDb
 require("./db/init_mongo");
+
+// sensor process middleware
+require("./middleware/sensor.middleware");
 //init routes
 app.use('', require("./routes"));
 
