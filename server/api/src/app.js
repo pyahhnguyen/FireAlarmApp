@@ -4,8 +4,10 @@ const express = require("express");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
-const http = require("http");
-
+const bodyParser = require("body-parser");
+const http = require("http"); // Import the 'http' module for creating an HTTP server
+const WebSocket = require("ws");
+// const apiKey = require("./routes/Auth/checkAuth")
 
 const app = express();
 const server = http.createServer(app);
@@ -25,19 +27,18 @@ app.use((req, res, next) => {
     next();
 });
 
-// MongoDB initialization (assumed to be setup in db/init_mongo)
+// init MongoDb
 require("./db/init_mongo");
 
-// Routes initialization (assumed to be defined within routes/index.js)
+//init routes
 app.use('', require("./routes"));
 
-// General error handling
+//handling error
 app.use((req, res, next) => {
-    const error = new Error('Not found');
+    const  error = new Error('Not found');
     error.status = 404;
-    next(error);
-});
-
+    next(error)
+})
 
 app.use((error, req, res, next) => {
     const statusCode = error.status || 500;
@@ -49,4 +50,6 @@ app.use((error, req, res, next) => {
     })
 })  
 
-module.exports = { server, app };
+module.exports = {server, app, wss};    
+
+
