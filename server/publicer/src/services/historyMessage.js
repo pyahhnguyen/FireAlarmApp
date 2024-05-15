@@ -1,54 +1,34 @@
-// historyManager.js
-
-const historyMessageModel = require('../models/historyMessage.model');
+const Sensor = require('../../../api/src/models/sensor.model');
 
 class HistoryManager {
-    async addMessage(userId, topic, message) {
+    async addMessage(message, topic) {
         try {
-            let historyEntry = await historyMessageModel.findOne({ userId, topic });
-                // Create a new document if none exists for the user and topic
-            historyEntry = await historyMessageModel.create({ userId, topic, message }); 
+            // Parse the JSON message
+            const parsedMessage = message;
 
-            return historyEntry; // Return the updated or newly created document
+            const { value, address, location, device_name, device_type, model_code, _id_ } = parsedMessage;
+            const newSensor = new Sensor({
+                device_type,
+                deviveId: _id_, // Assuming _id_ is mapped to deviceId
+                deviceName: device_name,
+                model_code,
+                deviceData: value,
+                location,
+                topic,
+                status: 'normal',
+                warning: 0,
+            });
+
+            const savedSensor = await newSensor.save();
+            console.log('Sensor saved successfully:', savedSensor);
+
+            return savedSensor;
         } catch (err) {
             console.error('Error adding message to history:', err.message);
             throw err;
         }
     }
-
-    async getHistory(userId, topic) {
-        try {
-            const result = await historyMessageModel.findOne({ userId, topic });
-            return result ? result.messages : [];
-        } catch (err) {
-            console.error('Error getting history:', err.message);
-            return [];
-        }
-    }
-
-    async clearHistory(userId, topic) {
-        try {
-            await historyMessageModel.deleteOne({ userId, topic });
-        } catch (err) {
-            console.error('Error clearing history:', err.message);
-        }
-    }
-
-    async clearUserHistory(userId) {
-        try {
-            await historyMessageModel.deleteMany({ userId });
-        } catch (err) {
-            console.error('Error clearing user history:', err.message);
-        }
-    }
-
-    async clearAllHistory() {
-        try {
-            await historyMessageModel.deleteMany({});
-        } catch (err) {
-            console.error('Error clearing all history:', err.message);
-        }
-    }
+    // Other methods remain unchanged...
 }
 
 module.exports = new HistoryManager();

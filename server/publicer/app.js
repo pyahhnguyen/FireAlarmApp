@@ -13,13 +13,15 @@ const server = http.createServer(app);
 // Socket.IO server attached to the same HTTP server
 const io = new Server(server);
 const PORT = process.env.PORT || 5000;
+
 server.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
 
+
+
 // Initialize WebSocket (Socket.IO) with the server
 websocket(io);
-// startDeviceAndForwardMessages(io)
 
 process.on('SIGINT', function() {
   console.log("Caught interrupt signal");
