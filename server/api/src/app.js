@@ -25,8 +25,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-
 // MongoDB initialization (assumed to be setup in db/init_mongo)
 require("./db/init_mongo");
 
