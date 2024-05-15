@@ -39,21 +39,12 @@ const createTokenPair = async (payload, publicKey, privateKey ) => {
 
 //chech authentication for logout 
 const authentication  = asyncHandler(async (req, res, next) => {
-/*
-    1- check userId missing?    
-    2- get accessToken 
-    3- verify accessToken
-    4- check user in dbs
-    5- check keystore with userId 
-    6- return next
-*/
+
     const userId = req.headers[HEADER.CLIENT_ID]
     if(!userId) throw new AuthFailureError('Invalid Request')
-
     //2 
     const keyStore = await findByUserId(userId)
     if(!keyStore) throw new NotFoundError('Not found Keystore')
-    
    //3
     if(req.headers[HEADER.REFRESHTOKEN]) {
         try {
@@ -74,14 +65,14 @@ const authentication  = asyncHandler(async (req, res, next) => {
     if(!accessToken) throw new AuthFailureError('Invalid Request')
     try {
         const decodeUser = JWT.verify(accessToken, keyStore.publicKey)
-        if( userId !== decodeUser.userId) throw new AuthFailureError('Invalid Request')
+        if(userId !== decodeUser.userId) throw new AuthFailureError('Invalid Request')
         req.keyStore = keyStore
+        req.user = decodeUser
         return next()
     } catch (error) {
         throw error
     }          
 }
-
 // verify JWT
 )
 const verifyJWT = async (token, keySecret) => {

@@ -27,6 +27,7 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 import { setLoginState } from "./redux/action";
 import { View, Image ,ActivityIndicator } from "react-native"; 
 import { COLORS } from "./constants/theme";
+import io from 'socket.io-client';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -108,7 +109,6 @@ const RootNavigation = () => {
       </View>
     );
   }
-
   // if (loading) {
   //   return (
   //     <View style={{flex: 1, justifyContent: 'center'}}>
@@ -176,6 +176,51 @@ export default function App() {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
+  
+  // const [connectionStatus, setConnectionStatus] = useState('Connecting...');
+  // const [receivedMessage, setReceivedMessage] = useState('');
+
+  // useEffect(() => {
+  //   const socketUrl = 'http://10.0.243.231:8000'; // Modify with your server URL
+  //   const userId = '65dde8cde00e7c1aa09330ef';  // Example User ID
+  //   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZThjZGUwMGU3YzFhYTA5MzMwZWYiLCJlbWFpbCI6ImtoYWlodW5nMDNAZ21haWwuY29tIiwiaWF0IjoxNzE1NjYxNDA1LCJleHAiOjE3MTYyNjYyMDV9.v2KEUFJTF96Kszz5MFn7RAwm3jF79iwhuIY8lh7HkHE';  // Example Token
+
+  //   const socket = io(socketUrl, {
+  //     query: { token, userId },
+  //     transports: ['websocket'],
+  //     forceNew: true,
+  //   });
+
+  //   socket.on('connect', () => {
+  //     setConnectionStatus('Connected');
+  //   });
+
+  //   socket.on('message', (message) => {
+  //     setReceivedMessage(message);
+  //   });
+
+  //   socket.on('subscribed', (response) => {
+  //     console.log('Subscription confirmation received:', response);
+  //   });
+
+  //   socket.on('error', (error) => {
+  //     console.error('Error encountered:', error);
+  //   });
+
+  //   socket.on('disconnect', (reason) => {
+  //     setConnectionStatus(`Disconnected: ${reason}`);
+  //   });
+
+  //   socket.on('close', () => {
+  //     console.log('Socket closed unexpectedly.');
+  //   });
+
+  //   return () => {
+  //     socket.disconnect(); // Clean up socket connection when component unmounts
+  //   };
+  // }, []);
+
 
   const fonts = {
     regular: require("./assets/fonts/regular.otf"),

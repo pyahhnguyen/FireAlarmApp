@@ -53,6 +53,7 @@ export const Logout = (userId, accessToken) => {
                 'Content-Type': 'application/json',
                 'x-api-key': '2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b',
                 'authorization': accessToken,
+                // 'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZThjZGUwMGU3YzFhYTA5MzMwZWYiLCJlbWFpbCI6ImtoYWlodW5nMDNAZ21haWwuY29tIiwiaWF0IjoxNzE1NjYxNDA1LCJleHAiOjE3MTU4MzQyMDV9.iQ6_yuL1P8JTT-uh-cHQvTr52nW2Cm_WycaCLMWU1ro',
                 'x-client-id': userId,
             };
             // Make the logout request with error handling
@@ -65,7 +66,6 @@ export const Logout = (userId, accessToken) => {
             await AsyncStorage.clear();
         } catch (error) {
             console.error('Logout Error:', error);
-
             // Handle specific error scenarios
             if (error.response) {
                 if (error.response.status === 404) {

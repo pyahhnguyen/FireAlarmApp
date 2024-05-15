@@ -69,7 +69,6 @@ const Living = () => {
   return (
     <View style={styles.container} >
 
-
       <TouchableOpacity style={[styles.card]}>
         <Image
           style={styles.image}
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
     marginVertical: 10,
-    backgroundColor: COLORS.lightGrey,
+    // backgroundColor: COLORS.white,
     borderRadius: 5,
 
   },

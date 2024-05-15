@@ -14,19 +14,17 @@ import { useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import Constants from "expo-constants";
 import { Logout, login } from "../../redux/action";
 import { useDispatch } from "react-redux";
-h = Dimensions.get("screen").height;
 
+h = Dimensions.get("screen").height;
 const Profile = () => {
   const [userData, setUserData] = useState("");
   const [userLogin, setLogin] = useState(true);
   const navigation = useNavigation();
   const apiUrl = Constants.expoConfig.extra.IP_HOST;
   const dispatch = useDispatch();
-
   async function getData() {
     try {
       const Logindata = await AsyncStorage.getItem("loginData");
@@ -37,10 +35,7 @@ const Profile = () => {
           loginData.metadata.tokens &&
           loginData.metadata.user
         ) {
-          const refreshToken = loginData.metadata.tokens.refreshToken;
-          const accessToken = loginData.metadata.tokens.accessToken;
           const userdata = loginData.metadata.user;
-          const userId = userdata._id;
           setUserData(userdata);
         } else {
           console.error(
@@ -69,9 +64,10 @@ const Profile = () => {
         ) {
           const refreshToken = loginData.metadata.tokens.refreshToken;
           const accessToken = loginData.metadata.tokens.accessToken;
+          
           const userId = loginData.metadata.user._id;
+
           dispatch(Logout(userId, accessToken));
-        
         } else {
           console.error(
             "Login data does not contain tokens property:",
@@ -82,17 +78,7 @@ const Profile = () => {
     } catch (error) {
       console.error("Error retrieving token from AsyncStorage:", error);
     }
-    
   };
-
-  const clearAuthToken = async () => {
-    await AsyncStorage.removeItem("isLoggedIn");
-    await AsyncStorage.removeItem("authAccessToken");
-    await AsyncStorage.removeItem("userdata");
-    console.log("auth token cleared");
-    navigation.replace("Login");
-  };
-
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"transparent"} />
@@ -158,7 +144,7 @@ const Profile = () => {
                 <MaterialCommunityIcons
                   name="heart-outline"
                   size={24}
-                  color={COLORS.primary}
+                  color={COLORS.primary}  
                 />
                 <Text style={styles.menuText}>Favorites</Text>
               </View>

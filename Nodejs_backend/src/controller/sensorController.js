@@ -1,21 +1,28 @@
-'use strict'
-const { Ok, Created, SuccessResponse } = require('../core/success.response')
-const SensorService = require('../services/sensor.service')
 
-class sensorController {
-    alertProcess = async (req, res, next) => {
-        new SuccessResponse({
-            metadata: await SensorService.alertProcess(req.body)
-        }).send(res)
+
+'use strict';
+const { SuccessResponse } = require('../core/success.response');
+const SensorService = require('../services/sensor.service');
+
+class SensorController {
+    async sensor_history(req, res, next) {
+        try { 
+    
+            // Respond with the sensor history
+            new SuccessResponse({
+                message: 'Sensor history retrieved successfully',
+                metadata: await SensorService.getSensorHistory({
+                    userId: req.user.userId,
+                    deviceId: req.params.deviceId
+                })
+            }).send(res);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Server error' });
+        }
     }
 
-    history = async (req, res, next) => {
-        new SuccessResponse({
-            metadata: await SensorService.history(req.body)
-        }).send(res)
-    }
 
 }
 
-module.exports = new sensorController();
-
+module.exports = new SensorController();

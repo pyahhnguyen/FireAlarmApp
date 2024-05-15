@@ -6,7 +6,7 @@ const sensorSchema = new mongoose.Schema({
       type: String,
       required: true,
   },
-  deviveId : {
+  deviceId : {
       type: String,
       required: true,
   },
@@ -16,7 +16,7 @@ const sensorSchema = new mongoose.Schema({
   },
   deviceDescription: {
       type: String,
-     
+  
   },
   model_code:{
       type: String,
@@ -48,8 +48,15 @@ location: {
       type: String,
       required: true,
   },
+  owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+  
+  },
 });
 
 const Sensor = mongoose.model('Sensor', sensorSchema);
 
 module.exports = Sensor;
+

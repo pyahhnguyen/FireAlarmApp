@@ -19,13 +19,15 @@ const DeviceDetails = ({ route }) => {
     "flame": require("../../assets/images/Flame-Sensor-Detector.jpg"),
   };
   // Define a mapping between locations and floor plan images
-  const locationImages = {
+  const locationImages_normal = {
     "Living Room": require("../../assets/images/Planner_Living_fire.png"),
     'Kitchen': require("../../assets/images/Planner_Kitchen_fire.png"),
     "Bed Room": require("../../assets/images/Planner_Bedroom_fire.png"),
     "Bath Room": require("../../assets/images/Planner_Bathroom_fire.png"),
     // Add more locations as needed
   };
+  // const locationImages_alert = {
+  // }
 
   return (
     <ScrollView>
@@ -94,9 +96,7 @@ const DeviceDetails = ({ route }) => {
           }}
         />
       </View>
-
     </View>
-    
 
     <View style={styles.historyheader}>
       <Text style={styles.headerText}>History</Text>

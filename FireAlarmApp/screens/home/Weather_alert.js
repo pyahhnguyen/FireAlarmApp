@@ -32,11 +32,9 @@ const WeatherAlert = () => {
     fetchData();
     // Set up interval to fetch data every 5 minutes (adjust as needed)
     const intervalId = setInterval(fetchData, 1 * 60 * 1000);
-
     // Clean up interval when component unmounts
     return () => clearInterval(intervalId);
   }, []);
-
 
   const { main, wind, name, sys } = weatherData || {
     // Default data if weatherData is not available
