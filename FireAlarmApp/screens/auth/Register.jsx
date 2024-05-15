@@ -1,14 +1,13 @@
 import {
   StyleSheet,
-  Text,
   View,
-  SafeAreaView,
   Image,
   Pressable,
   KeyboardAvoidingView,
   Alert,
   TextInput
 } from "react-native";
+
 import React, { useState } from "react";
 import ReusableText from "../../components/Reusable/ReusableText";
 import WidthSpace from "../../components/Reusable/WidthSpace";

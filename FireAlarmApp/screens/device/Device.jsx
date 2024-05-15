@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,7 @@ import { COLORS, SIZES } from "../../constants/theme";
 import { device_data } from "../../constants/device-data";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import { initializeSocket } from "./socketInstance";
 
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
@@ -22,6 +23,49 @@ const Device = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [sensors, setSensors] = useState([]);
   const navigation = useNavigation();
+  const [connectionStatus, setConnectionStatus] = useState('Connecting...');
+  const [data, setData] = useState({});
+
+  // useEffect(() => {
+  //   const socket = initializeSocket();
+
+  //   socket.on('connect', () => {
+  //     setConnectionStatus('Connected');
+  //   });
+
+  //   socket.on('message', (message) => {
+  //     const newData = JSON.parse(message);
+
+  //     // Define the value standards for each device_type
+  //     const valueStandards = {
+  //       heat: 150,
+  //       flame: 1900,
+  //       smoke: 1900,
+  //       gas: 1900,
+  //     };
+  //     // Get the value standard for the current device_type
+  //     const valueStandard = valueStandards[newData.device_type] || 1000; // Default value standard is 1000
+
+  //     // Check if the value exceeds the standard
+  //     const exceedsStandard = newData.value > valueStandard;
+
+  //     // Generate additional fields based on the incoming data and value standard
+  //     const updatedData = {
+  //       ...newData,
+  //       device_id: newData._id_, // Extract the device ID from the _id_
+  //       status: exceedsStandard ? 'Alarm' : 'Normal',
+  //       warning: exceedsStandard ? '1' : '0',
+  //     };
+  //     setData((prevData) => ({
+  //       ...prevData,
+  //       [updatedData._id_]: updatedData,
+  //     }));
+  //   });
+
+  //   return () => {
+  //     socket.disconnect(); // Clean up socket connection when component unmounts
+  //   };
+  // }, []);
 
   const sensorTypeImages = {
     smoke: require("../../assets/images/Smoke-Alarms-Smoke-Detectors.jpg"),
@@ -42,6 +86,15 @@ const Device = () => {
   };
 
   const renderItem = ({ item, index }) => {
+    const getItemColor = () => {
+      // Example condition, you can replace it with your logic
+      if (item.warning === "1") {
+        return COLORS.yellow; // Set color to green for active status
+      } else {
+        return COLORS.white; // Set color to red for other statuses
+      }
+    };
+
     return (
       <TouchableOpacity
         onPress={() => handlePress(item)}
@@ -53,7 +106,7 @@ const Device = () => {
           ...styles.shadow,
         }}
       >
-        <View style={styles.card}>
+        <View style={[styles.card, { backgroundColor: getItemColor() }]}>
           <Image
             style={styles.image}
             source={sensorTypeImages[item.device_type]}
@@ -80,16 +133,14 @@ const Device = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="transparent" />
-      
-        <FlatList
-          data={device_data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.device_id}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
-    
+      <FlatList
+        data={device_data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.device_id}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      />
     </View>
   );
 };

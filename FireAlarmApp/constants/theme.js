@@ -19,7 +19,8 @@ const COLORS = {
     tertiary: "#FF7754",
     header: '#45CFDD',
     background: '#51C2D5',
-    alert: '#FF414D'
+    alert: '#FF414D',
+    yellow:'#ffdf00'
 
 };
 

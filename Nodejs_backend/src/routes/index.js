@@ -1,4 +1,4 @@
- // routes/index.js
+// routes/index.js
 const express = require("express");
 const router = express.Router();
 const { apikey, permission } = require("../auth/chechAuth");
@@ -7,11 +7,11 @@ router.use(apikey);
 // check permission 
 router.use(permission('0000'));
 
-
 // authen route
 router.use('/v1/api', require('./access/index'));
+// sensor route
+router.use('/v1/api', require('./sensor/index'));
 
-// router.use('/v1/api', require('./sensor/index'));
 
 // Root routes
 router.get("/", (req, res) => {

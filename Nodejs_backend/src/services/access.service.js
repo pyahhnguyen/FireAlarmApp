@@ -67,6 +67,7 @@ static handleRefreshToken = async ({refreshToken, user, keyStore}) => {
     console.log('delKey :::', deleteKey)
     return deleteKey
   }
+  
   /*
   1- check eamil in dbs
   2- match password
@@ -77,7 +78,7 @@ static handleRefreshToken = async ({refreshToken, user, keyStore}) => {
 
   // service login
 
-  static login = async ({ email, password, refreshToken = null }) => {
+  static login = async ({ email, password}) => {
     // 1
     const foundUser = await findByEmail({ email });
     if (!foundUser) throw new BadRequestError("Error: user not registered !");
