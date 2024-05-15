@@ -1,18 +1,14 @@
 const socketIo = require('socket.io');
 const JWT = require('jsonwebtoken');
 const setupDevice = require('../controllers/deviceModule');
-const getUserTopics = require('./topicManagement');
+const getUserTopics = require('./getUserTopics');
 const { findByUserId } = require('../services/service.key.token');
 
-// const historyManager = require('../services/historyMessage');
-// const History = require('../models/History');
 
 module.exports = async (io) => {
     const device = setupDevice();
-    
     // Log the initiation of the device setup
     console.log("Setting up device...");
-    // Handle device connection
     io.use(async (socket, next) => {
         // console.log("Middleware called for socket:", socket.id);
         const token = socket.handshake.query.token;
@@ -47,7 +43,6 @@ module.exports = async (io) => {
         }
     });
 
-    // io for save all data from connection to database
     io.on('connection', async (socket) => {
         console.log(`Socket connected: ${socket.id}`);
         try {
@@ -64,7 +59,7 @@ module.exports = async (io) => {
                     socket.emit('message', payload.toString());
                     // Parse the received message
                 };
-                // Add the message listener
+                // Add the message listenev
                 device.on('message', messageListener);
                 // Store the message listener so we can remove it when the socket disconnects
                 socket.messageListeners = socket.messageListeners || [];

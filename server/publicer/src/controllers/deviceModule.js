@@ -20,7 +20,7 @@ function setupDevice() {
   
   device.on('message', function (topic, payload) {
     console.log(`Message received on AWS IoT topic ${topic}:`);
-    console.log(payload.toString()); // Converts Buffer to string
+    // console.log(payload.toString()); // Converts Buffer to string
   });
   device.on('reconnect', () => {
     console.log('Reconnecting...');
