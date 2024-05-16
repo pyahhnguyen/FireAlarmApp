@@ -6,7 +6,6 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require("http"); // Import the 'http' module for creating an HTTP server
-const WebSocket = require("ws");
 // const apiKey = require("./routes/Auth/checkAuth")
 
 const app = express();
@@ -50,6 +49,6 @@ app.use((error, req, res, next) => {
     })
 })  
 
-module.exports = {server, app, wss};    
+module.exports = {server, app};    
 
 
