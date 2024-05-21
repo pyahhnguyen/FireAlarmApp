@@ -47,7 +47,6 @@ const TabHome = () => {
     }
   };
 
-
   const data_chart = [
     { value: 1, color: 'red' },
     { value: 5, color: 'green' },
@@ -81,6 +80,7 @@ const TabHome = () => {
   }
 
   function renderAlertHistory() {
+
     return <AlertHistory customContainerStyle={{}} history={alertHistory} />;
   }
 

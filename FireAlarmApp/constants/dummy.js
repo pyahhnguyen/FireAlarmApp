@@ -104,6 +104,7 @@ const chartOptions = [
 export const alertHistory = [
   
   
+  
     {
       "deviceId": 1,
       "deviceType": "Smoke Detector",
@@ -113,9 +114,9 @@ export const alertHistory = [
       "deviceDescription": "Smoke Detected",
       "deviceData": 2,
       "location": "Living Room",
-      "resolveAt": "2024-01-25T08:23:17.405Z",
+      "resolveAt": "2024-05-17T08:23:17.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:23:17.405Z"
+      "triggerAt": "2024-05-17T08:23:17.405Z"
     },
     {
       "deviceId": 2,
@@ -126,9 +127,9 @@ export const alertHistory = [
       "deviceDescription": "Heat Detected",
       "deviceData": 3,
       "location": "Kitchen",
-      "resolveAt": "2024-01-25T08:21:10.405Z",
+      "resolveAt": "2024-05-17T08:21:10.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:21:10.405Z"
+      "triggerAt": "2024-05-17T08:21:10.405Z"
     },
     {
       "deviceId": 3,
@@ -139,9 +140,9 @@ export const alertHistory = [
       "deviceDescription": "Gas Detected",
       "deviceData": 1,
       "location": "Bed Room",
-      "resolveAt": "2024-01-25T08:20:17.405Z",
+      "resolveAt": "2024-05-17T08:20:17.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:20:17.405Z"
+      "triggerAt": "2024-05-17T08:20:17.405Z"
     },
     {
       "deviceId": 4,
@@ -152,9 +153,9 @@ export const alertHistory = [
       "deviceDescription": "Flame Detected",
       "deviceData": 4,
       "location": "Bath Room",
-      "resolveAt": "2024-01-25T08:18:08.405Z",
+      "resolveAt": "2024-05-17T08:18:08.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:18:10.405Z"
+      "triggerAt": "2024-05-17T08:18:10.405Z"
     },
     {
       "deviceId": 5,
@@ -165,9 +166,9 @@ export const alertHistory = [
       "deviceDescription": "Smoke Detected",
       "deviceData": 2,
       "location": "Living Room",
-      "resolveAt": "2024-01-25T08:17:09.405Z",
+      "resolveAt": "2024-05-17T08:17:09.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:17:09.405Z"
+      "triggerAt": "2024-05-17T08:17:09.405Z"
     },
     {
       "deviceId": 6,
@@ -178,9 +179,9 @@ export const alertHistory = [
       "deviceDescription": "Heat Detected",
       "deviceData": 3,
       "location": "Kitchen",
-      "resolveAt": "2024-01-25T08:15:17.405Z",
+      "resolveAt": "2024-05-17T08:15:17.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:15:17.405Z"
+      "triggerAt": "2024-05-17T08:15:17.405Z"
     },
     {
       "deviceId": 7,
@@ -191,9 +192,9 @@ export const alertHistory = [
       "deviceDescription": "Gas Detected",
       "deviceData": 1,
       "location": "Bed Room",
-      "resolveAt": "2024-01-25T08:12:11.405Z",
+      "resolveAt": "2024-05-17T08:12:11.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:12:11.405Z"
+      "triggerAt": "2024-05-17T08:12:11.405Z"
     },
     {
       "deviceId": 8,
@@ -204,12 +205,13 @@ export const alertHistory = [
       "deviceDescription": "Flame Detected",
       "deviceData": 4,
       "location": "Bath Room",
-      "resolveAt": "2024-01-25T08:10:08.405Z",
+      "resolveAt": "2024-05-17T08:10:08.405Z",
       "status": "Alarm",
-      "triggerAt": "2024-01-25T08:10:06.405Z"
+      "triggerAt": "2024-05-17T08:10:06.405Z"
     }
   
   
+
       
 ]
 const dummyData = {alertHistory, chartOptions};

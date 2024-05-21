@@ -53,7 +53,7 @@ export const Logout = (userId, accessToken) => {
                 'Content-Type': 'application/json',
                 'x-api-key': '2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b',
                 'authorization': accessToken,
-                // 'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZThjZGUwMGU3YzFhYTA5MzMwZWYiLCJlbWFpbCI6ImtoYWlodW5nMDNAZ21haWwuY29tIiwiaWF0IjoxNzE1NjYxNDA1LCJleHAiOjE3MTU4MzQyMDV9.iQ6_yuL1P8JTT-uh-cHQvTr52nW2Cm_WycaCLMWU1ro',
+                // 'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZThjZGUwMGU3YzFhYTA5MzMwZWYiLCJlbWFpbCI6ImtoYWlodW5nMDNAZ21haWwuY29tIiwiaWF0IjoxNzE1OTU0ODQyLCJleHAiOjE3MTYxMjc2NDJ9.tYXwoUxAuLkTSqh_NOikpPSqtmv9QCjkmzeAeS5UhW8',
                 'x-client-id': userId,
             };
             // Make the logout request with error handling

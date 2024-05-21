@@ -1,34 +1,25 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  useRef,
-  useContext,
-} from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { View, Image, Platform, Alert, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { useFonts } from "expo-font";
-import BottomTabNavigation from "./navigation/BottomTabNavigation";
 import UserNavigator from "./navigation/UserStack.Navigation";
-import Login from "./screens/auth/Login";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
-import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Auth from "./Context/store/Auth";
-import AuthGlobal from "./Context/store/AuthGlobal";
 import CommonStackNavigation from "./navigation/CommonStack.Navigator";
 import store from "./redux/store";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import { setLoginState } from "./redux/action";
-import { View, Image ,ActivityIndicator } from "react-native"; 
-import { COLORS } from "./constants/theme";
-import io from 'socket.io-client';
+// import * as Linking from 'expo-linking';
+// import messaging from '@react-native-firebase/messaging';
+// import firebase from '@react-native-firebase/app';
 
+
+// Notification handling configuration
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -37,93 +28,103 @@ Notifications.setNotificationHandler({
   }),
 });
 
-function handleRegistrationError(errorMessage) {
-  alert(errorMessage);
-  throw new Error(errorMessage);
+const Stack = createNativeStackNavigator();
+
+async function requestUserPermission() {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
 }
 
 async function registerForPushNotificationsAsync() {
   let token;
-
-  if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("default", {
-      name: "default",
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
+      lightColor: '#FF231F7C',
     });
   }
 
   if (Device.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
+    if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
-    if (finalStatus !== "granted") {
-      handleRegistrationError(
-        "Failed to get push token for push notification!"
-      );
+    if (finalStatus !== 'granted') {
+      Alert.alert('Error', 'Failed to get push token for push notification!');
       return;
     }
     token = await Notifications.getDevicePushTokenAsync({
       projectId: Constants.expoConfig.extra.eas.projectId,
     });
-    console.log(token.data);
+    try {
+      await AsyncStorage.setItem('deviceToken', token.data);
+    } catch (error) {
+      console.error('AsyncStorage error: ', error.message);
+    }
   } else {
-    handleRegistrationError("Must use physical device for Push Notifications");
+    Alert.alert('Error', 'Must use physical device for Push Notifications');
   }
-  AsyncStorage.setItem("deviceToken", token.data);
-  return token.data;
+  return token?.data;
 }
-const Stack = createNativeStackNavigator();
 
-const RootNavigation = () => {
+function RootNavigation() {
   const [loading, setLoading] = useState(true);
   const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
   const dispatch = useDispatch();
+  const navigationRef = useRef(null);
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
+    async function checkLoginStatus() {
       try {
         const loginData = await AsyncStorage.getItem("loginData");
-        console.log('loginData:', loginData);
+        console.log("LoginData:", loginData);
         if (loginData) {
           dispatch(setLoginState(JSON.parse(loginData)));
         }
       } catch (error) {
         console.error("Error checking login status:", error);
       } finally {
-        setLoading(false); // Set loading to false regardless of the outcome
+        setLoading(false);
       }
     };
     checkLoginStatus();
+
+    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
+      const data = response.notification.request.content.data;
+      console.log("Notification data:", data);
+      if (data && data.targetScreen && navigationRef.current) {
+        navigationRef.current.navigate('CommonStack', {
+          screen: 'BottomTabs',
+          params: { screen: data.targetScreen },
+        });
+      }
+    });
+
+    return () => Notifications.removeNotificationSubscription(responseListener);
+
   }, []);
 
   if (loading) {
     return (
-      <View style={{resizeMode:"contain" }}>
-        <Image source={require("./assets/images/splash.png")} />
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size="large" />
       </View>
     );
   }
-  // if (loading) {
-  //   return (
-  //     <View style={{flex: 1, justifyContent: 'center'}}>
-  //       <ActivityIndicator size="large" color={COLORS.lightWhite} />
-  //     </View>
-  //   )
-  // }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+    <NavigationContainer ref={navigationRef} >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
           <Stack.Screen name="CommonStack" component={CommonStackNavigation} />
         ) : (
@@ -132,97 +133,13 @@ const RootNavigation = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [deviceToken, setDeviceToken] = useState("");
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+  const [fontsLoaded] = useFonts({
 
-  useEffect(() => {
-    async function prepare() {
-      try {
-        await Font.loadAsync(Entypo.font);
-        await new Promise((resolve) => setTimeout(resolve, 200));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        // Tell the application to render
-        setAppIsReady(true);
-      }
-    }
-    prepare();
-  }, []);
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => setDeviceToken(token));
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-
-  
-  // const [connectionStatus, setConnectionStatus] = useState('Connecting...');
-  // const [receivedMessage, setReceivedMessage] = useState('');
-
-  // useEffect(() => {
-  //   const socketUrl = 'http://10.0.243.231:8000'; // Modify with your server URL
-  //   const userId = '65dde8cde00e7c1aa09330ef';  // Example User ID
-  //   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZThjZGUwMGU3YzFhYTA5MzMwZWYiLCJlbWFpbCI6ImtoYWlodW5nMDNAZ21haWwuY29tIiwiaWF0IjoxNzE1NjYxNDA1LCJleHAiOjE3MTYyNjYyMDV9.v2KEUFJTF96Kszz5MFn7RAwm3jF79iwhuIY8lh7HkHE';  // Example Token
-
-  //   const socket = io(socketUrl, {
-  //     query: { token, userId },
-  //     transports: ['websocket'],
-  //     forceNew: true,
-  //   });
-
-  //   socket.on('connect', () => {
-  //     setConnectionStatus('Connected');
-  //   });
-
-  //   socket.on('message', (message) => {
-  //     setReceivedMessage(message);
-  //   });
-
-  //   socket.on('subscribed', (response) => {
-  //     console.log('Subscription confirmation received:', response);
-  //   });
-
-  //   socket.on('error', (error) => {
-  //     console.error('Error encountered:', error);
-  //   });
-
-  //   socket.on('disconnect', (reason) => {
-  //     setConnectionStatus(`Disconnected: ${reason}`);
-  //   });
-
-  //   socket.on('close', () => {
-  //     console.log('Socket closed unexpectedly.');
-  //   });
-
-  //   return () => {
-  //     socket.disconnect(); // Clean up socket connection when component unmounts
-  //   };
-  // }, []);
-
-
-  const fonts = {
+    ...Entypo.font,
     regular: require("./assets/fonts/regular.otf"),
     bold: require("./assets/fonts/bold.otf"),
     light: require("./assets/fonts/light.otf"),
@@ -234,14 +151,68 @@ export default function App() {
     medium_poppins: require("./assets/fonts/Poppins-Medium.ttf"),
     xtrabold_poppins: require("./assets/fonts/Poppins-ExtraBold.ttf"),
     semibold_poppins: require("./assets/fonts/Poppins-SemiBold.ttf"),
-  };
+  });
 
-  const [fontsLoaded] = useFonts(fonts);
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync(Entypo.font);
+        const token = await registerForPushNotificationsAsync();
+        console.log("Push token:", token);
+        // Check Firebase app configuration
+        // console.log("Firebase apps initialized: ", firebase.apps.length);
+
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+
+  // useEffect(() => {
+  //   if (requestUserPermission()) {
+  //     // return Fcm token for device 
+  //     messaging().getToken().then(token => {
+  //       console.log("Fcm token", token)
+  //     });
+  //   }
+  //   else {
+  //     console.log("Permission not granted", authStatus)
+  //   }
+
+  //   messaging().getInitialNotification().then(async (remoteMessage) => {
+  //     if (remoteMessage) {
+  //       console.log('Notification caused app to open from quit state:', 
+  //       remoteMessage.notification);
+  //     }
+  //   });
+
+  //   messaging().onNotificationOpenedApp(remoteMessage => {
+  //     console.log('Notification caused app to open from background state:', 
+  //     remoteMessage.notification);
+  //   })
+
+  //   messaging().setBackgroundMessageHandler(async remoteMessage => {
+  //     console.log('Message handled in the background!', remoteMessage);
+  //   });
+    
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+
+  //   });    
+    
+  //   return unsubscribe;
+
+
+  // },[]);
 
   if (!appIsReady || !fontsLoaded) {
     return null;
   }
-  
+
   return (
     <Provider store={store}>
       <RootNavigation />

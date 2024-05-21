@@ -64,8 +64,7 @@ const Profile = () => {
         ) {
           const refreshToken = loginData.metadata.tokens.refreshToken;
           const accessToken = loginData.metadata.tokens.accessToken;
-          
-          const userId = loginData.metadata.user._id;
+          const userId = loginData.metadata.user._id; 
 
           dispatch(Logout(userId, accessToken));
         } else {
@@ -79,6 +78,7 @@ const Profile = () => {
       console.error("Error retrieving token from AsyncStorage:", error);
     }
   };
+  
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"transparent"} />
