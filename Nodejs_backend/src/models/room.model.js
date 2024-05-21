@@ -5,7 +5,6 @@ const roomSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-
     // Add other room-specific fields as needed
     createdAt: {
         type: Date,

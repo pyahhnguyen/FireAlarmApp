@@ -5,7 +5,6 @@ const path = require('path');
 require('dotenv').config();
 
 function setupDevice() {
-
     const device = awsIot.device({
         keyPath: path.resolve(__dirname, process.env.PATH_TO_PRIVATE_KEY),
         certPath: path.resolve(__dirname, process.env.PATH_TO_CERTIFICATE),
@@ -13,7 +12,6 @@ function setupDevice() {
         clientId: deviceConfig.CLIENT_ID,
         host: deviceConfig.ENDPOINT
     });
-
     device.on('connect', function () {
         console.log("Connected to AWS IoT");
     });
