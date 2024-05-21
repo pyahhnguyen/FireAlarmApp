@@ -11,7 +11,6 @@ import DetailProfile from '../screens/profile/DetailProfile'
 import EditProfile from '../screens/profile/EditProfile'
 import BottomTabNavigation from './BottomTabNavigation';
 import { COLORS } from '../constants/theme';
-import Login from '../screens/auth/Login';
 const Tab = createStackNavigator();
 
 function CommonStackNavigation() {

@@ -1,6 +1,7 @@
 
 {
   "expo": {
+    "scheme": "myapp",
     "name": "FireAlarmApp",
     "slug": "FireAlarmApp",
     "version": "1.0.0",
@@ -25,17 +26,20 @@
       },
       "package": "com.khaihung22.FireAlarmApp",
       "googleServicesFile": "./google-services.json"
-
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+
+    "plugins": [
+    
+    ],
+
     "extra": {
       "eas": {  
         "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16" 
       },
-      "IP_HOST":"192.168.1.71"
+      "IP_HOST": "10.0.248.48"
     }
-  
   }
 }

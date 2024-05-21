@@ -1,18 +1,36 @@
 import io from 'socket.io-client';
+import Constants from "expo-constants";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const IP_HOST = Constants.expoConfig.extra.IP_HOST;
+const SOCKET_URL = `http://${IP_HOST}:5000`;
+console.log(SOCKET_URL);
 
-const SOCKET_URL = 'http://10.0.243.231:8000';
-const USER_ID = '65dde8cde00e7c1aa09330ef';
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRkZThjZGUwMGU3YzFhYTA5MzMwZWYiLCJlbWFpbCI6ImtoYWlodW5nMDNAZ21haWwuY29tIiwiaWF0IjoxNzE1NzA5Mzc2LCJleHAiOjE3MTYzMTQxNzZ9.0KhItJ1vJ_atzNTsnXZxni4sjcSxKxA4d1tcChWCTNw';
+export const initializeSocket = async () => {
+    const logindata = await AsyncStorage.getItem("loginData");
+    // console.log(logindata);
+    if (!logindata) {
+        console.error('Login data not found in AsyncStorage.');
+        return null;
+    }
+    const loginData = JSON.parse(logindata);
+    if (!loginData.metadata || !loginData.metadata.tokens || !loginData.metadata.user) {
+        console.error('Invalid login data structure.');
+        return null;
+    }
+    const refreshToken = loginData.metadata.tokens.refreshToken;
+    const userId = loginData.metadata.user._id;
 
-const initializeSocket = () => {
+    if (!refreshToken) {
+        console.error('Refresh token not found in login data.');
+        return null;
+    }
+
     const socket = io(SOCKET_URL, {
-        query: { token: TOKEN, userId: USER_ID },
+        query: { token: refreshToken, userId: userId },
         transports: ['websocket'],
         forceNew: true,
     });
 
     return socket;
 };
-
-export default initializeSocket;

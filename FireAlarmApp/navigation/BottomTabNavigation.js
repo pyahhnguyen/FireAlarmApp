@@ -62,9 +62,9 @@ import HomeStackNavigator from "./HomeStack.Navigator";
         <Tab.Screen
           name="Devices"
           component={DeviceStackNavigator}
-          options={{
+          options={{  
             headerShown: false,
-            unmountOnBlur: true, // Add this line
+            unmountOnBlur: false, // Add this line
           }}
         />
 

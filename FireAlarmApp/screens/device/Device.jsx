@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -23,49 +23,68 @@ const Device = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [sensors, setSensors] = useState([]);
   const navigation = useNavigation();
-  const [connectionStatus, setConnectionStatus] = useState('Connecting...');
+  const [connectionStatus, setConnectionStatus] = useState("Connecting...");
   const [data, setData] = useState({});
+  useEffect(() => {
+    let socket;
 
-  // useEffect(() => {
-  //   const socket = initializeSocket();
+    const setupSocket = async () => {
+      socket = await initializeSocket(); // Wait for the socket to be initialized
+      if (!socket) {
+        console.error("Failed to initialize socket.");
+        return;
+      }
+      socket.on("connect", () => {
+        setConnectionStatus("Connected");
+      });
 
-  //   socket.on('connect', () => {
-  //     setConnectionStatus('Connected');
-  //   });
+      socket.on("message", (message) => {
+        const newData = JSON.parse(message);
+        const valueStandards = {
+          smoke: 1500, // Example standard value for temperature sensor
+          heat: 150,
+          gas: 900,
+          flame: 1700,
+        };
+        const valueStandard = valueStandards[newData.device_type] || 1000;
+        const exceedsStandard = newData.value > valueStandard;
+        const updatedData = {
+          ...newData,
+          device_id: newData._id_,
+          status: exceedsStandard ? "Alarm" : "Normal",
+          warning: exceedsStandard ? "1" : "0",
+        };
+        setData((prevData) => ({
+          ...prevData,
+          [updatedData._id_]: updatedData,
+        }));
+      });
 
-  //   socket.on('message', (message) => {
-  //     const newData = JSON.parse(message);
+      socket.on("subscribed", (response) => {
+        console.log("Subscription confirmation received:", response);
+      });
 
-  //     // Define the value standards for each device_type
-  //     const valueStandards = {
-  //       heat: 150,
-  //       flame: 1900,
-  //       smoke: 1900,
-  //       gas: 1900,
-  //     };
-  //     // Get the value standard for the current device_type
-  //     const valueStandard = valueStandards[newData.device_type] || 1000; // Default value standard is 1000
+      socket.on("error", (error) => {
+        console.error("Error encountered:", error);
+      });
 
-  //     // Check if the value exceeds the standard
-  //     const exceedsStandard = newData.value > valueStandard;
+      socket.on("disconnect", (reason) => {
+        setConnectionStatus(`Disconnected: ${reason}`);
+      });
 
-  //     // Generate additional fields based on the incoming data and value standard
-  //     const updatedData = {
-  //       ...newData,
-  //       device_id: newData._id_, // Extract the device ID from the _id_
-  //       status: exceedsStandard ? 'Alarm' : 'Normal',
-  //       warning: exceedsStandard ? '1' : '0',
-  //     };
-  //     setData((prevData) => ({
-  //       ...prevData,
-  //       [updatedData._id_]: updatedData,
-  //     }));
-  //   });
+      socket.on("close", () => {
+        console.log("Socket closed unexpectedly.");
+      });
+    };
 
-  //   return () => {
-  //     socket.disconnect(); // Clean up socket connection when component unmounts
-  //   };
-  // }, []);
+    setupSocket(); // Call the async function to setup the socket
+
+    return () => {
+      if (socket) {
+        socket.disconnect(); // Clean up socket connection when component unmounts
+      }
+    };
+  }, []);
 
   const sensorTypeImages = {
     smoke: require("../../assets/images/Smoke-Alarms-Smoke-Detectors.jpg"),
@@ -77,7 +96,7 @@ const Device = () => {
   const handlePress = (item) => {
     navigation.navigate("Detail Device", { item });
   };
-
+  
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
@@ -116,7 +135,7 @@ const Device = () => {
               {item.device_name || "MQ2 Smoke Alarm"}
             </Text>
             <Text style={styles.titleItem}>
-              Honeywell BW-Input: {item.code || "29352"}
+              Honeywell BW-Input: {item.model_code || "29352"}
             </Text>
             <Text style={styles.titleItem}>
               Status: {item.status || "Active"}
@@ -134,7 +153,7 @@ const Device = () => {
     <View style={styles.container}>
       <StatusBar backgroundColor="transparent" />
       <FlatList
-        data={device_data}
+        data={Object.values(data) || device_data}
         renderItem={renderItem}
         keyExtractor={(item) => item.device_id}
         refreshControl={

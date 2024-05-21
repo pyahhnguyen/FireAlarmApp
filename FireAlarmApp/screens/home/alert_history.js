@@ -29,7 +29,6 @@ const AlertHistory = ({ customContainerStyle, history }) => {
   
   const apiHost = Constants.expoConfig.extra.API_HOST || 'localhost'
 
-
   const handleModal = (item) => {
     setSelectedItemData(item);
     setIsModalVisible(!isModalVisible);
@@ -64,7 +63,6 @@ const fetchData = async () => {
       if (!isAlreadyInHistory) {
         // Add firstAlarmItem only if it's not already in the array
         const updatedHistory = [...historyALert, firstAlarmItem];
-
         const sortedHistory = updatedHistory.sort((a, b) => new Date(b.triggerAt) - new Date(a.triggerAt));
         sortedHistory.forEach((sensor, index) => {
           sensor.deviceId = `${index + 1}`;
@@ -80,12 +78,10 @@ const fetchData = async () => {
     setRefreshing(false);
   }
 };
-
 useEffect(() => {
   ////// open if want to fetch data from server
   // fetchData();
 }, []);
-
 
 const renderItem = ({ item }) => (
   <TouchableOpacity
@@ -241,12 +237,7 @@ const renderItem = ({ item }) => (
               </TouchableOpacity>
               
             </View>
-
-          
-
           </Modal.Footer>
-
-
         </Modal.Container>
       </Modal>
     </View>
