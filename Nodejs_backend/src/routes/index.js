@@ -6,13 +6,10 @@ const { apikey, permission } = require("../auth/chechAuth");
 router.use(apikey);
 // check permission 
 router.use(permission('0000'));
-
 // authen route
 router.use('/v1/api', require('./access/index'));
 // sensor route
 router.use('/v1/api', require('./sensor/index'));
-
-
 // Root routes
 router.get("/", (req, res) => {
   return res.status(200).json({
