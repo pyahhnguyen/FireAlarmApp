@@ -10,7 +10,6 @@ const roomSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    
     statusRoom: {
         type: String,
         default: 'normal',
@@ -20,10 +19,12 @@ const roomSchema = new mongoose.Schema({
         ref: 'Sensor',
         required: true,
     },
-
-      //status room 
+    apartment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Apartment',
+        required: true,
+    },
 });
-
 
 const Room = mongoose.model('Room', roomSchema);
 

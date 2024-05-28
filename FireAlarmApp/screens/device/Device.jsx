@@ -15,6 +15,8 @@ import { device_data } from "../../constants/device-data";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { initializeSocket } from "./socketInstance";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSensorData } from "../../redux/actions/sensor.action";
 
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
@@ -24,10 +26,12 @@ const Device = () => {
   const [sensors, setSensors] = useState([]);
   const navigation = useNavigation();
   const [connectionStatus, setConnectionStatus] = useState("Connecting...");
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.sensors.sensorData);
+  // console.log("Data:", data);
   useEffect(() => {
     let socket;
-
     const setupSocket = async () => {
       socket = await initializeSocket(); // Wait for the socket to be initialized
       if (!socket) {
@@ -54,10 +58,13 @@ const Device = () => {
           status: exceedsStandard ? "Alarm" : "Normal",
           warning: exceedsStandard ? "1" : "0",
         };
-        setData((prevData) => ({
-          ...prevData,
-          [updatedData._id_]: updatedData,
-        }));
+
+        dispatch(updateSensorData({ [newData._id_]: updatedData })); // Correct key usage here
+
+        // setData((prevData) => ({
+        //   ...prevData,
+        //   [updatedData._id_]: updatedData,
+        // }));
       });
 
       socket.on("subscribed", (response) => {
@@ -148,7 +155,6 @@ const Device = () => {
       </TouchableOpacity>
     );
   };
-
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="transparent" />
@@ -163,7 +169,6 @@ const Device = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

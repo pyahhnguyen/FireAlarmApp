@@ -11,14 +11,12 @@ import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CommonStackNavigation from "./navigation/CommonStack.Navigator";
-import store from "./redux/store";
+import store from "./redux/store/store";
 import { Provider, useSelector, useDispatch } from "react-redux";
-import { setLoginState } from "./redux/action";
+import { setLoginState } from "./redux/actions/action";
 // import * as Linking from 'expo-linking';
 // import messaging from '@react-native-firebase/messaging';
 // import firebase from '@react-native-firebase/app';
-
-
 // Notification handling configuration
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -27,19 +25,7 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
-
 const Stack = createNativeStackNavigator();
-
-async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-  }
-}
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -51,7 +37,6 @@ async function registerForPushNotificationsAsync() {
       lightColor: '#FF231F7C',
     });
   }
-
   if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -79,7 +64,8 @@ async function registerForPushNotificationsAsync() {
 
 function RootNavigation() {
   const [loading, setLoading] = useState(true);
-  const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  // console.log("isLoggedIn:", isLoggedIn);
   const dispatch = useDispatch();
   const navigationRef = useRef(null);
 
@@ -91,6 +77,10 @@ function RootNavigation() {
         if (loginData) {
           dispatch(setLoginState(JSON.parse(loginData)));
         }
+        else {
+          // If no login data, make sure user is marked as logged out in Redux
+          dispatch({ type: 'LOGOUT' });
+        }
       } catch (error) {
         console.error("Error checking login status:", error);
       } finally {
@@ -99,21 +89,7 @@ function RootNavigation() {
     };
     checkLoginStatus();
 
-    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
-      const data = response.notification.request.content.data;
-      console.log("Notification data:", data);
-      if (data && data.targetScreen && navigationRef.current) {
-        navigationRef.current.navigate('CommonStack', {
-          screen: 'BottomTabs',
-          params: { screen: data.targetScreen },
-        });
-      }
-    });
-
-    return () => Notifications.removeNotificationSubscription(responseListener);
-
   }, []);
-
   if (loading) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -121,7 +97,6 @@ function RootNavigation() {
       </View>
     );
   }
-
   return (
     <NavigationContainer ref={navigationRef} >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -134,11 +109,14 @@ function RootNavigation() {
     </NavigationContainer>
   );
 }
-
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const [fontsLoaded] = useFonts({
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(undefined);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
+  const [fontsLoaded] = useFonts({
     ...Entypo.font,
     regular: require("./assets/fonts/regular.otf"),
     bold: require("./assets/fonts/bold.otf"),
@@ -152,15 +130,10 @@ export default function App() {
     xtrabold_poppins: require("./assets/fonts/Poppins-ExtraBold.ttf"),
     semibold_poppins: require("./assets/fonts/Poppins-SemiBold.ttf"),
   });
-
   useEffect(() => {
     async function prepare() {
       try {
         await Font.loadAsync(Entypo.font);
-        const token = await registerForPushNotificationsAsync();
-        console.log("Push token:", token);
-        // Check Firebase app configuration
-        // console.log("Firebase apps initialized: ", firebase.apps.length);
 
       } catch (e) {
         console.warn(e);
@@ -171,48 +144,32 @@ export default function App() {
     prepare();
   }, []);
 
+  useEffect(() => {
+    registerForPushNotificationsAsync()
+      .then((token) => setExpoPushToken(token ?? ''))
+      .catch((error) => console.error('Failed to register for notifications', error));
 
-  // useEffect(() => {
-  //   if (requestUserPermission()) {
-  //     // return Fcm token for device 
-  //     messaging().getToken().then(token => {
-  //       console.log("Fcm token", token)
-  //     });
-  //   }
-  //   else {
-  //     console.log("Permission not granted", authStatus)
-  //   }
-
-  //   messaging().getInitialNotification().then(async (remoteMessage) => {
-  //     if (remoteMessage) {
-  //       console.log('Notification caused app to open from quit state:', 
-  //       remoteMessage.notification);
-  //     }
-  //   });
-
-  //   messaging().onNotificationOpenedApp(remoteMessage => {
-  //     console.log('Notification caused app to open from background state:', 
-  //     remoteMessage.notification);
-  //   })
-
-  //   messaging().setBackgroundMessageHandler(async remoteMessage => {
-  //     console.log('Message handled in the background!', remoteMessage);
-  //   });
-    
-  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
-  //     console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-
-  //   });    
-    
-  //   return unsubscribe;
-
-
-  // },[]);
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+    return () => {
+      notificationListener.current &&
+        Notifications.removeNotificationSubscription(
+          notificationListener.current,
+        );
+      responseListener.current &&
+        Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   if (!appIsReady || !fontsLoaded) {
     return null;
   }
-
   return (
     <Provider store={store}>
       <RootNavigation />

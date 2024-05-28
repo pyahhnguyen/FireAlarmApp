@@ -34,6 +34,19 @@ class SensorController {
         }
     }
 
+    // Get the number of alerts for a user
+    async alertsNumber(req, res, next) {
+        try {
+            // Respond with the number of alerts
+            new SuccessResponse({
+                message: 'Number of alerts retrieved successfully',
+                metadata: await SensorService.getAlertsNumber(req.user.userId)
+            }).send(res);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Server error' });
+        }
+    }
 
 }
 

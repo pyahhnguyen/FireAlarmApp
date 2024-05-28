@@ -86,6 +86,7 @@ export default function Donut(props = []) {
                 cx="50%"
                 cy="50%"
                 r={state.radius}
+                fill={state.fill}
                 originX={state.radius + state.strokeWidth}
                 originY={state.radius + state.strokeWidth}
                 rotation={currentRotation}

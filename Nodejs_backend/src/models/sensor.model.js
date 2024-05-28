@@ -26,9 +26,9 @@ const sensorSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-
     location: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
     },
     address: {
@@ -43,7 +43,10 @@ const sensorSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-
+    room: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Room',
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -56,7 +59,6 @@ const sensorSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-
     },
 });
 

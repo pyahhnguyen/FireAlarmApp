@@ -16,11 +16,9 @@ const AlertScreen = () => {
   const [myAlert, setMyAlert] = useState("");
   const [alertList, setAlertList] = useState([]);
   const navigation = useNavigation();
-
   const handlePress = (item) => {
     navigation.navigate('Detail Alert', { item }); // Pass item data to details screen
   };
-
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -33,13 +31,12 @@ const AlertScreen = () => {
         ...styles.shadow,
       }}
     >
-      <View style={styles.card}>
+    <View style={styles.card}>
         <Text style={{ fontSize:18, color: COLORS.primary, padding:5 }}>{item.title}</Text>
         <TouchableOpacity onPress={() => onDeleteItem(item.title)}>
           <Text style={{ fontSize: 18, color: COLORS.lightBlue, padding:5, backgroundColor:COLORS.lightWhite}}>Clear</Text>
         </TouchableOpacity>
-      </View>
-
+    </View>
     </TouchableOpacity>
     );
   };
@@ -62,7 +59,6 @@ const AlertScreen = () => {
   return (
     <View>
       <StatusBar backgroundColor="transparent" />
-
       <TextInput
         value={myAlert}
         keyboardType="default"
@@ -88,7 +84,6 @@ const AlertScreen = () => {
     </View>
   );
 };
-
 export default AlertScreen;
 
 const styles = StyleSheet.create({

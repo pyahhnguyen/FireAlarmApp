@@ -15,7 +15,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
-import { Logout, login } from "../../redux/action";
+import { Logout, login } from "../../redux/actions/action";
 import { useDispatch } from "react-redux";
 
 h = Dimensions.get("screen").height;

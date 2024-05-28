@@ -30,6 +30,11 @@ class SensorService {
             throw error;
         }
     }
+    // Add the getAlertsNumber method to get the number of alerts
+
+    static async getAlertsNumber(userId) {
+        
+    }
 }
 
 module.exports = SensorService;
