@@ -30,7 +30,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
     "plugins": [
     
     ],
@@ -39,7 +38,8 @@
       "eas": {  
         "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16" 
       },
-      "IP_HOST": "10.0.248.48"
+      "IP_HOST":"10.0.230.80"
     }
   }
 }
+

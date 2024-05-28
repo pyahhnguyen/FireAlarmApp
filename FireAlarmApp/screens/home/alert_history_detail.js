@@ -15,42 +15,6 @@ const Alert_History_Detail = ({ route }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [firstAlarmItem, setFirstAlarmItem] = useState(null);
 
-
-    const fetchData = async () => {
-        try {
-            setRefreshing(true); // Set refreshing to true while fetching
-            const response = await axios.get(`http://${apiHost}:3050/api/alert`, {
-                headers: {
-                    'userId': '659a4e55b88b9369f584b308', // Replace with your actual header
-                },
-            });
-            const data = response.data;
-            // Convert the JSON data to an array of sensor items
-            const sensorArray = Object.values(data);
-            // Sort the array based on the triggerAt field in descending order
-            sensorArray.sort((a, b) => new Date(b.triggerAt) - new Date(a.triggerAt));
-            // Add a deviceId field based on the array index
-            sensorArray.forEach((sensor, index) => {
-                sensor.deviceId = `${index + 1}`;
-            });
-            const firstAlarmItem = sensorArray.find(sensor => sensor.status === "Alarm");
-            console.log('First Alarm:', firstAlarmItem);
-            setFirstAlarmItem(firstAlarmItem);
-
-            // First Alarm: {"Code": "SD-001", "Location": "LivingRoom", "ModelNo": "SD-001", "deviceData": 0, "deviceDescription": "Smoke detector in the living room", "deviceId": "2", "deviceType": "Smoke Detector", "location": "Living Room", "name": "Smoke Detector 1", "resolveAt": "2024-01-15T19:23:17.405Z", "status": "Alarm", "triggerAt": "2024-01-15T19:23:17.405Z"}
-
-            setRecentAlert(data);
-            // console.log('Retrieved recent data:', sensorArray);
-        } catch (error) {
-            console.error('Error retrieving data:', error);
-        } finally {
-            setRefreshing(false); // Set refreshing back to false after fetching
-        }
-    };
-
-    useEffect(() => {
-        // fetchData();
-    }, []);
     // // truyen data đi sensorData = history
     // const [detailSensor, setDetailSensor] = React.useState(sensorData);
 
@@ -80,7 +44,7 @@ const Alert_History_Detail = ({ route }) => {
     const locationImages = {
         "Living Room": require("../../assets/images/Planner_Living_fire.png"),
         'Kitchen': require("../../assets/images/Planner_Kitchen_fire.png"),
-        "Bed Room": require("../../assets/images/Planner_Bedroom_fire.png"),
+        "Bedroom": require("../../assets/images/Planner_Bedroom_fire.png"),
         "Bath Room": require("../../assets/images/Planner_Bathroom_fire.png"),
         // Add more locations as needed
     };

@@ -6,7 +6,7 @@
 //         alert_identify:  "Detector #1",
 //         description:   "Smoke Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 
 //     {
@@ -15,7 +15,7 @@
 //         alert_identify:  "Detector #2",
 //         description:   "Heat Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 //     {
 //         id: 3,
@@ -23,7 +23,7 @@
 //         alert_identify:  "Detector #3",
 //         description:   "Gas Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 //     {
 //         id: 4,
@@ -31,7 +31,7 @@
 //         alert_identify:  "Detector #4",
 //         description:   "Smoke Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 //     {
 //         id: 5,
@@ -39,7 +39,7 @@
 //         alert_identify:  "Detector #5",
 //         description:   "Gas Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 //     {
 //         id: 6,
@@ -47,7 +47,7 @@
 //         alert_identify:  "Detector #6",
 //         description:   "Heat Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 //     {
 //         id: 7,
@@ -55,7 +55,7 @@
 //         alert_identify:  "Detector #7",
 //         description:   "Flame Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 //     {
 //         id: 8,
@@ -63,7 +63,7 @@
 //         alert_identify:  "Detector #8",
 //         description:   "Smoke Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 
 //     },
 //     {
@@ -72,7 +72,7 @@
 //         alert_identify:  "Detector #9",
 //         description:   "Smoke Detected",
 //         date: "2023-11-12, 14:20pm",
-//         status: "Alarm",
+//         status: "Alert",
 //     },
 // ];
 
@@ -104,7 +104,6 @@ const chartOptions = [
 export const alertHistory = [
   
   
-  
     {
       "deviceId": 1,
       "deviceType": "Smoke Detector",
@@ -115,7 +114,7 @@ export const alertHistory = [
       "deviceData": 2,
       "location": "Living Room",
       "resolveAt": "2024-05-17T08:23:17.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:23:17.405Z"
     },
     {
@@ -128,7 +127,7 @@ export const alertHistory = [
       "deviceData": 3,
       "location": "Kitchen",
       "resolveAt": "2024-05-17T08:21:10.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:21:10.405Z"
     },
     {
@@ -141,7 +140,7 @@ export const alertHistory = [
       "deviceData": 1,
       "location": "Bed Room",
       "resolveAt": "2024-05-17T08:20:17.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:20:17.405Z"
     },
     {
@@ -154,7 +153,7 @@ export const alertHistory = [
       "deviceData": 4,
       "location": "Bath Room",
       "resolveAt": "2024-05-17T08:18:08.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:18:10.405Z"
     },
     {
@@ -167,7 +166,7 @@ export const alertHistory = [
       "deviceData": 2,
       "location": "Living Room",
       "resolveAt": "2024-05-17T08:17:09.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:17:09.405Z"
     },
     {
@@ -180,7 +179,7 @@ export const alertHistory = [
       "deviceData": 3,
       "location": "Kitchen",
       "resolveAt": "2024-05-17T08:15:17.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:15:17.405Z"
     },
     {
@@ -193,7 +192,7 @@ export const alertHistory = [
       "deviceData": 1,
       "location": "Bed Room",
       "resolveAt": "2024-05-17T08:12:11.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:12:11.405Z"
     },
     {
@@ -206,7 +205,7 @@ export const alertHistory = [
       "deviceData": 4,
       "location": "Bath Room",
       "resolveAt": "2024-05-17T08:10:08.405Z",
-      "status": "Alarm",
+      "status": "Alert",
       "triggerAt": "2024-05-17T08:10:06.405Z"
     }
   

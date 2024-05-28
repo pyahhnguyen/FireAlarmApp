@@ -16,7 +16,6 @@ function AlertStackNavigator() {
         //     },
         // })}
         >
-
             <AlertStack.Screen
                 name="Alert"
                 component={Alert}

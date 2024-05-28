@@ -20,7 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch } from 'react-redux';
-import { login } from '../../redux/action';
+import { login } from '../../redux/actions/action';
 
 const Login = () => {
 

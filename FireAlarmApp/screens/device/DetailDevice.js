@@ -10,7 +10,6 @@ import { saveData, loadData, handleServerResponse } from "../../constants/AsyncM
 const w = Dimensions.get('screen').width;;
 const h = Dimensions.get('screen').height;
 
-
 const DeviceDetails = ({ route }) => {
 
   const { item } = route.params;
@@ -24,7 +23,6 @@ const DeviceDetails = ({ route }) => {
         const accessToken = loginData.metadata.tokens.accessToken;
         const userId = loginData.metadata.user._id;
         console.log("Access Token:", accessToken)
-
         const headers = {
           "Content-Type": "application/json",
           "x-api-key": "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
@@ -120,7 +118,7 @@ const DeviceDetails = ({ route }) => {
                 <Text style={styles.content}>True</Text>
                 <Text style={styles.content}>{item.status}</Text>
                 <Text style={styles.content}></Text>
-                <Text style={styles.content}>2024-04-25T08:23:17.405Z</Text>
+                <Text style={styles.content}>{moment(item.createdAt).format('DD MMMM YYYY, hh:mm a')}</Text>
                 <Text style={styles.content}>Block 03</Text>
               </View>
             </View>

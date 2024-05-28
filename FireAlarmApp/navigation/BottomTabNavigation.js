@@ -42,6 +42,7 @@ import HomeStackNavigator from "./HomeStack.Navigator";
             return <Ionicons name={iconName} size={26} color={color} />;
           },
           tabBarActiveTintColor: COLORS.primary,
+          
         })}
       >
         <Tab.Screen
@@ -64,7 +65,7 @@ import HomeStackNavigator from "./HomeStack.Navigator";
           component={DeviceStackNavigator}
           options={{  
             headerShown: false,
-            unmountOnBlur: false, // Add this line
+            unmountOnBlur: true, // Add this line
           }}
         />
 

@@ -10,6 +10,7 @@ import {
   FlatList
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import moment from "moment";
 
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
 // import { FlatList } from "react-native-gesture-handler";
@@ -33,7 +34,6 @@ const AlertHistory = ({ customContainerStyle, history }) => {
     setSelectedItemData(item);
     setIsModalVisible(!isModalVisible);
   };
-
   const navigation = useNavigation();
 
   const handleDetail = () => {
@@ -41,47 +41,6 @@ const AlertHistory = ({ customContainerStyle, history }) => {
   navigation.navigate('Alert_History', { sensorData: selectedItemData });
 };
 
-const fetchData = async () => {
-  try {
-    setRefreshing(true);
-
-    const response = await axios.get(`http://${apiHost}:3050/api/alert`, {
-      headers: {
-        'userId': '659a4e55b88b9369f584b308',
-      },
-    });
-
-    const data = response.data;
-    const sensorArray = Object.values(data);
-
-    const firstAlarmItem = sensorArray.find(sensor => sensor.status === "Alarm");
-
-    if (firstAlarmItem) {
-      // Check if the firstAlarmItem already exists in historyALert
-      const isAlreadyInHistory = historyALert.some(item => item.name === firstAlarmItem.name && item.triggerAt === firstAlarmItem.triggerAt);
-
-      if (!isAlreadyInHistory) {
-        // Add firstAlarmItem only if it's not already in the array
-        const updatedHistory = [...historyALert, firstAlarmItem];
-        const sortedHistory = updatedHistory.sort((a, b) => new Date(b.triggerAt) - new Date(a.triggerAt));
-        sortedHistory.forEach((sensor, index) => {
-          sensor.deviceId = `${index + 1}`;
-        });
-
-        setHistoryAlert(sortedHistory);
-        // console.log('History data:', sortedHistory);
-      }
-    }
-  } catch (error) {
-    console.error('Error retrieving data:', error);
-  } finally {
-    setRefreshing(false);
-  }
-};
-useEffect(() => {
-  ////// open if want to fetch data from server
-  // fetchData();
-}, []);
 
 const renderItem = ({ item }) => (
   <TouchableOpacity
@@ -105,7 +64,7 @@ const renderItem = ({ item }) => (
       <Text style={{ ...FONTS.h4, color: COLORS.primary }}>
         {item.deviceType}
       </Text>
-      <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.triggerAt}</Text>
+      <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{moment(item.triggerAt).format('DD MMMM YYYY, hh:mm a')}</Text>
     </View>
 
     <View

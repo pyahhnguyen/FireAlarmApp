@@ -1,4 +1,4 @@
-import React , {useEffect, useState}from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,8 +6,6 @@ import {
   Pressable,
   Dimensions,
   LogBox,
-
-  
 } from "react-native";
 import { COLORS } from "../../constants/theme";
 import { ScrollView } from 'react-native-virtualized-view'
@@ -20,21 +18,58 @@ import { SIZES, FONTS } from "../../constants/theme";
 import Donut from "./donut_screen";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import Constants from 'expo-constants';
+import { loadData } from "../../constants/AsyncModule";
+import adaptApiDataToAlertHistoryFormat from "../../constants/AdaptApidatasensor";
+import { useSelector } from 'react-redux';
+
+
 const tabs = ["Status", "News"];
 const w = Dimensions.get("screen").width;
 const h = Dimensions.get("screen").height;
 
 const TabHome = () => {
   const [selected, setSelected] = React.useState(0);
-
   const [alertHistory, setAlertHistory] = React.useState(dummyData.alertHistory);
   const [recentalert, setRecentAlert] = React.useState()
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
+  const IPHOST = Constants.expoConfig.extra.IP_HOST;
+
+  const alertCount = useSelector(state => state.sensors.alertCount);
+  const normalCount = useSelector(state => state.sensors.normalCount);
+  
 
   React.useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const loginData = await loadData('loginData');
+        const accessToken = loginData.metadata.tokens.accessToken;
+        const userId = loginData.metadata.user._id;
+
+        const headers = {
+          "Content-Type": "application/json",
+          "x-api-key": "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
+          "authorization": accessToken,
+          "x-client-id": userId,
+        };
+        const response = await axios.get(`http://${IPHOST}:3056/v1/api/sensors/user/recentAlert`, { headers });
+        if (response.data && response.data.metadata) {
+          const adaptedData = adaptApiDataToAlertHistoryFormat(response.data.metadata);
+          setAlertHistory(adaptedData);
+        }
+
+      } catch (error) {
+        console.error('Failed to fetch history:', error);
+      }
+    };
+    fetchHistory();
+  }, []);
+
 
   const renderContent = () => {
     switch (tabs[selected]) {
@@ -48,12 +83,11 @@ const TabHome = () => {
   };
 
   const data_chart = [
-    { value: 1, color: 'red' },
-    { value: 5, color: 'green' },
-  // ... other data entries
+    { value: alertCount, color: 'red' },
+    { value: normalCount, color: 'green' },
+    // ... other data entries
   ];
 
-  
   function renderChart() {
     return (
       <View
@@ -67,16 +101,16 @@ const TabHome = () => {
           flexDirection: 'row',  // Thêm thuộc tính flexDirection để sắp xếp theo chiều ngang
         }}
       >
-        <View style={{ alignItems: 'center' , marginHorizontal:10}}>
-          <Text  style={{ color: COLORS.green, }}>Normal: {data_chart[1].value} </Text>
+        <View style={{ alignItems: 'center', marginHorizontal: 10 }}>
+          <Text style={{ color: COLORS.green, }}>Normal: {data_chart[1].value} </Text>
         </View>
         <Donut data={data_chart} />
-        <View style={{ alignItems: 'center',marginHorizontal:10 }}>
-          <Text style={{ color: COLORS.red  }}>Alert:  {data_chart[0].value} </Text>
+        <View style={{ alignItems: 'center', marginHorizontal: 10 }}>
+          <Text style={{ color: COLORS.red }}>Alert:  {data_chart[0].value} </Text>
         </View>
       </View>
     );
-    
+
   }
 
   function renderAlertHistory() {
@@ -85,7 +119,6 @@ const TabHome = () => {
   }
 
   const StatusContent = () => (
-
     <ScrollView>
       <View style={{ marginBottom: 180, flex: 1 }}>
         <View
@@ -94,9 +127,9 @@ const TabHome = () => {
             marginVertical: SIZES.fourteen,
           }}
         >
-          {/* {renderChart()} */}
+          {renderChart()}
         </View>
-        
+
         <Text
           style={{
             marginLeft: SIZES.padding,
