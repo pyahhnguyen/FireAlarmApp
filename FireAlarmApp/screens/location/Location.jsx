@@ -155,7 +155,6 @@ const Location = ({ route }) => {
             alignItems: "center",
             marginTop: 30,
             marginBottom: 50,
-
             resizeMode: "cover",
           }}
         >

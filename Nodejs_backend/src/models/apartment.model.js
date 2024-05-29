@@ -22,7 +22,10 @@ const apartmentSchema = new mongoose.Schema({
     room : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room',
-        required: true,
+    },
+    sensor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sensor',
     },
     numberOfRooms: {
         type: Number,
@@ -38,7 +41,7 @@ const apartmentSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-});
+}, { timestamps: true });
 
 
 

@@ -14,6 +14,7 @@ import CommonStackNavigation from "./navigation/CommonStack.Navigator";
 import store from "./redux/store/store";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import { setLoginState } from "./redux/actions/action";
+import { Text } from "react-native";
 // import * as Linking from 'expo-linking';
 // import messaging from '@react-native-firebase/messaging';
 // import firebase from '@react-native-firebase/app';
@@ -25,8 +26,8 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
-const Stack = createNativeStackNavigator();
 
+const Stack = createNativeStackNavigator();
 async function registerForPushNotificationsAsync() {
   let token;
   if (Platform.OS === 'android') {
@@ -111,11 +112,6 @@ function RootNavigation() {
 }
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(undefined);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
   const [fontsLoaded] = useFonts({
     ...Entypo.font,
     regular: require("./assets/fonts/regular.otf"),
@@ -134,6 +130,8 @@ export default function App() {
     async function prepare() {
       try {
         await Font.loadAsync(Entypo.font);
+        const token = await registerForPushNotificationsAsync();
+        console.log("DeviceToken:", token);
 
       } catch (e) {
         console.warn(e);
@@ -142,29 +140,6 @@ export default function App() {
       }
     }
     prepare();
-  }, []);
-
-  useEffect(() => {
-    registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ''))
-      .catch((error) => console.error('Failed to register for notifications', error));
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-    return () => {
-      notificationListener.current &&
-        Notifications.removeNotificationSubscription(
-          notificationListener.current,
-        );
-      responseListener.current &&
-        Notifications.removeNotificationSubscription(responseListener.current);
-    };
   }, []);
 
   if (!appIsReady || !fontsLoaded) {
