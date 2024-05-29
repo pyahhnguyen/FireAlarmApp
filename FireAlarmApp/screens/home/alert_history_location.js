@@ -119,7 +119,7 @@ const History_Location = ({ route }) => {
                         marginTop: 30,
                         marginBottom: 50,
 
-                        resizeMode: "cover",
+                        resizeMode: "contain",
                     }}
                 >
                     <Image

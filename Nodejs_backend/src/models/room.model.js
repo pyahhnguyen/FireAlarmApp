@@ -17,14 +17,13 @@ const roomSchema = new mongoose.Schema({
     sensor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Sensor',
-        required: true,
     },
     apartment: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Apartment',
         required: true,
     },
-});
+}, { timestamps: true });
 
 const Room = mongoose.model('Room', roomSchema);
 

@@ -60,7 +60,6 @@ const Device = () => {
         };
 
         dispatch(updateSensorData({ [newData._id_]: updatedData })); // Correct key usage here
-
         // setData((prevData) => ({
         //   ...prevData,
         //   [updatedData._id_]: updatedData,

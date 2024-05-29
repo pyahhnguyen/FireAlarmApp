@@ -46,13 +46,21 @@ const DeviceDetails = ({ route }) => {
     "flame": require("../../assets/images/Flame-Sensor-Detector.jpg"),
   };
 
-  // Define a mapping between locations and floor plan images
+  // Define a mapping between locations and floor plan images in normal state
   const locationImages_normal = {
+    "Living Room": require("../../assets/images/planner_normal_living.png"),
+    'Kitchen': require("../../assets/images/planner_normal_kitchen.png"),
+    "Bedroom": require("../../assets/images/planner_normal_bedroom.png"),
+    "Bathroom": require("../../assets/images/planner_normal_bathroom.png"),
+    // Add more locations as needed
+  };
+
+  // Define a mapping between locations and floor plan images in alert state
+  const locationImages_alert = {
     "Living Room": require("../../assets/images/Planner_Living_fire.png"),
     'Kitchen': require("../../assets/images/Planner_Kitchen_fire.png"),
-    "Bed Room": require("../../assets/images/Planner_Bedroom_fire.png"),
-    "Bath Room": require("../../assets/images/Planner_Bathroom_fire.png"),
-    // Add more locations as needed
+    "Bedroom": require("../../assets/images/Planner_Bedroom_fire.png"),
+    "Bathroom": require("../../assets/images/Planner_Bathroom_fire.png"),
   };
 
   const renderHistoryItem = ({ item, index }) => {
@@ -67,6 +75,9 @@ const DeviceDetails = ({ route }) => {
       </View>
     );
   };
+  const mainImage = item.status === "Alarm"
+    ? locationImages_alert[item.location]
+    : locationImages_normal[item.location];
 
   return (
     <FlatList
@@ -119,7 +130,7 @@ const DeviceDetails = ({ route }) => {
                 <Text style={styles.content}>{item.status}</Text>
                 <Text style={styles.content}></Text>
                 <Text style={styles.content}>{moment(item.createdAt).format('DD MMMM YYYY, hh:mm a')}</Text>
-                <Text style={styles.content}>Block 03</Text>
+                <Text style={styles.content}>{item.location}</Text>
               </View>
             </View>
 
@@ -128,13 +139,13 @@ const DeviceDetails = ({ route }) => {
               alignItems: "center",
             }}>
               <Image
-                source={require("../../assets/images/planner-removebg.png")}
+                source={mainImage}
                 style={{
                   width: w / 1.1,
                   height: h / 2.8,
                   borderRadius: 2,
                   backgroundColor: COLORS.lightWhite,
-                  resizeMode: "contain",
+                  resizeMode: "cover",
                 }}
               />
             </View>
