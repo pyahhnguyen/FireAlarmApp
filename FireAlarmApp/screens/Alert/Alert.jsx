@@ -19,6 +19,7 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import * as Device from "expo-device";
 import { alertlist } from "../../constants/alertlist";
+import moment from "moment";
 
 const AlertScreen = () => {
   const [myAlert, setMyAlert] = useState("");
@@ -27,19 +28,25 @@ const AlertScreen = () => {
   const [notification, setNotification] = useState(undefined);
   const notificationListener = useRef();
   const responseListener = useRef();
-
   const navigation = useNavigation();
   const handlePress = (item) => {
     navigation.navigate("Detail Alert", { item }); // Pass item data to details screen
   };
    // Set handler for background notifications
-   Notifications.setNotificationHandler({
+  Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: true,
-      shouldSetBadge: false,
+      shouldSetBadge: true,
     }),
   });
+  // Define a function to uppercase the first letter of a string
+  const capitalizeFirstLetter = (string) => {
+    if (!string) return string;
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+
   useEffect(() => {
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -52,13 +59,15 @@ const AlertScreen = () => {
         // Create a new alert item from notification data
         const newAlert = {
           id: uuid.v4(), // Generate a unique ID for the new alert
-          alertType: remoteMessage.data.alertType,
+          alertType: capitalizeFirstLetter(remoteMessage.data.type),
           location: remoteMessage.data.location,
-          severity: remoteMessage.data.severity,
-          deviceDetails: remoteMessage.data.deviceDetails,
-          timeOfAlert: remoteMessage.data.timeOfAlert,
+          address: remoteMessage.data.address,
+          severity: 'High - Immediate action required!',
+          deviceName: remoteMessage.data.deviceName,
+          deviceModel: remoteMessage.data.model_code,
+          deviceId: remoteMessage.data.deviceId,
+          timeOfAlert: remoteMessage.data.timestamp,
         };
-
         // Add the new alert to the top of the list
         setAlertList((prevAlerts) => [newAlert, ...prevAlerts]);
       });
@@ -79,14 +88,16 @@ const AlertScreen = () => {
           setNotification(remoteMessage.data);
           // Create a new alert item from notification data
           const newAlert = {
-            id: uuid.v4(), // Generate a unique ID for the new alert
-            alertType: remoteMessage.data.alertType,
-            location: remoteMessage.data.location,
-            severity: remoteMessage.data.severity,
-            deviceDetails: remoteMessage.data.deviceDetails,
-            timeOfAlert: remoteMessage.data.timeOfAlert,
+              id: uuid.v4(), // Generate a unique ID for the new alert
+              alertType: capitalizeFirstLetter(remoteMessage.data.type),
+              location: remoteMessage.data.location,
+              address: remoteMessage.data.address,
+              severity: 'High - Immediate action required!',
+              deviceName: remoteMessage.data.deviceName,
+              deviceModel: remoteMessage.data.model_code,
+              deviceId: remoteMessage.data.deviceId,
+              timeOfAlert: remoteMessage.data.timestamp,
           };
-
           // Add the new alert to the top of the list
           setAlertList((prevAlerts) => [newAlert, ...prevAlerts]);
         }
@@ -125,20 +136,20 @@ const AlertScreen = () => {
             <Text
               style={{ fontSize: 18, color: COLORS.primary, marginLeft: 10 }}
             >
-              {item.alertType}
+              {item.alertType} Alert
             </Text>
           </View>
-          <Text style={{ fontSize: 16, color: COLORS.darkGray }}>
-            {item.location}
+          <Text style={{ fontSize: 16, color: COLORS.darkgray}}>
+            {item.location} - {item.address}
           </Text>
           <Text style={{ fontSize: 14, color: COLORS.red }}>
             {item.severity}
           </Text>
-          <Text style={{ fontSize: 14, color: COLORS.darkGray }}>
-            {item.deviceDetails}
+          <Text style={{ fontSize: 14, color: COLORS.darkgray }}>
+            {item.deviceName} (Model:{item.deviceModel}, ID: {item.deviceId})
           </Text>
-          <Text style={{ fontSize: 14, color: COLORS.darkGray }}>
-            {item.timeOfAlert}
+          <Text style={{ fontSize: 14, color: COLORS.darkgray }}>
+            Timestamp: {moment(item.timeOfAlert).format('DD MMMM YYYY, hh:mm:ss a')}
           </Text>
           <TouchableOpacity onPress={() => onDeleteItem(item.id)}>
             <Text
@@ -163,12 +174,6 @@ const AlertScreen = () => {
   return (
     <View>
       <StatusBar backgroundColor="transparent" />
-      {/* {notification && (
-        <View style={{ padding: 20, marginTop: 20 }}>
-          <Text>Notification Data Name: {notification.id}</Text>
-          <Text>Notification Data Age: {notification.age}</Text>
-        </View>
-      )} */}
       <FlatList
         data={alertList}
         renderItem={renderItem}

@@ -1,38 +1,105 @@
-'use strict'
-const userModel = require('../models/user.model')
-const { getInfoData } = require('../utils/index')
+const User = require("../models/user.model");
+const Apartment = require("../models/apartment.model");
+const Building = require("../models/building.model");
+const mongoose = require("mongoose");
 
 
 const findByEmail = async ({ email, select = {
     email: 1, password:2, name: 1, roles: 1, status: 1, phone: 1 
 } }) => {
-    return await userModel.findOne({email}).select(select).lean()
+    return await User.findOne({email}).select(select).lean()
 }
-
+ 
 class UserService {
-    static userData = async (req, res) => {
+    // get user data
+    static async getData(userId) {
         try {
-            const { id } = req.body;
-
-            // Assuming you're using Mongoose to interact with MongoDB
-            const user = await userModel.findById(id);
-
-            if (user) {
-                // Modify the response format as needed based on your user model
-                return res.send({ status: "Ok", data: user });
-            } else {
-                return res.status(404).send({ error: "User not found" });
+            const user = await User.findById(userId)
+            .populate({
+                path: "apartments",
+                populate: {
+                    path: "building",
+                    model: "Building"
+                }
+            }); 
+            if (!user) {
+                throw new Error("User not found");
             }
+            // Map through apartments to construct a detailed user profile with apartment and building details
+            const apartmentsDetails = user.apartments.map((apartment) => ({
+                apartmentNo: apartment.apartmentNo,
+                buildingName: apartment.building.buildingName,
+                buildingAddress: apartment.building.address,
+                floor: apartment.floor,
+            }));
+            const userData = {
+                name:  user.name,
+                email: user.email,
+                phone: user.phone,
+                apartments: apartmentsDetails,
+            };
+            return userData; // Return the detailed user data
         } catch (error) {
-            console.error("Error fetching user data:", error);
-
-            // Handle specific Mongoose error, e.g., if the provided ID is not a valid ObjectId
-            if (error.name === "CastError") {
-                return res.status(400).send({ error: "Invalid user ID" });
-            }
-            return res.status(500).send({ error: "Internal server error" });
+            console.error("Failed to retrieve user:", error);
+            throw error; // Re-throw the error for the caller to handle
         }
-    };
+    }
+    // update user data
+    static async updateData(userId, { name, phone, buildingName, buildingAddress, apartmentNo, apartmentFloor }) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            const user = await User.findById(userId).session(session);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            // Update user fields
+            if (name) user.name = name;
+            if (phone) user.phone = phone;
+            await user.save({ session });
+    
+            // Handle Building and Apartment
+            if (buildingName && buildingAddress && apartmentNo && apartmentFloor) {
+                let building = await Building.findOne({ buildingName, address: buildingAddress }).session(session);
+                if (!building) {
+                    building = new Building({ buildingName, address: buildingAddress });
+                    await building.save({ session });
+                }
+    
+                let apartment = await Apartment.findOne({ apartmentNo, owner: userId }).session(session);
+                let isNewApartment = false;
+                if (apartment) {
+                    apartment.floor = apartmentFloor;
+                    apartment.building = building._id;
+                } else {
+                    apartment = new Apartment({
+                        apartmentNo,
+                        owner: userId,
+                        building: building._id,
+                        floor: apartmentFloor
+                    });
+                    isNewApartment = true; // Flag to add to user's apartments array
+                }
+                await apartment.save({ session });
+    
+                // Ensure the user's apartments array includes this apartment
+                if (isNewApartment && !user.apartments.includes(apartment._id)) {
+                    user.apartments.push(apartment._id);
+                    await user.save({ session });
+                }
+            }
+    
+            await session.commitTransaction();
+            session.endSession();
+            return { message: 'User and related data updated successfully!' };
+        } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
+            console.error('Error updating user data:', error);
+            throw error;
+        }
+    }
+    
 }
 
 module.exports = {
@@ -40,82 +107,3 @@ module.exports = {
     UserService
 }
 
-
-// router.post("/userdata", async (req, res) => {
-//     const { token } = req.body;
-//     try {
-//       const user = jwt.verify(token, secretKey);
-//       const useremail = user.email;
-  
-//       User.findOne({ email: useremail }).then((data) => {
-//         return res.send({ status: "Ok", data: data });
-//       });
-//     } catch (error) {
-//       return res.send({ error: error });
-//     }
-//   });
-  
-//   router.get("/userinfo", async (req, res) => {
-//     const { userID } = req.query;
-  
-//     console.log('Received userID:', userID);
-  
-//     try {
-//       const userInfo = await User.findById(userID);
-  
-//       console.log('User Info:', userInfo);
-  
-//       if (userInfo) {
-//         return res.send({ status: "Ok", data: userInfo });
-//       } else {
-//         return res.send({ status: "User not found" });
-//       }
-//     } catch (error) {
-//       console.error('Error fetching user info:', error);
-//       return res.status(500).send({ error: 'Internal Server Error' });
-//     }
-//   });
-//   // error 500 
-//   router.put("/editprofile", async (req, res) => {
-//     const { userId, name, phone, buildingName, buildingAddress, apartmentNo, apartmentFloor } = req.body;
-  
-//     try {
-//       // Update the user profile
-//       const updatedUser = await User.findOneAndUpdate(
-//         { _id: userId },
-//         { name: name, phone: phone },
-//         { new: true, upsert: true }
-//       );
-  
-//      // Update or create the Building
-//      const updatedBuilding = await Building.findOneAndUpdate(
-//       { buildingName: buildingName },
-//       { buildingName: buildingName,address: buildingAddress },
-//       { new: true, upsert: true }
-//     );
-  
-  
-//     const updatedApartment = await Apartment.findOneAndUpdate(
-//       { owner: userId, building: updatedBuilding._id },
-//       { apartmentNo: apartmentNo, floor: apartmentFloor },
-//       { new: true, upsert: true }
-//     );
-    
-//       // Update the user with the new Building reference
-//       updatedUser.address = updatedBuilding._id;
-//       await updatedUser.save();
-//       // await updatedApartment.save();
-//       // await updatedBuilding.save();
-  
-//       res.json({
-//         success: true,
-//         user: updatedUser,
-//         building: updatedBuilding,
-//         apartment: updatedApartment,
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ success: false, error: 'Internal Server Error' });
-//     }
-//   });
-  

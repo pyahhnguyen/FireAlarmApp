@@ -10,7 +10,6 @@ const sensorReducer = (state = initialState, action) => {
             const newSensorData = action.payload;
             let newAlertCount = state.alertCount;
             let newNormalCount = state.normalCount;
-
             // Calculate the new counts
             Object.keys(newSensorData).forEach(key => {
                 const newData = newSensorData[key];
@@ -31,7 +30,6 @@ const sensorReducer = (state = initialState, action) => {
                     }
                 }
             });
-
             return {
                 ...state,
                 sensorData: {...state.sensorData, ...newSensorData},

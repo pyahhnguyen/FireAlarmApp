@@ -48,7 +48,7 @@ const Register = () => {
 
     // send a post request to the backend to register the user
     axios
-      .post(`http://${IPHOST}:3056/v1/api/user/signup`, user, {
+      .post(`${IPHOST}/v1/api/user/signup`, user, {
         headers: headers,
       })
       .then((response) => {

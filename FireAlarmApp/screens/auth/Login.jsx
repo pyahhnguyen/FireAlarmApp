@@ -29,7 +29,6 @@ const Login = () => {
   const [error, setError] = useState(""); // Thêm state mới để lưu trữ thông báo lỗi
   const navigation = useNavigation();
 
-  const apiUrl = Constants.expoConfig.extra.IP_HOST;
 
   const dispatch = useDispatch();
 

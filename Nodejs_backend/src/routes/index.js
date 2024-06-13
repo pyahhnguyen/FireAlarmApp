@@ -10,7 +10,8 @@ router.use(permission('0000'));
 router.use('/v1/api', require('./access/index'));
 // sensor route
 router.use('/v1/api', require('./sensor/index'));
-// Root routes
+// user routes
+router.use('/v1/api', require('./user/User.route'));
 router.get("/", (req, res) => {
   return res.status(200).json({
     message: "Welcome to the backend of SafeGuard.com",

@@ -13,10 +13,11 @@ export const login = (user) => {
         }
         // Make the request with error handling
         axios
-            .post(`http://${apiUrl}:3056/v1/api/user/login`, user, { headers: header })
+            .post(`${apiUrl}/v1/api/user/login`, user, { headers: header })
+
             .then((response) => {
                 const responseData = response.data;
-                console.log("Login Response:", responseData);
+                // console.log("Login Response:", responseData);
                 setLoginLocal(responseData);
                 // Handle successful login
                 dispatch(setLoginState(responseData))
@@ -55,7 +56,7 @@ export const Logout = (userId, accessToken) => {
                 'x-client-id': userId,
             };
             // Make the logout request with error handling
-            const response = await axios.post(`http://${apiUrl}:3056/v1/api/user/logout`, {}, { headers });
+            const response = await axios.post(`${apiUrl}/v1/api/user/logout`, {}, { headers });
             console.log('Logout Response:', response.data);
             // Dispatch the logout action
         } catch (error) {
@@ -74,5 +75,12 @@ export const Logout = (userId, accessToken) => {
         dispatch({ type: 'LOGOUT' });
         // Clear AsyncStorage
         await AsyncStorage.clear();
+        console.log('Logged out successfully');
     };
 };
+
+// Action creator for setting alert history
+export const setAlertHistory = (history) => ({
+    type: 'SET_ALERT_HISTORY',
+    payload: history,
+});

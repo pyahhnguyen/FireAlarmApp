@@ -35,7 +35,7 @@ const Profile = () => {
           loginData.metadata.tokens &&
           loginData.metadata.user
         ) {
-          const userdata = loginData.metadata.user;
+          const userdata = loginData.metadata;
           setUserData(userdata);
         } else {
           console.error(
@@ -104,7 +104,7 @@ const Profile = () => {
         <Text style={styles.name}>
           {userLogin === true
             ? userData
-              ? userData.name
+              ? userData.user.name
               : "Please login"
             : ""}
         </Text>
@@ -116,7 +116,7 @@ const Profile = () => {
           </TouchableOpacity>
         ) : (
           <View style={styles.loginBtn}>
-            <Text style={styles.menuText}>{userData.email}</Text>
+            <Text style={styles.menuText}>{userData? userData.user.email: null}</Text>
           </View>
         )}
 

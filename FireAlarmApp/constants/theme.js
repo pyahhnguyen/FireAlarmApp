@@ -20,7 +20,8 @@ const COLORS = {
     header: '#45CFDD',
     background: '#51C2D5',
     alert: '#FF414D',
-    yellow:'#ffdf00'
+    yellow:'#ffdf00',
+    darkgray:'#1A1A1A'
 
 };
 

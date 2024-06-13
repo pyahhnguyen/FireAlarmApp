@@ -10,11 +10,8 @@ const apartmentSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    building: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Building',
-        required: true,
-    },
+    building: { type: mongoose.Schema.Types.ObjectId, ref: 'Building' },
+
     floor: {
         type: Number,
         required: true,
@@ -29,13 +26,11 @@ const apartmentSchema = new mongoose.Schema({
     },
     numberOfRooms: {
         type: Number,
-        required: true,
     },
     statusApartment: {
         type: String,
         default: 'normal',
     },
-
     // Thêm các trường khác tùy theo yêu cầu của bạn
     createdAt: {
         type: Date,
@@ -43,14 +38,9 @@ const apartmentSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-
-
-
 const Apartment = mongoose.model('Apartment', apartmentSchema);
 
 module.exports = Apartment;
-
-
 
 // const mongoose = require('mongoose');
 

@@ -1,15 +1,24 @@
+// store.js
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../reducers/reducer';
 import sensorReducer from '../reducers/sensorReducer';
+import alertHistoryReducer from '../reducers/alertReducer';
+import alertsNotifyReducer from '../reducers/alertnotificationSlice';
+import thunk from "redux-thunk";
+import {applyMiddleware } from 'redux';
+
 
 const store = configureStore({
-
     reducer: {
-        user: userReducer,  // Assigns userReducer to a slice named 'user'
-        sensors: sensorReducer  // Assigns sensorReducer to a slice named 'sensors'
-    }
-    // middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    //     .concat(/* other middleware here */)
+        user: userReducer,
+        sensors: sensorReducer,
+        alertHistory: alertHistoryReducer,
+        alertnotification: alertsNotifyReducer, // Use the same name as in the state slice
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        immutableCheck: { warnAfter: 300 },
+        serializableCheck: { warnAfter: 300 },
+    })
 });
 
 export default store;
