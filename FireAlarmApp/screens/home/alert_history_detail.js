@@ -17,15 +17,11 @@ const Alert_History_Detail = ({ route }) => {
 
     // // truyen data đi sensorData = history
     // const [detailSensor, setDetailSensor] = React.useState(sensorData);
-
     const navigation = useNavigation();
-
     handleDevice = () => {
         navigation.navigate('Location', { detailSensor: sensorData });
     };
-
     // Define a mapping between sensor types and images
-
 
     const sensorTypeImages = {
         "Smoke Detector": require("../../assets/images/Smoke-Alarms-Smoke-Detectors.jpg"),
@@ -39,21 +35,18 @@ const Alert_History_Detail = ({ route }) => {
     const sensorImage = sensorTypeImages[sensorData && sensorData.deviceType ? sensorData.deviceType :
         (firstAlarmItem && firstAlarmItem.deviceType) ? firstAlarmItem.deviceType : defaultSensorData.deviceType];
 
-
     // Define a mapping between locations and floor plan images
     const locationImages = {
         "Living Room": require("../../assets/images/Planner_Living_fire.png"),
         'Kitchen': require("../../assets/images/Planner_Kitchen_fire.png"),
         "Bedroom": require("../../assets/images/Planner_Bedroom_fire.png"),
-        "Bath Room": require("../../assets/images/Planner_Bathroom_fire.png"),
+        "Bathroom": require("../../assets/images/Planner_Bathroom_fire.png"),
         // Add more locations as needed
     };
-
     // Select the image based on the location
     const locationImage = locationImages[sensorData && sensorData.location ? sensorData.location :
         (firstAlarmItem && firstAlarmItem.location) ? firstAlarmItem.location :
             defaultSensorData.location];
-
 
     return (
         <View

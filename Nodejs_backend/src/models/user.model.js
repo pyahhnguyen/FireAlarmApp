@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         // required: true,
     },
     sensors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Sensor' }],
-    
+    apartments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Apartment' }],
     createdAt: {
         type: Date,
         default: Date.now,

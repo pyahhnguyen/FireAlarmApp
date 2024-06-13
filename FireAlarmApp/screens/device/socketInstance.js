@@ -3,7 +3,9 @@ import Constants from "expo-constants";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const IP_HOST = Constants.expoConfig.extra.IP_HOST;
-const SOCKET_URL = `http://${IP_HOST}:5000`;
+const SOCKET_URL = `http://192.168.1.134:5000`;
+// const SOCKET_URL = `http://fire-reaction-api-119058655.us-east-1.elb.amazonaws.com:8080`;
+
 console.log(SOCKET_URL);
 
 export const initializeSocket = async () => {
@@ -23,12 +25,12 @@ export const initializeSocket = async () => {
 
     if (!refreshToken) {
         console.error('Refresh token not found in login data.');
-        return null;
+        return null;    
     }
 
     const socket = io(SOCKET_URL, {
         query: { token: refreshToken, userId: userId },
-        transports: ['websocket'],
+        transports: ['websocket'],  
         forceNew: true,
     });
 

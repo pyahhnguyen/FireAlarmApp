@@ -9,7 +9,6 @@ const http = require("http"); // Import the 'http' module for creating an HTTP s
 const { Server } = require('socket.io');
 // const websocket = require('./src/sockets/socket');
 
-
 const app = express();
 // init middlewares
 app.use(morgan("dev")); // print request logs on console
@@ -22,11 +21,7 @@ app.use(bodyParser.json()); // parse application/json
 
 // init MongoDb
 require("./db/init_mongo");
-
-// sensor process middleware
 // require("./middleware/sensor.middleware");
-
-
 app.use('', require("./routes"));
 
 //handling error

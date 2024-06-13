@@ -2,7 +2,7 @@ export const alertlist = [
     [
         {
             id: 1,
-            alertType: "Heat Alert",
+            alertType: "Heat",
             location: "Living Room - A203, Floor 2, Centec Tower Building",
             severity: "High - Immediate action required!",
             deviceDetails: "Heat and Rate-of-Rise Detector (Model: 5809, ID: pbems20)",
@@ -10,7 +10,7 @@ export const alertlist = [
         },
         {
             id: 2,
-            alertType: "Smoke Alert",
+            alertType: "Smoke",
             location: "Kitchen - A203, Floor 2, Centec Tower Building",
             severity: "Moderate - Check immediately",
             deviceDetails: "Smoke Detector (Model: 9920, ID: smkdet992)",
@@ -18,7 +18,7 @@ export const alertlist = [
         },
         {
             id: 3,
-            alertType: "Carbon Monoxide Alert",
+            alertType: "Carbon Monoxide",
             location: "Garage - A203, Floor 1, Centec Tower Building",
             severity: "Critical - Evacuate area!",
             deviceDetails: "CO Detector (Model: 301X, ID: comonox301)",
@@ -26,7 +26,7 @@ export const alertlist = [
         },
         {
             id: 4,
-            alertType: "Water Leak Alert",
+            alertType: "Water Leak",
             location: "Bathroom - A203, Floor 3, Centec Tower Building",
             severity: "Low - Inspect at convenience",
             deviceDetails: "Water Leak Sensor (Model: 908L, ID: wtrleak908)",
@@ -34,7 +34,7 @@ export const alertlist = [
         },
         {
             id: 5,
-            alertType: "Temperature Alert",
+            alertType: "Temperature",
             location: "Office Room - A203, Floor 3, Centec Tower Building",
             severity: "Moderate - Monitor conditions",
             deviceDetails: "Temperature Sensor (Model: T1000, ID: tempSensor10)",
@@ -42,7 +42,7 @@ export const alertlist = [
         },
         {
             id: 6,
-            alertType: "Heat Alert",
+            alertType: "Heat",
             location: "Living Room - A203, Floor 2, Centec Tower Building",
             severity: "High - Immediate action required!",
             deviceDetails: "Heat and Rate-of-Rise Detector (Model: 5809, ID: pbems20)",
@@ -50,7 +50,7 @@ export const alertlist = [
         },
         {
             id: 7,
-            alertType: "Smoke Alert",
+            alertType: "Smoke",
             location: "Kitchen - A203, Floor 2, Centec Tower Building",
             severity: "Moderate - Check immediately",
             deviceDetails: "Smoke Detector (Model: 9920, ID: smkdet992)",
@@ -58,7 +58,7 @@ export const alertlist = [
         },
         {
             id: 8,
-            alertType: "Carbon Monoxide Alert",
+            alertType: "Carbon Monoxide",
             location: "Garage - A203, Floor 1, Centec Tower Building",
             severity: "Critical - Evacuate area!",
             deviceDetails: "CO Detector (Model: 301X, ID: comonox301)",
@@ -66,7 +66,7 @@ export const alertlist = [
         },
         {
             id: 9,
-            alertType: "Water Leak Alert",
+            alertType: "Water Leak",
             location: "Bathroom - A203, Floor 3, Centec Tower Building",
             severity: "Low - Inspect at convenience",
             deviceDetails: "Water Leak Sensor (Model: 908L, ID: wtrleak908)",
@@ -74,7 +74,7 @@ export const alertlist = [
         },
         {
             id: 10,
-            alertType: "Temperature Alert",
+            alertType: "Temperature",
             location: "Office Room - A203, Floor 3, Centec Tower Building",
             severity: "Moderate - Monitor conditions",
             deviceDetails: "Temperature Sensor (Model: T1000, ID: tempSensor10)",

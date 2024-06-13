@@ -9,8 +9,7 @@ const STANDARD_VALUES = {
     'heat': 150,
     'gas': 1000,
     "flame": 1900,
-    // Example standard value for humidity sensor
-    // Add more sensor types and their corresponding standard values as needed
+
 };
 
 // Subscribe to the desired topic

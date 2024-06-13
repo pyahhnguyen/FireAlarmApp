@@ -29,7 +29,7 @@ const DeviceDetails = ({ route }) => {
           "authorization": accessToken,
           "x-client-id": userId,
         };
-        const response = await axios.get(`http://${IPHOST}:3056/v1/api/sensors/${item.device_id}`, { headers });
+        const response = await axios.get(`${IPHOST}/v1/api/sensors/${item.device_id}`, { headers });
         setHistory(response.data.metadata); // Adjust according to actual API response structure
       } catch (error) {
         console.error('Failed to fetch history:', error);

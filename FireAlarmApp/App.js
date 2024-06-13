@@ -15,10 +15,10 @@ import store from "./redux/store/store";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import { setLoginState } from "./redux/actions/action";
 import { Text } from "react-native";
-// import * as Linking from 'expo-linking';
-// import messaging from '@react-native-firebase/messaging';
-// import firebase from '@react-native-firebase/app';
-// Notification handling configuration
+
+
+
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -66,6 +66,7 @@ async function registerForPushNotificationsAsync() {
 function RootNavigation() {
   const [loading, setLoading] = useState(true);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const [connectionStatus, setConnectionStatus] = useState("Connecting...");
   // console.log("isLoggedIn:", isLoggedIn);
   const dispatch = useDispatch();
   const navigationRef = useRef(null);
@@ -91,6 +92,8 @@ function RootNavigation() {
     checkLoginStatus();
 
   }, []);
+
+  
   if (loading) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -112,6 +115,8 @@ function RootNavigation() {
 }
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  
+
   const [fontsLoaded] = useFonts({
     ...Entypo.font,
     regular: require("./assets/fonts/regular.otf"),
@@ -141,6 +146,8 @@ export default function App() {
     }
     prepare();
   }, []);
+
+  
 
   if (!appIsReady || !fontsLoaded) {
     return null;

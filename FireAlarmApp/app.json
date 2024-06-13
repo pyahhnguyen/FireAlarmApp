@@ -6,7 +6,7 @@
     "slug": "FireAlarmApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icons/splashicon.png",
+    "icon": "./assets/images/icons/iconApp.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -30,15 +30,15 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-    
+    "plugins": [ 
     ],
-
     "extra": {
       "eas": {  
         "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16" 
       },
-      "IP_HOST":"10.0.230.80"
+      // "IP_HOST":"http://fire-reaction-api-119058655.us-east-1.elb.amazonaws.com:80"
+      "IP_HOST":"http://192.168.1.134:3056"
+      
     }
   }
 }

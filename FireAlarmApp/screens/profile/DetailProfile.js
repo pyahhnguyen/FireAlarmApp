@@ -4,16 +4,38 @@ import { View, Text, TouchableOpacity, Image, TextInput, SafeAreaView } from 're
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Constants from 'expo-constants';
 
 const DetailProfile = ({route}) => {
   const { UserData } = route.params;
   const navigation = useNavigation();
-
+  // console.log("userid", UserData.user._id)
+  const [userData, setUserData] = useState(null);
+  const apiUrl = Constants.expoConfig.extra.IP_HOST;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          "x-api-key": "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
+          "authorization": UserData.tokens.accessToken,
+          "x-client-id": UserData.user._id,
+        };
+        const response = await axios.get(`${apiUrl}/v1/api/user/data`, { headers });
+        setUserData(response.data); 
+        // console.log('userdata:', response.data);
+      } catch (error) {
+        console.error('Failed to userdata:', error);
+      } 
+    };
+    fetchUserData();
+  }, []);
   return (
     <SafeAreaView>
       <StatusBar backgroundColor={"transparent"} />
-
+      {/* <Text>{userData ? JSON.stringify(userData) : 'No user data available'}</Text> */}
       <View
         style={{
           width: '100%',
@@ -42,42 +64,41 @@ const DetailProfile = ({route}) => {
         <View style={styles.userInfoContainer}>
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Name</Text>
-            <Text style={styles.infoText}>{UserData.name}</Text>
+            <Text style={styles.infoText}>{userData?.metadata?.name ?? "Nguyen Luong Phu Gia"}</Text>
           </View>
 
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Email</Text>
-            <Text style={styles.infoText}>{UserData.email}</Text>
+            <Text style={styles.infoText}>{UserData.user.email}</Text>
           </View>
-
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Phone</Text>
             <Text style={styles.infoText}>
-                {UserData.phone ? UserData.phone : '0919229544'}
+                    {userData?.metadata?.phone ?? '0919229544'}
             </Text>
             </View>
             <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Building Name</Text>
             <Text style={styles.infoText}>
-                {UserData.buildingName ? UserData.buildingName : 'Centec Tower Building'}
+            {userData?.metadata?.apartments?.slice(-1)[0]?.buildingName ?? 'Centec Tower Building'}
             </Text>
             </View>
             <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Building Address</Text>
             <Text style={styles.infoText}>
-                {UserData.buildingAddress ? UserData.buildingAddress : 'No. 72-74, Nguyen Thi Minh Khai Street, Vo Thi Sau Ward, District 3, Ho Chi Minh City, Vietnam'}
+                {userData?.metadata?.apartments?.slice(-1)[0]?.buildingAddress ?? 'No. 72-74, Nguyen Thi Minh Khai Street, Vo Thi Sau Ward, District 3, Ho Chi Minh City, Vietnam'}
             </Text>
             </View>
             <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Apartment Number</Text>
             <Text style={styles.infoText}>
-                {UserData.apartmentNumber ? UserData.apartmentNumber : 'A202'}
+                {userData?.metadata?.apartments?.slice(-1)[0]?.apartmentNo ?? 'A202'}
             </Text>
             </View>
             <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Apartment Floor</Text>
             <Text style={styles.infoText}>
-                {UserData.apartmentFloor ? UserData.apartmentFloor : '3'}
+            {userData?.metadata?.apartments?.slice(-1)[0]?.floor ?? '3'}
             </Text>
             </View>
 
@@ -113,11 +134,12 @@ const styles = {
     header: {
       flexDirection: 'row',
       alignItems: 'center',
-      padding: 10,
+      marginTop: 40,
     },
     backIcon: {
       fontSize: 30,
       marginRight: 10,
+      marginLeft: 10,
     },
     headerTitle: {
       fontSize: 16,

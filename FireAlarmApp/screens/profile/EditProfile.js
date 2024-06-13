@@ -20,45 +20,49 @@ import { StatusBar } from "expo-status-bar";
 const EditProfile = ({ route }) => {
   const { UserData } = route.params;
   const navigation = useNavigation();
-
   // State variables to hold updated information
-
-  const [name, setName] = useState(UserData.name);
-  const [email, setEmail] = useState(UserData.email);
-  const [phone, setPhone] = useState(UserData.phone);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState(UserData.user.email);
+  const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [buildingName, setBuildingName] = useState("");
   const [apartmentNumber, setApartmentNumber] = useState("");
   const [apartmentFloor, setApartmentFloor] = useState("");
-
+  console.log("UserData", UserData.tokens.accessToken);
   const ToastMessage = () => {
     ToastAndroid.show(
       "Edited Sucessfully! Please login again!!",
       ToastAndroid.SHORT
     );
   };
-
+  const apiUrl = Constants.expoConfig.extra.IP_HOST;
   const handleUpdateProfile = async () => {
     try {
-      const response = await axios.put(`http://${IPHOST}:${PORT_EX}/editprofile`, {
-        userId: UserData._id, // Assuming UserData has _id property
+      const headers = {
+        "Content-Type": "application/json",
+        "x-api-key": "2a06fcd170406face25783da33f0d105b8f312a7ddfdfb14d98121daa275e22328c9d9ebd3b146d650a168499f7265d862618e3c3809906d0ecfc71d598e947b",
+        "authorization": UserData.tokens.accessToken,
+        "x-client-id": UserData.user._id,
+      };
+      const body = {
         name: name,
         phone: phone,
         buildingName: buildingName,
-        buildingAddress: address, // Assuming address is the buildingId
-        apartmentNo: apartmentNumber,
+        buildingAddress: address,
         apartmentFloor: apartmentFloor,
-      });
-      console.log(response.data); // Handle the response data accordingly
-      // After a successful update, you can show a success message
-      ToastMessage();
-      // Navigate back after updating
-      navigation.navigate("Login");
+        apartmentNo: apartmentNumber
+      };
+      const response = await axios.put(`${apiUrl}/v1/api/user/updateUserdata`, body, {headers});
+      console.log(response.data);
+      if (response.status === 200) {
+        ToastMessage(); // Show success message only if update is successful
+      } else {
+        console.log('Update failed with status:', response.status); // Log non-success status
+      }
     } catch (error) {
-      console.error(error); // Handle errors
+      console.error('Failed to update user data:', error); // Handle errors more specifically if needed
     }
   };
-
   return (
     <SafeAreaView>
       <StatusBar backgroundColor={"transparent"} />
@@ -74,23 +78,22 @@ const EditProfile = ({ route }) => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: 10,
+            marginTop: 40,
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionic name="close-outline" style={{ fontSize: 35 }} />
+            <Ionic name="close-outline" style={{ fontSize: 35, marginLeft:10 }} />
           </TouchableOpacity>
           <Text style={{ fontSize: 16, fontWeight: "bold" }}>Edit Profile</Text>
           <TouchableOpacity
             onPress={() => {
-              ToastMessage();
-              navigation.goBack();
               handleUpdateProfile();
+              navigation.goBack();
             }}
           >
             <Ionic
               name="checkmark"
-              style={{ fontSize: 35, color: "#3493D9" }}
+              style={{ fontSize: 35, color: "#3493D9", marginRight: 10}}
             />
           </TouchableOpacity>
         </View>
@@ -114,13 +117,12 @@ const EditProfile = ({ route }) => {
                 opacity: 0.5,
               }}
             >
-              Name
+            Name
             </Text>
             <TextInput
               placeholder="name"
-              defaultValue={UserData.name}
-              // value={name}
               onChangeText={(text) => setName(text)}
+              value={name}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
@@ -139,8 +141,6 @@ const EditProfile = ({ route }) => {
             <TextInput
               placeholder="email"
               defaultValue={email}
-              // value={email}
-              // onChangeText={(text) => setEmail(text)}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
@@ -158,9 +158,8 @@ const EditProfile = ({ route }) => {
             </Text>
             <TextInput
               placeholder="phonenumber"
-              // value='phone'
               onChangeText={(text) => setPhone(text)}
-              defaultValue={UserData.phone}
+              value={phone}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
@@ -178,9 +177,8 @@ const EditProfile = ({ route }) => {
             </Text>
             <TextInput
               placeholder="building name"
-              // value='buildingName'
               onChangeText={(text) => setBuildingName(text)}
-              // defaultValue={UserData.email}
+              value={buildingName}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
@@ -198,9 +196,8 @@ const EditProfile = ({ route }) => {
             </Text>
             <TextInput
               placeholder="address"
-              // value='address'
               onChangeText={(text) => setAddress(text)}
-              // defaultValue={UserData.email}
+              value={address}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
@@ -218,9 +215,8 @@ const EditProfile = ({ route }) => {
             </Text>
             <TextInput
               placeholder="apartment number"
-              // value='apartmentNumber'
               onChangeText={(text) => setApartmentNumber(text)}
-              // defaultValue={UserData.email}
+              value={apartmentNumber}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
@@ -238,9 +234,8 @@ const EditProfile = ({ route }) => {
             </Text>
             <TextInput
               placeholder="apartment floor"
-              // value='apartmentFloor'
               onChangeText={(text) => setApartmentFloor(text)}
-              // defaultValue={UserData.email}
+              value={apartmentFloor}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
