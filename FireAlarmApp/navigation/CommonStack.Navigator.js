@@ -73,7 +73,6 @@ function CommonStackNavigation() {
         };
 
         setupSocket(); // Call the async function to setup the socket
-
         return () => {
             if (socket) {
                 socket.disconnect(); // Clean up socket connection when component unmounts

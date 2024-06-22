@@ -12,15 +12,10 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { COLORS, SIZES } from "../../constants/theme";
 import uuid from "react-native-uuid"; // Import uuid library
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
-import { Platform } from "react-native";
-import * as Device from "expo-device";
 import { alertlist } from "../../constants/alertlist";
 import moment from "moment";
-
+import { useNavigation } from "@react-navigation/native";
 const AlertScreen = () => {
   const [myAlert, setMyAlert] = useState("");
   const [alertList, setAlertList] = useState(alertlist[0]); // Access the inner array
@@ -45,7 +40,6 @@ const AlertScreen = () => {
     if (!string) return string;
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
-
 
   useEffect(() => {
     notificationListener.current =

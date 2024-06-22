@@ -36,9 +36,8 @@
       "eas": {  
         "projectId": "300707ef-1566-49c8-962a-f6899e4b8b16" 
       },
-      // "IP_HOST":"http://fire-reaction-api-119058655.us-east-1.elb.amazonaws.com:80"
-      "IP_HOST":"http://192.168.1.134:3056"
-      
+      "IP_HOST":"http://k8s-firereac-apiingre-5d2e6e1484-1986370931.us-east-1.elb.amazonaws.com:80"
+      // "IP_HOST":"http://192.168.1.228:3056"
     }
   }
 }
