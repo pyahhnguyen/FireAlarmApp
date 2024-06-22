@@ -12,3 +12,6 @@ node_modules/
 
 # Ignore any config.js files in any directory
 **/config.js
+
+# Ignore key folders
+key/
