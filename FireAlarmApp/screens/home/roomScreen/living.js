@@ -29,9 +29,9 @@ const Living = () => {
     };
     return typeMap[deviceType] || require("../../../assets/images/smoke.png"); // Default image if type not found
   };
-  const handlePress = (item) => {
-    navigation.navigate("Living_device", { item });
-  };
+  // const handlePress = (item) => {
+  //   navigation.navigate("Living_device", { item });
+  // };
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity 

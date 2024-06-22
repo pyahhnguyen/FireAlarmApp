@@ -17,8 +17,6 @@ import { setLoginState } from "./redux/actions/action";
 import { Text } from "react-native";
 
 
-
-
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
