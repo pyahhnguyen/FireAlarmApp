@@ -16,8 +16,8 @@ const store = configureStore({
         alertnotification: alertsNotifyReducer, // Use the same name as in the state slice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        immutableCheck: { warnAfter: 300 },
-        serializableCheck: { warnAfter: 300 },
+        immutableCheck: { warnAfter: 2000 },
+        serializableCheck: { warnAfter: 2000 },
     })
 });
 

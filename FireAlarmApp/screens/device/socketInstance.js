@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const IP_HOST = Constants.expoConfig.extra.IP_HOST;
 // const SOCKET_URL = `http://192.168.1.74:5000`;
-const SOCKET_URL = `http://k8s-firereac-apiingre-5d2e6e1484-1986370931.us-east-1.elb.amazonaws.com:8080`;
+const SOCKET_URL = `http://k8s-firereac-apiingre-f6742aacaf-869971807.us-east-1.elb.amazonaws.com:8080`;
 
 console.log(SOCKET_URL);
 

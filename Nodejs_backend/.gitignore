@@ -11,7 +11,7 @@ node_modules/
 /src/configs/config_localhost.js
 
 # Ignore any config.js files in any directory
-**/config.js
+**/config.json
 
 # Ignore key folders
 key/

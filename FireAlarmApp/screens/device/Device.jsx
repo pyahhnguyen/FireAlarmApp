@@ -28,68 +28,7 @@ const Device = () => {
   const [connectionStatus, setConnectionStatus] = useState("Connecting...");
   // const [data, setData] = useState({});
   const data = useSelector(state => state.sensors.sensorData);
-  // console.log("Data:", data);
-  // useEffect(() => {
-  //   let socket;
-  //   const setupSocket = async () => {
-  //     socket = await initializeSocket(); // Wait for the socket to be initialized
-  //     if (!socket) {
-  //       console.error("Failed to initialize socket.");
-  //       return;
-  //     }
-  //     socket.on("connect", () => {
-  //       setConnectionStatus("Connected");
-  //     });
-  //     socket.on("message", (message) => {
-  //       const newData = JSON.parse(message);
-  //       // console.log("New data received:", newData);
-  //       const valueStandards = {
-  //         smoke: 1500, // Example standard value for temperature sensor
-  //         heat: 150,
-  //         gas: 900,
-  //         flame: 1700,
-  //       };
-  //       const valueStandard = valueStandards[newData.device_type] || 1000;
-  //       const exceedsStandard = newData.value > valueStandard;
-  //       const updatedData = {
-  //         ...newData,
-  //         device_id: newData._id_,
-  //         status: exceedsStandard ? "Alarm" : "Normal",
-  //         warning: exceedsStandard ? "1" : "0",
-  //       };
-  //       dispatch(updateSensorData({ [newData._id_]: updatedData })); // Correct key usage here
-  //       // setData((prevData) => ({
-  //       //   ...prevData,
-  //       //   [updatedData._id_]: updatedData,
-  //       // }));
-  //     });
-
-  //     socket.on("subscribed", (response) => {
-  //       console.log("Subscription confirmation received:", response);
-  //     });
-
-  //     socket.on("error", (error) => {
-  //       console.error("Error encountered:", error);
-  //     });
-
-  //     socket.on("disconnect", (reason) => {
-  //       setConnectionStatus(`Disconnected: ${reason}`);
-  //     });
-
-  //     socket.on("close", () => {
-  //       console.log("Socket closed unexpectedly.");
-  //     });
-  //   };
-
-  //   setupSocket(); // Call the async function to setup the socket
-
-  //   return () => {
-  //     if (socket) {
-  //       socket.disconnect(); // Clean up socket connection when component unmounts
-  //     }
-  //   };
-  // }, []);
-
+ 
   const sensorTypeImages = {
     smoke: require("../../assets/images/Smoke-Alarms-Smoke-Detectors.jpg"),
     heat: require("../../assets/images/heat_sensor.jpg"),

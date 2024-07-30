@@ -23,4 +23,4 @@ The Smart Fire Alarm System is designed to detect and alert early fire hazards i
    + Database: MongoDB
    + Cloud Platform: Amazon Web Services (AWS) for backend deployment.
 
-**Project Image**:
+
