@@ -74,3 +74,8 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
+# ignore all .env files
+key/
+
+# Ignore environment variables
+.env

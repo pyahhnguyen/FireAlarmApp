@@ -6,7 +6,7 @@ export const alertlist = [
             location: "Living Room - A203, Floor 2, Centec Tower Building",
             severity: "High - Immediate action required!",
             deviceDetails: "Heat and Rate-of-Rise Detector (Model: 5809, ID: pbems20)",
-            timeOfAlert: "2024-05-28 08:11:56"
+            timeOfAlert: "2024-06-17 08:11:56"
         },
         {
             id: 2,
@@ -14,7 +14,7 @@ export const alertlist = [
             location: "Kitchen - A203, Floor 2, Centec Tower Building",
             severity: "Moderate - Check immediately",
             deviceDetails: "Smoke Detector (Model: 9920, ID: smkdet992)",
-            timeOfAlert: "2024-05-28 09:24:03"
+            timeOfAlert: "2024-06-17 09:24:03"
         },
         {
             id: 3,
@@ -22,7 +22,7 @@ export const alertlist = [
             location: "Garage - A203, Floor 1, Centec Tower Building",
             severity: "Critical - Evacuate area!",
             deviceDetails: "CO Detector (Model: 301X, ID: comonox301)",
-            timeOfAlert: "2024-05-28 10:45:22"
+            timeOfAlert: "2024-06-17 10:45:22"
         },
         {
             id: 4,
@@ -30,7 +30,7 @@ export const alertlist = [
             location: "Bathroom - A203, Floor 3, Centec Tower Building",
             severity: "Low - Inspect at convenience",
             deviceDetails: "Water Leak Sensor (Model: 908L, ID: wtrleak908)",
-            timeOfAlert: "2024-05-28 11:36:40"
+            timeOfAlert: "2024-06-17 11:36:40"
         },
         {
             id: 5,
@@ -38,7 +38,7 @@ export const alertlist = [
             location: "Office Room - A203, Floor 3, Centec Tower Building",
             severity: "Moderate - Monitor conditions",
             deviceDetails: "Temperature Sensor (Model: T1000, ID: tempSensor10)",
-            timeOfAlert: "2024-05-28 12:15:30"
+            timeOfAlert: "2024-06-17 12:15:30"
         },
         {
             id: 6,
@@ -46,7 +46,7 @@ export const alertlist = [
             location: "Living Room - A203, Floor 2, Centec Tower Building",
             severity: "High - Immediate action required!",
             deviceDetails: "Heat and Rate-of-Rise Detector (Model: 5809, ID: pbems20)",
-            timeOfAlert: "2024-05-28 08:11:56"
+            timeOfAlert: "2024-06-17 08:11:56"
         },
         {
             id: 7,
@@ -54,7 +54,7 @@ export const alertlist = [
             location: "Kitchen - A203, Floor 2, Centec Tower Building",
             severity: "Moderate - Check immediately",
             deviceDetails: "Smoke Detector (Model: 9920, ID: smkdet992)",
-            timeOfAlert: "2024-05-28 09:24:03"
+            timeOfAlert: "2024-06-17 09:24:03"
         },
         {
             id: 8,
@@ -62,7 +62,7 @@ export const alertlist = [
             location: "Garage - A203, Floor 1, Centec Tower Building",
             severity: "Critical - Evacuate area!",
             deviceDetails: "CO Detector (Model: 301X, ID: comonox301)",
-            timeOfAlert: "2024-05-28 10:45:22"
+            timeOfAlert: "2024-06-17 10:45:22"
         },
         {
             id: 9,
@@ -70,7 +70,7 @@ export const alertlist = [
             location: "Bathroom - A203, Floor 3, Centec Tower Building",
             severity: "Low - Inspect at convenience",
             deviceDetails: "Water Leak Sensor (Model: 908L, ID: wtrleak908)",
-            timeOfAlert: "2024-05-28 11:36:40"
+            timeOfAlert: "2024-06-17 11:36:40"
         },
         {
             id: 10,
@@ -78,11 +78,10 @@ export const alertlist = [
             location: "Office Room - A203, Floor 3, Centec Tower Building",
             severity: "Moderate - Monitor conditions",
             deviceDetails: "Temperature Sensor (Model: T1000, ID: tempSensor10)",
-            timeOfAlert: "2024-05-28 12:15:30"
+            timeOfAlert: "2024-06-17 12:15:30"
         }
     ]
-
-
 ]
+
 
 // Receive data from the server api and display it in the app

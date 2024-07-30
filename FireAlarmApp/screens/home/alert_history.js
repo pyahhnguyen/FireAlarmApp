@@ -64,7 +64,7 @@ const renderItem = ({ item }) => (
       <Text style={{ ...FONTS.h4, color: COLORS.primary }}>
         {item.deviceType}
       </Text>
-      <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{moment(item.triggerAt).format('DD MMMM YYYY, hh:mm a')}</Text>
+      <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{moment(item.triggerAt).format('DD MMMM YYYY, hh:mm:ss a')}</Text>
     </View>
 
     <View

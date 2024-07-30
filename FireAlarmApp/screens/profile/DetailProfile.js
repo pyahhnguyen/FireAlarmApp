@@ -64,7 +64,7 @@ const DetailProfile = ({route}) => {
         <View style={styles.userInfoContainer}>
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Name</Text>
-            <Text style={styles.infoText}>{userData?.metadata?.name ?? "Nguyen Luong Phu Gia"}</Text>
+            <Text style={styles.infoText}>{userData?.metadata?.name }</Text>
           </View>
 
           <View style={styles.infoContainer}>

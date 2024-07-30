@@ -54,7 +54,7 @@ const Kitchen = () => {
                 <View style={styles.sensorContent}>
                     <Text style={styles.titleItem}>SensorId: {item._id_}</Text>
                     <Text style={styles.titleItem}>Type: {item.device_type} Detector</Text>
-                    <Text style={styles.titleItem}>Value: {item.value}</Text>
+                    <Text style={styles.valueText}>Value: {item.value}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -116,6 +116,11 @@ const styles = StyleSheet.create({
         fontWeight: 'medium',
 
     },
+    valueText:{
+        fontSize: 15,
+        color: COLORS.red,
+        fontWeight: 'bold',
+      },
     shadow: {
         shadowColor: "#121211",
         shadowOffset: {
